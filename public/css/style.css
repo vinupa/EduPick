@@ -1,0 +1,55 @@
+.flash-message {
+    position: absolute;
+    /* top: 10px;
+    right: 10px; */
+    top: -30px;
+    right: 122px;
+    z-index: 9999;
+    width: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    &.success {
+        background-color: #28a745;
+    }
+
+    &.error {
+        background-color: #dc3545;
+    }
+
+    &.warning {
+        background-color: #ffc107;
+    }
+
+    &.info {
+        background-color: #17a2b8;
+    }
+
+    &.primary {
+        background-color: #007bff;
+    }
+
+    &.secondary {
+        background-color: #6c757d;
+    }
+
+    &.dark {
+        background-color: #343a40;
+    }
+
+    &.light {
+        background-color: #f8f9fa;
+    }
+
+    &.alert {
+        background-color: #dc3545;
+    }
+
+    &.notice {
+        background-color: #ffc107;
+    }
+}

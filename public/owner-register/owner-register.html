@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+
+    <style>
+      
+    </style>
+    <title>Register Owner</title>
+  </head>
+  <body>
+    <div class="owner-register">
+      <header class="header">
+        <div class="navbar">
+          <div class="navbar-logo-conatiner">
+            <img class="logo-image" src="logo-image.png" />
+            <div class="navbar-logo-text-container">
+              <div class="navbar-logo-edupick">EduPick</div>
+            </div>
+          </div>
+        </div>
+        <div class="hello">Hello 👋🏼</div>
+        <div class="hero-banner-text-sub">
+          Join our school transportation system to ensure a safe and efficient
+          commute for your children. We&#039;re here to make your child&#039;s
+          journey to school worry-free.
+        </div>
+      </header>
+      
+      <div class="toggle-container">
+        <img class="toggle-container-rectangle-l" src="toggle-container-rectangle-l.png"/>
+        <img class="toggle-container-rectangle"src="toggle-container-rectangle.png"/>
+        <a href="../parent-register/parent-register.html">
+          <div class="toggle-text">Parent</div>
+        </a>
+        <a href="">
+          <div class="toggle-text2">Vehicle Owner</div>
+        </a>
+        <a href="../driver-register/driver-register.html">
+          <div class="toggle-text3">Driver</div>
+        </a>
+      </div>
+
+      <div class="login-root-container">
+        <div class="login-title">Create a Vehicle Owner Account</div>
+        <form class="login-contatiner" action="your_server_endpoint.php" method="POST">
+          <div class="login-container-sub">
+            <div class="form-text-component">
+              <label class="form-text" for="first_name">First Name</label>
+              <input class="form-input-container" type="text" id="first_name" name="first_name" placeholder="alexander" required>
+            </div>
+            <div class="form-text-component">
+              <label class="form-text" for="last_name">Last Name</label>
+              <input class="form-input-container" type="text" id="last_name" name="last_name" placeholder="alexander" required>
+            </div>
+            <div class="form-text-component">
+              <label class="form-text" for="email">Email</label>
+              <input class="form-input-container" type="email" id="email" name="email" placeholder="alexander" required>
+            </div>
+            <div class="form-text-component">
+              <div class="form-text">Password</div>
+              <input class="form-input-container" type="password" id="password" name="password" placeholder="************" required>
+            </div>
+            <div class="form-text-component">
+              <label class="form-text" for="address">Address</label>
+              <input class="form-input-container" type="text" id="address" name="address" placeholder="alexander" required>
+            </div>
+            <div class="form-text-component">
+              <label class="form-text" for="mobile_number">Mobile Number</label>
+              <input class="form-input-container" type="text" id="mobile_number" name="mobile_number" placeholder="alexander" required>
+            </div>
+          </div>
+          <div class="signin-click-container">
+            <div class="signin-click-container-sub">
+                <div class="signin-button">
+                  <button class="sign-in" type="submit">Register</button>
+                </div>
+              <div class="login-direct-text">
+                <span>
+                  <span class="login-direct-text-span">Already have an account ? </span>
+                  <a href="../login/login.html"><span class="login-direct-text-span2">Click here to login</span></a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="footer">
+        <div class="footer-right">
+          <div class="footer-right-text">Get In Touch</div>
+          <div class="footer-right-text2">About Us</div>
+          <div class="footer-right-text2">Contact Us</div>
+          <div class="footer-right-text2">EduPcik ©</div>
+        </div>
+        <div class="footer-social-icons-container">
+          <div class="facebook">
+            <div class="facebook-icon">
+              <img class="facebook2" src="facebook2.png" />
+            </div>
+          </div>
+          <div class="instagram">
+            <div class="instagram-icon">
+              <img class="instagram-circle" src="instagram-circle.png" />
+            </div>
+          </div>
+          <div class="twitter">
+            <div class="twitter-icon">
+              <img class="twitter2" src="twitter2.png" />
+            </div>
+          </div>
+        </div>
+        <div class="footer-right-container">
+          <div class="footer-right-text3">
+            <div class="bx-bx-phone">
+              <img class="phone" src="phone.png" />
+            </div>
+            <div class="h-6">+94112729729</div>
+          </div>
+          <div class="footer-right-text3">
+            <img class="place-marker" src="place-marker.png" />
+            <div class="h-6">
+              35 Reid Ave Colombo 007, <br />Sri Lanka
+            </div>
+          </div>
+          <div class="footer-right-text3">
+            <img class="envelope" src="envelope.png" />
+            <div class="h-6">edupick@edu.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
