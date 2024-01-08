@@ -1,5 +1,13 @@
-<?php require APPROOT . '/views/inc/header.php'; ?>
-<h1>
-    <?php echo $data['title']; ?>
-</h1>
-<?php require APPROOT . '/views/inc/footer.php'; ?>
+<?php
+    if(isset($_SESSION['user_id'])){
+        if($_SESSION['user_type'] == 'parent'){
+            redirect('parents/index');
+        } elseif($_SESSION['user_type'] == 'owner'){
+            redirect('owners/index');
+        } elseif($_SESSION['user_type'] == 'driver'){
+            redirect('drivers/index');
+        }
+    } else {
+        redirect('users/login');
+    }
+?>
