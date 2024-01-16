@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduPick</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="navbar">
+        <div class="logo-container">
+          <img src="logo.png" alt="EduPick Logo" class="logo-img" />
+          <h2 class="logo"><a href="#"><span style="color: #e44d26;">Edu</span>Pick</a></h2>
+        </div>
+        
+        <!--<input type="checkbox" id="menu-toggle" />
+         <label for="menu-toggle" id="hamburger-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+            <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </label> -->
+        <!-- <ul class="links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Portfolio</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul> -->
+        <div class="buttons">
+          <a class="signin" id="form-open" href="auth.html">Sign In</a>
+          <a href="auth.html" class="signup">Sign Up</a>
+        </div>
+      </nav>
+    </header>
+
+    <section class="home">
+        <d  iv class="form_container">
+          <!-- Login From -->
+          <div class="form login_form">
+            <form action="#">
+              <h2>Login</h2>
+              <div class="input_box">
+                <input type="email" placeholder="Enter your email" required />
+                <i class="uil uil-envelope-alt email"></i>
+              </div>
+              <div class="input_box">
+                <input type="password" placeholder="Enter your password" required />
+                <i class="uil uil-lock password"></i>
+                <i class="uil uil-eye-slash pw_hide"></i>
+              </div>
+  
+              <div class="option_field">
+                <span class="checkbox">
+                  <input type="checkbox" id="check" />
+                  <label for="check">Remember me</label>
+                </span>
+                <a href="#" class="forgot_pw">Forgot password?</a>
+              </div>
+  
+              <button class="button">Login Now</button>
+  
+              <div class="login_signup">Don't have an account? <a href="#" id="signup">Signup</a></div>
+            </form>
+          </div>
+  
+          <!-- Signup From -->
+          <div class="form signup_form">
+            <div class="select_role">
+                <select id="userRole" onChange="update()" required>
+                  <option value="parent" selected>Parent</option>
+                  <option value="owner">Owner</option>
+                  <option value="driver">Driver</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+            <form action="#">
+              <h2>Signup</h2>
+              <div class="input_box" id="firstNameInput">
+                <input type="tett" placeholder="Enter your first name" required />
+              </div>
+              <div class="input_box" id="lastNameInput">
+                <input type="text" placeholder="Enter your last name" required />
+              </div>
+              <div class="input_box" id="emailInput">
+                <input type="email" placeholder="Enter your email" required />
+              </div>
+              <div class="input_box" id="passwordInput">
+                <input type="password" placeholder="Create password" required />
+              </div>
+              <div class="input_box" id="confirmPasswordInput">
+                <input type="password" placeholder="Confirm password" required />
+              </div>
+              <div class="input_box" id="addressInput">
+                <input type="text" placeholder="Enter your address" required />
+              </div>
+              <div class="input_box" id="cityInput">
+                <input type="text" placeholder="Enter your nearest city" required />
+              </div>
+              <div class="input_box" id="mobileInput">
+                <input type="tel" placeholder="Enter your mobile number" required />
+              </div>
+  
+              <button class="button">Signup Now</button>
+  
+              <div class="login_signup">Already have an account? <a href="#" id="login">Login</a></div>
+            </form>
+          </div>
+        </div>
+      </section>
+      <script src="script.js"></script>
+  </body>
+  </html>
