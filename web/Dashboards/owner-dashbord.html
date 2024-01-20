@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboard_style.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Owner Dashboard Panel</title> 
+</head>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="images/logo.png" alt="">
+            </div>
+
+            <span class="logo_name">EduPick</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="#">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Dahsboard</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-chart"></i>
+                    <span class="link-name">Manage Vehicles</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-eye"></i>
+                    <span class="link-name">View Drivers</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-eye"></i>
+                    <span class="link-name">View Customers</span>
+                </a></li>
+            </ul>
+            
+            <ul class="logout-mode">
+                <li><a href="#">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                    <span class="link-name">Dark Mode</span>
+                </a>
+
+                <div class="mode-toggle">
+                  <span class="switch"></span>
+                </div>
+            </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <h2>Hi, Stephen</h2>
+            <!-- <img src="images/profile.jpg" alt=""> -->
+        </div>
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-tachometer-fast-alt"></i>
+                    <span class="text">Dashboard</span>
+                </div>
+
+                <div class="boxes">
+                    <a href="">
+                        <div class="box box1">
+                            <i class="uil uil-plus-circle"></i>
+                            <span class="text">Add Vehicle</span>
+                        </div>
+                    </a>
+                    <!-- <div class="box box2">
+                        <i class="uil uil-comments"></i>
+                        <span class="text">Comments</span>
+                        <span class="number">20,120</span>
+                    </div>
+                    <div class="box box3">
+                        <i class="uil uil-share"></i>
+                        <span class="text">Total Share</span>
+                        <span class="number">10,120</span>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="activity">
+
+                <div class="activity-data">
+                    <div class="data names">
+                        <span class="data-title">Licence Plate </span>
+                        <span class="data-list">WP-2345</span>
+                        <span class="data-list">WP-7335</span>
+                    </div>
+                    <div class="data email">
+                        <span class="data-title">Features </span> <br>
+                        <span class="data-list">Toyota HiAce</span>
+                        <span class="data-list">Toyota HiAce</span>
+                    </div>
+                    <div class="data joined">
+                        <span class="data-title">Total Seats</span>
+                        <span class="data-list">17</span>
+                        <span class="data-list">12</span>
+                    </div>
+                    <div class="data type">
+                        <span class="data-title">Vacant Seats</span>
+                        <span class="data-list">7</span>
+                        <span class="data-list">4</span>
+                    </div>
+                    <div class="data status">
+                        <span class="data-title">Cities Covered </span> <br>
+                        <span class="data-list">Thalawathugoda > Kotte > Nugegoda</span>
+                        <span class="data-list">Kadawatha > Maligawatta > Maradana</span>
+                    </div>
+                    <div class="data icons">
+                        <span class="data-title">Delete/Edit</span> <br>
+                        <span class="data-list">
+                            <div class="delete-edit-icons">
+                                <a href=""><i class="uil uil-trash-alt"></i> </a>
+                                <a href=""><i class="uil uil-edit"></i></a>
+                            </div>
+                        </span>
+                        <span class="data-list">
+                            <div class="delete-edit-icons">
+                                <a href=""><i class="uil uil-trash-alt"></i> </a>
+                                <a href=""><i class="uil uil-edit"></i></a>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="dashboard_script.js"></script>
+</body>
+</html>
