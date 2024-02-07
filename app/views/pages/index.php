@@ -8,6 +8,6 @@
             redirect('drivers/index');
         }
     } else {
-        redirect('users/login');
+        redirect('users/index');
     }
 ?>

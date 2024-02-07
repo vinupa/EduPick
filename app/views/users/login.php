@@ -1,107 +1,60 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
 
-<link rel="stylesheet" href="<?php echo URLROOT; ?>/login/style.css">
+<link rel="stylesheet" href="<?php echo URLROOT; ?>/auth/style.css">
 <title><?php echo SITENAME; ?> | Login</title>
 
-  </head>
+</head>
+  
   <body>
-    <div class="login-user">
-      <header class="header">
-        <div class="navbar">
-          <div class="navbar-logo-conatiner">
-            <img class="logo-image" src="<?php echo URLROOT; ?>/login/logo-image.png" />
-            <div class="navbar-logo-text-container">
-              <div class="navbar-logo-edupick">EduPick</div>
-            </div>
-          </div>
+    <header class="header">
+      <nav class="navbar">
+        <div class="logo-container">
+          <img src="<?php echo URLROOT; ?>/auth/logo.png" alt="EduPick Logo" class="logo-img" />
+          <h2 class="logo"><a href="#"><span style="color: #e44d26;">Edu</span>Pick</a></h2>
         </div>
-        <div class="hello">Hello 👋🏼</div>
-        <div class="hero-banner-text-sub">
-          Join our school transportation system to ensure a safe and efficient
-          commute for your children. We&#039;re here to make your child&#039;s
-          journey to school worry-free.
+        
+        <div class="buttons">
+          <a class="signin" id="form-open" href="<?php echo URLROOT; ?>/users/index/">Home</a>
+          <a href="<?php echo URLROOT; ?>/users/parentRegister/" class="signup">Sign Up</a>
         </div>
-      </header>
-    
-      <div class="login-root-container">
-        <div class="login-title">Log In to Your Account</div>
-        <form class="login-contatiner" action="<?php echo URLROOT; ?>/users/login" method="POST">
-        <br><?php flash('register_success'); ?>
-          <div class="login-container-sub">
-            <div class="form-text-component">
-              <label class="form-text" for="username">Email</label>
-              <input class="form-input-container" type="email" id="email" name="email" value="<?php echo $data['email']; ?>">
-            </div>
-            <div class="form-text-component">
-              <div class="form-text">Password</div>
-              <input class="form-input-container" type="password" id="password" name="password" placeholder="********">
-            </div>
-          </div>
-          <div class="login-click-container">
-            <div class="login-click-container-sub">
-                <div class="login-button">
-                  <button class="log-in" type="submit">Login</button>
-                </div>
-              <div class="login-direct-text">
-                <span>
-                  <span class="login-direct-text-span">Don’t have an account ? </span>
-                  <a href="<?php echo URLROOT; ?>/users/parentRegister/"><span class="login-direct-text-span2">Click here to register</span></a>
-                </span>
+      </nav>
+    </header>
+
+    <section class="home">
+        <d  iv class="form_container">
+          <!-- Login Form -->
+          <div class="form login_form">
+            <form action="<?php echo URLROOT; ?>/users/login" method="POST">
+              <h2>Login</h2>
+              <br><?php flash('register_success'); ?>
+              <div class="auth-err">
+                <p> <?php echo $data['email_err']; ?></p>
+                <p> <?php echo $data['password_err']; ?></p>
               </div>
-            </div>
-                <p style="color:red"> <?php echo $data['email_err']; ?></p>
-                <p style="color:red"> <?php echo $data['password_err']; ?></p>
-          </div>
-        </form>
-      </div>
 
-      <div class="footer">
-        <div class="footer-right">
-          <div class="footer-right-text">Get In Touch</div>
-          <div class="footer-right-text2">About Us</div>
-          <div class="footer-right-text2">Contact Us</div>
-          <div class="footer-right-text2">EduPick ©</div>
-        </div>
-        <div class="footer-social-icons-container">
-          <div class="facebook">
-            <div class="facebook-icon">
-              <img class="facebook2" src="<?php echo URLROOT; ?>/login/facebook2.png" />
-            </div>
-          </div>
-          <div class="instagram">
-            <div class="instagram-icon">
-              <img class="instagram-circle" src="<?php echo URLROOT; ?>/login/instagram-circle.png" />
-            </div>
-          </div>
-          <div class="twitter">
-            <div class="twitter-icon">
-              <img class="twitter2" src="<?php echo URLROOT; ?>/login/twitter2.png" />
-            </div>
+              <div class="input_box">
+                <p>Email:</p>
+                <input type="email" placeholder="email@example.com" id="email" name="email" required />
+              </div>
+              <div class="input_box">
+                <p>Password:</p>
+                <input type="password" placeholder="**********" id="password" name="password" required />
+              </div>
+  
+              <!-- <div class="option_field">
+                <span class="checkbox">
+                  <input type="checkbox" id="check" />
+                  <label for="check">Remember me</label>
+                </span>
+                <a href="#" class="forgot_pw">Forgot password?</a>
+              </div> -->
+              
+              <button class="button" type="submit">Login Now</button>
+  
+              <div class="login_signup">Don't have an account? <a href="<?php echo URLROOT; ?>/users/parentRegister/" id="signup">Signup</a></div>
+            </form>
           </div>
         </div>
-        <div class="footer-right-container">
-          <div class="footer-right-text3">
-            <div class="bx-bx-phone">
-              <img class="phone" src="<?php echo URLROOT; ?>/login/phone.png" />
-            </div>
-            <div class="h-6">+94112729729</div>
-          </div>
-          <div class="footer-right-text3">
-            <img class="place-marker" src="<?php echo URLROOT; ?>/login/place-marker.png" />
-            <div class="h-6">
-              35 Reid Ave Colombo 007, <br />Sri Lanka
-            </div>
-          </div>
-          <div class="footer-right-text3">
-            <img class="envelope" src="<?php echo URLROOT; ?>/login/envelope.png" />
-            <div class="h-6">edupick@edu.com</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
-
-
+      </section>
 
 <?php require APPROOT . '/views/inc/footer.php'; ?>

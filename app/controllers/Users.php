@@ -6,6 +6,11 @@
             $this->userModel = $this->model('User');
         }
 
+        public function index(){
+            $data = [];
+            $this->view('users/index', $data);
+        }
+
         public function parentRegister(){
             // Check for POST
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
