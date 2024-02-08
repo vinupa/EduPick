@@ -6,6 +6,8 @@
             redirect('owners/index');
         } elseif($_SESSION['user_type'] == 'driver'){
             redirect('drivers/index');
+        } elseif($_SESSION['user_type'] == 'admin'){
+            redirect('admins/index');
         }
     } else {
         redirect('users/index');

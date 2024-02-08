@@ -144,7 +144,19 @@
                     if($this->db->rowCount() > 0){
                         return true;
                     } else {
-                        return false;
+
+                        $this->db->query('SELECT * FROM `admin` WHERE email = :email');
+                        // Bind value
+                        $this->db->bind(':email', $email);
+
+                        $row = $this->db->single();
+
+                        // Check row
+                        if($this->db->rowCount() > 0){
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
                 }
             }
@@ -202,6 +214,25 @@
                         } else {
                             return false;
                         }
+
+                    } else {
+
+                        $this->db->query('SELECT * FROM `admin` WHERE email = :email');
+                        // Bind value
+                        $this->db->bind(':email', $email);
+
+                        $row = $this->db->single();
+
+                        // Check row
+                        if($this->db->rowCount() > 0){
+                            $hashed_password = $row->password;
+                            if(password_verify($password, $hashed_password)){
+                                $row->type = 'admin';
+                                return $row;
+                            } else {
+                                return false;
+                            }
+
                     } else {
                         return false;
                     }
@@ -210,3 +241,4 @@
         }
 
     }
+}

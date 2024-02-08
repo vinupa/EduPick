@@ -356,6 +356,7 @@
 
                 // Sanitize POST data
                 $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
+                print_r($_POST);
 
                 $data = [
                     'email' => trim($_POST['email']),
@@ -429,6 +430,8 @@
                 $_SESSION['user_id'] = $user->ownerID;
             else if($user->type == 'driver')
                 $_SESSION['user_id'] = $user->driverID;
+            else if($user->type == 'admin')
+                $_SESSION['user_id'] = $user->adminID;
             redirect('pages/index');
         }
 
@@ -459,6 +462,14 @@
 
         public function isDriverLoggedIn(){
             if(isset($_SESSION['user_id']) && $_SESSION['user_type'] == 'driver'){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function isAdminLoggedIn(){
+            if(isset($_SESSION['user_id']) && $_SESSION['user_type'] == 'admin'){
                 return true;
             } else {
                 return false;
