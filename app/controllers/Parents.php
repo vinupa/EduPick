@@ -37,7 +37,7 @@
                 $data = [
                     'fname' => trim($_POST['first_name']),
                     'lname' => trim($_POST['last_name']),
-                    'school' => trim($_POST['school']),
+                    'school' => trim($_POST['school'] ?? ''),
                     'grade' => trim($_POST['grade']),
                     'parentID' => $_SESSION['user_id'],
                     'fname_err' => '',
@@ -64,6 +64,8 @@
                 // Validate grade
                 if(empty($data['grade'])){
                     $data['grade_err'] = 'Please enter grade';
+                } elseif($data['grade'] < 1 || $data['grade'] > 13){
+                    $data['grade_err'] = 'Please enter a valid grade';
                 }
 
                 // Make sure no errors
@@ -155,6 +157,8 @@
                 // Validate grade
                 if(empty($data['grade'])){
                     $data['grade_err'] = 'Please enter grade';
+                } elseif($data['grade'] < 1 || $data['grade'] > 13){
+                    $data['grade_err'] = 'Please enter a valid grade';
                 }
 
                 // Make sure no errors
