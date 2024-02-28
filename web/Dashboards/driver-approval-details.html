@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="dashboard_style.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-    <title>Driver Approval</title> 
+    <title>Driver Approval Details</title> 
 </head>
 <body>
     <nav>
@@ -21,7 +21,7 @@
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="./admin-dashboard.html">
+                <li><a href="../Dashboards/admin-dashboard.html">
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Dahsboard</span>
                 </a></li>
@@ -29,11 +29,11 @@
                     <i class="uil uil-bus-school"></i>
                     <span class="link-name">Approve Vehicles</span>
                 </a></li>
-                <li><a href="./driver-approval.html">
+                <li><a href="../Dashboards/driver-approval.html">
                     <i class="uil uil-user-circle"></i>
                     <span class="link-name">Approve Drivers</span>
                 </a></li>
-                <li><a href="./admin-register.html">
+                <li><a href="#">
                     <i class="uil uil-sign-in-alt"></i>
                     <span class="link-name">Admin Registration</span>
                 </a></li>
@@ -66,60 +66,40 @@
         </div>
         <div class="dash-content">
             <div class="overview">
-                <div class="title">
-                    <i class="uil uil-envelope"></i>
-                    <span class="text">Requests</span>
+                <div class="approve-details-container">
+                    <div class="approve-details-box">
+                        <div class="images">
+                            <div class="img-holder active">
+                                <img src="./Images/driver1.png">
+                            </div>
+                        </div>
+                        <div class="basic-info">
+                            <h1>John Doe</h1>
+                        </div>
+                        <div class="description">
+                            <ul class="features">
+                                <li><i class="uil uil-check-square"></i>Contact Information: +1 (555) 123-4567</li>
+                                <li><i class="uil uil-check-square"></i>NIC Number: 5551234567</li>
+                                <li><i class="uil uil-check-square"></i>NIC Document: </li>
+                                <li><i class="uil uil-check-square"></i>Driver's License Number: DL123456789</li>
+                                <li><i class="uil uil-check-square"></i>License Expiry Date: March 31, 2025</li>
+                                <li><i class="uil uil-check-square"></i>Driver's License:</li>
+                                <li><i class="uil uil-check-square"></i>Employment Status: Full-time</li>
+                                <li><i class="uil uil-check-square"></i>Assigned Vehicle(s): ABC123, XYZ789</li>
+                                <li><i class="uil uil-check-square"></i>Accident History: None</li>
+                                <li><i class="uil uil-check-square"></i>Criminal History: None</li>
+                                <li><i class="uil uil-check-square"></i>Police Report</li>
+                            </ul>
+                            <div class="options">
+                                <a href="#">Approve</a>
+                                <a href="#">Reject</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="blog-card">
-                    <div class="inner-part">
-                       <label for="imgTap" class="img">
-                       <img class="img-3" src="../Dashboards/Images/driver1.png">
-                       </label>
-                       <div class="content">
-                          <div class="vehicle-title">
-                             John Doe
-                          </div>
-                          <div class="text">
-                            <ul class="vehicle-details">
-                                <li>NIC Number: 5551234567</li>
-                                <li>License Number: 5551234567</li>
-                                <li>Employment Status: Full-time</li>
-                            </ul>
-                          </div>
-                          <a href="./driver-approval-details.html"><button>Read more</button></a>
-                       </div>
-                    </div>
-                 </div>
-
-                 <div class="blog-card">
-                    <div class="inner-part">
-                       <label for="imgTap" class="img">
-                       <img class="img-3" src="../Dashboards/Images/driver2.png">
-                       </label>
-                       <div class="content">
-                          <div class="vehicle-title">
-                            John Doe
-                          </div>
-                          <div class="text">
-                            <ul class="vehicle-details">
-                                <li>NIC Number: 5551234567</li>
-                                <li>License Number: 5551234567</li>
-                                <li>Employment Status: Full-time</li>
-                            </ul>
-                          </div>
-                          <a href="./driver-approval-details.html"><button>Read more</button></a>
-                       </div>
-                    </div>
-                 </div>
-
-                 
             </div>
-
-
         </div>
     </section>
-
     <script src="dashboard_script.js"></script>
 </body>
 </html>
