@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 01, 2023 at 01:16 PM
+-- Generation Time: Feb 29, 2024 at 09:02 AM
 -- Server version: 8.0.32
 -- PHP Version: 8.2.2
 
@@ -37,6 +37,13 @@ CREATE TABLE `admin` (
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`adminID`, `email`, `password`, `firstName`, `lastName`, `contactNumber`, `regDate`) VALUES
+(1, 'admin@edupick.com', '$2y$10$nGsc6BxLxT4GwBlhmurBM.d/8whBz9YIs69i1cA3y1DYkF.7dqh0O', 'Admin', 'EduPick', '0712341234', '2024-02-07 18:13:42');
+
 -- --------------------------------------------------------
 
 --
@@ -52,7 +59,8 @@ CREATE TABLE `child` (
   `absentState` tinyint(1) NOT NULL,
   `parentID` int NOT NULL,
   `vanID` int DEFAULT NULL,
-  `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isDeleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -67,7 +75,7 @@ CREATE TABLE `driver` (
   `password` varchar(255) NOT NULL,
   `firstName` varchar(30) NOT NULL,
   `lastName` varchar(30) NOT NULL,
-  `nic` varchar(12) NOT NULL,
+  `nic` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `address` varchar(1000) NOT NULL,
   `contactNumber` varchar(13) NOT NULL,
   `ownerID` int DEFAULT NULL,
@@ -263,19 +271,19 @@ ALTER TABLE `vehiclephotos`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `adminID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `adminID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `child`
 --
 ALTER TABLE `child`
-  MODIFY `childID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `childID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `driver`
 --
 ALTER TABLE `driver`
-  MODIFY `driverID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `driverID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `incident`
@@ -293,13 +301,13 @@ ALTER TABLE `manager`
 -- AUTO_INCREMENT for table `owner`
 --
 ALTER TABLE `owner`
-  MODIFY `ownerID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ownerID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `parent`
 --
 ALTER TABLE `parent`
-  MODIFY `parentID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `parentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `vehicle`

@@ -16,6 +16,7 @@
     --box1-color: #4DA3FF;
     --title-icon-color: #fff;
     --delete-edit-color: #4DA3FF;
+    --child-card-color: #f2f2f2;
     
     --tran-05: all 0.5s ease;
     --tran-03: all 0.3s ease;
@@ -38,6 +39,7 @@ body.dark{
     --box3-color: #3A3B3C;
     --title-icon-color: #CCC;
     --delete-edit-color: #004a71;
+    --child-card-color: #4D4C4C;
 }
 
 nav{
