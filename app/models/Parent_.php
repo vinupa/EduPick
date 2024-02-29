@@ -7,7 +7,7 @@
         }
 
         public function getChildren($parent_id){
-            $this->db->query('SELECT * FROM child WHERE parentID = :parent_id');
+            $this->db->query('SELECT * FROM child WHERE parentID = :parent_id AND isDeleted = 0');
             $this->db->bind(':parent_id', $parent_id);
 
             $results = $this->db->resultSet();
@@ -31,7 +31,7 @@
         }
 
         public function getChild($child_id){
-            $this->db->query('SELECT * FROM child WHERE childID = :child_id');
+            $this->db->query('SELECT * FROM child WHERE childID = :child_id AND isDeleted = 0');
             $this->db->bind(':child_id', $child_id);
 
             $row = $this->db->single();
@@ -55,7 +55,8 @@
         }
 
         public function removeChild($child_id){
-            $this->db->query('DELETE FROM child WHERE childID = :child_id');
+            // $this->db->query('DELETE FROM child WHERE childID = :child_id');
+            $this->db->query('UPDATE child SET isDeleted = 1 WHERE childID = :child_id');
             $this->db->bind(':child_id', $child_id);
 
             if($this->db->execute()){
