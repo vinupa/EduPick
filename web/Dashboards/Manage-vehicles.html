@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="Owner.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
-    <title>Owner Dashboard Panel</title> 
+    <title>Manage Vehicles</title> 
 </head>
 <body>
     <nav>
@@ -69,18 +69,18 @@
         <div class="dash-content">
             <div class="overview">
                 <div class="title">
-                    <i class="uil uil-tachometer-fast-alt"></i>
-                    <span class="text">Dashboard</span>
+                    <i class="uil uil-chart"></i>
+                    <span class="text">Manage Vehicles</span>
                 </div>
 
-                <div class="boxes">
-                    <a href="Vehicle-reg.php">
+                <!--<div class="boxes">
+                    <a href="">
                         <div class="box box1">
                             <i class="uil uil-plus-circle"></i>
-                            <span class="text">Register Vehicle </span>
+                            <span class="text">Add Vehicle</span>
                         </div>
                     </a>
-                    <!-- <div class="box box2">
+                     <div class="box box2">
                         <i class="uil uil-comments"></i>
                         <span class="text">Comments</span>
                         <span class="number">20,120</span>
@@ -94,72 +94,95 @@
             </div>
 
             <div class="activity">
-                
+
                 <div class="activity-data">
                     
                     <div class="data names">
-                        <span class="data-title">Vehicle </span><br>
-                        <td style="width: 200px; height: 150px;">
-                            <img src="images/van1.jpg" alt="van1" style=" width: 40px; height: 100%; border-radius: 50%">
-                            
-    
-                        </td>
-                        <td style="width: 200px; height: 150px;">
-                            <img src="images/van2.jpg" alt="van2" style="width: 40px; height: 100%; border-radius: 50%">
-                        </td>
+                        <span class="data-title">Vehicle ID</span><br>
+                        <span class="data-list">V-2345</span><br>
+                        <span class="data-list">V-7335</span>
                     </div>
 
                     <div class="data names">
-                        <span class="data-title">Licence Plate </span>
-                        <span class="data-list">WP-2345</span>
-                        <span class="data-list">WP-7335</span>
+                        <span class="data-title">Vehicle Model</span> <br>
+                        <span class="data-list">Toyota HiAce</span><br>
+                        <span class="data-list">Toyota HiAce</span>
+                    </div>
+                    
+   
+                    <!--<div class="buttons-row row2">
+                        <button class="button assign-drivers">Assign Drivers</button>
+                    </div>
+                    
+                    <div class="buttons-row row3">
+                        <button class="button assign-drivers">Edit Details</button>
+
                     </div>
 
-                    <div class="data email">
-                        <span class="data-title">Model</span> 
-                        <span class="data-list">Toyota HiAce</span>
-                        <span class="data-list">Toyota HiAce</span>
+                    <div class="buttons-row row3">
+                        <button class="button assign-drivers">Edit Details</button>
+
                     </div>
-                    <div class="data joined">
-                        <span class="data-title">Total Seats</span>
-                        <span class="data-list">17</span>
-                        <span class="data-list">12</span>
+                    
+                    <div class="buttons-row column2">
+                        <button class="button assign-drivers">Assign Drivers</button>
+                        <button class="button edit-details">Assign Drivers</button>
+                        <button class="button edit-details">Assign Drivers</button>
                     </div>
-                    <div class="data type">
-                        <span class="data-title">Vacant Seats</span>
-                        <span class="data-list">7</span>
-                        <span class="data-list">4</span>
+                    
+                    <!--<div class="buttons-row">
+                        <button class="button assign-drivers">Edit Details</button>
+                        <button class="button edit-details">Edit Details</button>
+                        <button class="button assign-drivers">Edit Details</button>
                     </div>
-                    <div class="data type">
-                        <span class="data-title">Schools</span>
-                        <span class="data-list">Lyceum I.S</span>
-                        <span class="data-list">Colombo I.S</span>
-                    </div>
-                    <div class="data status">
-                        <span class="data-title">Cities Covered </span> 
-                        <span class="data-list">Kotte > Nugegoda</span>
-                        <span class="data-list">Maligawatta > Maradana</span>
-                    </div>
+
+                     <button class="button">Assign Drivers</button>
+                   <script>
+                      const button = document.querySelector(".button");
+                      button.addEventListener("click", (e) => {
+                        e.preventDefault;
+                        button.classList.add("animate");
+                        setTimeout(() => {
+                          button.classList.remove("animate");
+                        }, 600);
+                      });
+                    </script>
+                    
+                    <button class="button">Edit Details</button>
+                    <script>
+                      const button = document.querySelector(".button");
+                      button.addEventListener("click", (e) => {
+                        e.preventDefault;
+                        button.classList.add("animate");
+                        setTimeout(() => {
+                          button.classList.remove("animate");
+                        }, 600);
+                      });
+                    </script> -->
+
                     <div class="data icons">
-                        <span class="data-title">Delete/Edit</span>
+                        <span class="data-title">Assign Drivers</span><br>
                         <span class="data-list">
-                            <div class="delete-edit-icons">
-                                <a href=""><i class="uil uil-trash-alt"></i> </a>
-                                <a href="Vehicle-edit.html"><i class="uil uil-edit"></i></a>
-                            </div>
+                            <div class="delete-edit-icons">   
+                                <a href="add-drivers.html"><i class="uil uil-edit"></i></a>
+                            </div><br>
                         </span>
                         <span class="data-list">
                             <div class="delete-edit-icons">
-                                <a href=""><i class="uil uil-trash-alt"></i> </a>
-                                <a href="Vehicle-edit.html"><i class="uil uil-edit"></i></a>
+                                <a href="add-drivers.html"><i class="uil uil-edit"></i></a>
                             </div>
                         </span>
                     </div>
+                    
+                            </div>
+                        </span>
+                    </div>
+
                 </div>
             </div>
         </div>
     </section>
 
-    <script src="dashboard_script.js"></script>
+    <script src="Owner.js"></script>
 </body>
 </html>
