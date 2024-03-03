@@ -15,11 +15,11 @@
                 <i class="uil uil-bus-school"></i>
                 <span class="link-name">Approve Vehicles</span>
             </a></li>
-            <li><a href="<?php echo URLROOT; ?>/admins/index">
+            <li><a href="<?php echo URLROOT; ?>/admins/driverApproval">
                 <i class="uil uil-user-circle"></i>
                 <span class="link-name">Approve Drivers</span>
             </a></li>
-            <li><a href="<?php echo URLROOT; ?>/admins/index">
+            <li><a href="<?php echo URLROOT; ?>/users/adminRegister">
                 <i class="uil uil-sign-in-alt"></i>
                 <span class="link-name">Admin Registration</span>
             </a></li>

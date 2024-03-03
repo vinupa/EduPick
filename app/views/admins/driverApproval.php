@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
 <title>
-    <?php echo SITENAME; ?> | Vehicle Approval
+    <?php echo SITENAME; ?> | Driver Approval
 </title> 
 
 </head>
@@ -18,28 +18,27 @@
                 <span class="text">Requests</span>
             </div>
             
-            <!-- Iterate over vehicle requests and generate cards dynamically -->
-            <?php foreach($data['vehicleRequests'] as $vehicleRequest): ?>
+            <!-- Iterate over driver requests and generate cards dynamically -->
+            <?php foreach($data['driverRequests'] as $driverRequest): ?>
             <div class="blog-card">
                 <div class="inner-part">
                    <label for="imgTap" class="img">
-                   <img class="img-3" src="../Dashboards/Images/schoolbus2.png">
+                   <img class="img-3" src="../Dashboards/Images/driver_avatar.png">
                    </label>
                    <div class="content">
                       <div class="vehicle-title">
-                         Vehicle Owner : <?php echo $vehicleRequest->ownerFirstName . ' ' . $vehicleRequest->ownerLastName; ?>
+                         Driver Name: <?php echo $driverRequest->firstName . ' ' . $driverRequest->lastName; ?>
                       </div>
                       <div class="text">
                         <ul class="vehicle-details">
-                            <li>Vehicle Number: <?php echo $vehicleRequest->licensePlate; ?></li>
-                            <li>Total Seats: <?php echo $vehicleRequest->totalSeats; ?></li>
+                            <li>NIC Number: <?php echo $driverRequest->nic; ?></li>
+                            <li>Owner Name: <?php echo $driverRequest->ownerFirstName . ' ' . $driverRequest->ownerLastName; ?></li>
                       </div>
-                      <a href="<?php echo URLROOT; ?>/admins/vehicleApprovalDetails/<?php echo $vehicleRequest->vehicleID; ?>"><button>Read more</button></a>
+                      <a href="<?php echo URLROOT; ?>/admins/driverApprovalDetails/<?php echo $driverRequest->driverID; ?>"><button>Read more</button></a>
                    </div>
                 </div>
              </div>
              <?php endforeach; ?>
-             <!-- End of dynamic card generation -->
              
         </div>
     </div>

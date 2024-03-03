@@ -2,12 +2,17 @@
 <link rel="stylesheet" href="<?php echo URLROOT; ?>/admin-dashboard/style.css" />
 <link rel="stylesheet" href="<?php echo URLROOT; ?>/admin-dashboard/approvalDetailsStyle.css" />
 <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+<script src="<?php echo URLROOT; ?>/admin-dashboard/script.js"></script>
+<title>
+    <?php echo SITENAME; ?> | Vehicle Approval Details
+</title> 
+
 </head>
 <body>
     <?php require APPROOT . '/views/inc/adminNav.php'; ?>
     <div class="dash-content">
         <div class="overview">
-            <div class="approve-details-container">
+            <di v class="approve-details-container">
                 <div class="approve-details-box">
                     <div class="images">
                         <!-- If you have multiple images, loop through them here -->
@@ -28,8 +33,8 @@
                             <li><i class="uil uil-check-square"></i>Vehicle Registration Document: <a href="" target="_blank">View Document</a></li>
                         </ul>
                         <div class="options">
-                            <a href="#">Approve</a>
-                            <a href="#">Reject</a>
+                            <a href="<?php echo URLROOT; ?>/admins/approveVehicle/<?php echo $data['vehicleDetails']->vehicleID; ?>" onclick="return confirmApproval();">Approve</a>
+                            <a href="<?php echo URLROOT; ?>/admins/rejectVehicle/<?php echo $data['vehicleDetails']->vehicleID; ?>" onclick="return confirmRejection();">Reject</a>
                         </div>
                     </div>
                 </div>

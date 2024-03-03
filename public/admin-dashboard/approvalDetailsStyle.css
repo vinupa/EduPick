@@ -2,12 +2,13 @@
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;    
 }
 
 .approve-details-box {
     border-radius: 10px;
     box-shadow: 5px 5px 10px 1px rgb(0, 0, 0, 12%);
+    background-color: white;
     padding: 45px;
     margin: 15px 0;
     width: 950px;
@@ -100,3 +101,4 @@
 .approve-details-box .description .features .fa-circle-xmark {
     color: var(--yellow-color);
 }
+

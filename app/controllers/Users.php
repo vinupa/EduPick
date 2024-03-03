@@ -241,6 +241,8 @@ class Users extends Controller
         }
     }
 
+
+
     public function driverRegister()
     {
         // Check for POST
@@ -352,6 +354,92 @@ class Users extends Controller
 
             // Load view
             $this->view('users/driverRegister', $data);
+        }
+    }
+
+    public function adminRegister(){
+        // Check if the user is logged in and is an admin
+        // if(!$this->userModel->isAdminLoggedIn()){
+        //     redirect('pages/index');
+        // }
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            // Process form
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            $data = [
+                'first_name' => trim($_POST['first_name']),
+                'last_name' => trim($_POST['last_name']),
+                'email' => trim($_POST['email']),
+                'password' => trim($_POST['password']),
+                'confirm_password' => trim($_POST['confirm_password']),
+                'first_name_err' => '',
+                'last_name_err' => '',
+                'email_err' => '',
+                'password_err' => '',
+                'confirm_password_err' => ''
+            ];
+
+            // Validate input
+            if(empty($data['first_name'])){
+                $data['first_name_err'] = 'Please enter first name';
+            }
+
+            if(empty($data['last_name'])){
+                $data['last_name_err'] = 'Please enter last name';
+            }
+
+            if(empty($data['email'])){
+                $data['email_err'] = 'Please enter email';
+            } elseif($this->userModel->findAdminByEmail($data['email'])){
+                $data['email_err'] = 'Email is already taken';
+            }
+
+            if(empty($data['password'])){
+                $data['password_err'] = 'Please enter password';
+            } elseif(strlen($data['password']) < 6){
+                $data['password_err'] = 'Password must be at least 6 characters';
+            }
+
+            if(empty($data['confirm_password'])){
+                $data['confirm_password_err'] = 'Please confirm password';
+            } elseif($data['password'] != $data['confirm_password']){
+                $data['confirm_password_err'] = 'Passwords do not match';
+            }
+
+            // Make sure errors are empty
+            if(empty($data['first_name_err']) && empty($data['last_name_err']) && empty($data['email_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])){
+                // Hash password
+                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+                // Register Admin
+                if($this->userModel->adminRegister($data)){
+                    flash('register_success', 'You are now registered as an Admin');
+                    redirect('users/adminRegister');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                // Load view with errors
+                $this->view('users/adminRegister', $data);
+            }
+
+        } else {
+            // Load form
+            $data = [
+                'first_name' => '',
+                'last_name' => '',
+                'email' => '',
+                'password' => '',
+                'confirm_password' => '',
+                'first_name_err' => '',
+                'last_name_err' => '',
+                'email_err' => '',
+                'password_err' => '',
+                'confirm_password_err' => ''
+            ];
+
+            $this->view('admins/register', $data);
         }
     }
 
