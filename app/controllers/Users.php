@@ -371,11 +371,13 @@ class Users extends Controller
                 'first_name' => trim($_POST['first_name']),
                 'last_name' => trim($_POST['last_name']),
                 'email' => trim($_POST['email']),
+                'contact_number' => trim($_POST['contact_number']),
                 'password' => trim($_POST['password']),
                 'confirm_password' => trim($_POST['confirm_password']),
                 'first_name_err' => '',
                 'last_name_err' => '',
                 'email_err' => '',
+                'contact_number_err' => '',
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
@@ -395,6 +397,10 @@ class Users extends Controller
                 $data['email_err'] = 'Email is already taken';
             }
 
+            if (empty($data['contact_number'])) {
+                $data['contact_number_err'] = 'Please enter contact number';
+            }
+
             if(empty($data['password'])){
                 $data['password_err'] = 'Please enter password';
             } elseif(strlen($data['password']) < 6){
@@ -408,14 +414,14 @@ class Users extends Controller
             }
 
             // Make sure errors are empty
-            if(empty($data['first_name_err']) && empty($data['last_name_err']) && empty($data['email_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])){
+            if(empty($data['first_name_err']) && empty($data['last_name_err']) && empty($data['email_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['contact_number_err'])){
                 // Hash password
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
                 // Register Admin
                 if($this->userModel->adminRegister($data)){
                     flash('register_success', 'You are now registered as an Admin');
-                    redirect('users/adminRegister');
+                    redirect('users/login');
                 } else {
                     die('Something went wrong');
                 }
@@ -430,16 +436,18 @@ class Users extends Controller
                 'first_name' => '',
                 'last_name' => '',
                 'email' => '',
+                'contact_number' => '',
                 'password' => '',
                 'confirm_password' => '',
                 'first_name_err' => '',
                 'last_name_err' => '',
                 'email_err' => '',
+                'contact_number_err' => '',
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
 
-            $this->view('admins/register', $data);
+            $this->view('users/adminRegister', $data);
         }
     }
 

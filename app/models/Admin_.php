@@ -6,6 +6,66 @@ class Admin_ {
         $this->db = new Database;
     }
 
+    public function getAdmins(){
+        // Execute the SQL query to select all admins except adminID = 1
+        $this->db->query('SELECT * FROM admin WHERE adminID != 1');
+        
+        // Retrieve the result set
+        $results = $this->db->resultSet();
+        
+        // Return the results
+        return $results;
+    }
+
+    public function updateAdmin($data){
+        // Prepare SQL query to update admin details
+        $this->db->query('UPDATE admin SET email = :email, firstName = :firstName, lastName = :lastName, contactNumber = :contactNumber WHERE adminID = :adminID');
+    
+        // Bind values
+        $this->db->bind(':adminID', $data['adminID']);
+        $this->db->bind(':email', $data['email']);
+        $this->db->bind(':firstName', $data['firstName']);
+        $this->db->bind(':lastName', $data['lastName']);
+        $this->db->bind(':contactNumber', $data['contactNumber']);
+    
+        // Execute the update query
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // public function removeChild($child_id){
+    //     // $this->db->query('DELETE FROM child WHERE childID = :child_id');
+    //     $this->db->query('UPDATE child SET isDeleted = 1 WHERE childID = :child_id');
+    //     $this->db->bind(':child_id', $child_id);
+
+    //     if($this->db->execute()){
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    public function getAdminById($adminID){
+        // Prepare SQL query to select admin by ID
+        $this->db->query('SELECT * FROM admin WHERE adminID = :adminID');
+    
+        // Bind adminID parameter
+        $this->db->bind(':adminID', $adminID);
+    
+        // Fetch single row
+        $row = $this->db->single();
+    
+        // Check if row exists
+        if($this->db->rowCount() > 0){
+            return $row;
+        } else {
+            return null;
+        }
+    }
+
     public function getVehicleRequests(){
         $this->db->query('SELECT vehicle.*, owner.firstName AS ownerFirstName, owner.lastName AS ownerLastName, owner.contactNumber AS ownerContactNumber FROM vehicle INNER JOIN owner ON vehicle.ownerID = owner.ownerID WHERE vehicle.approvedState = 0');
 

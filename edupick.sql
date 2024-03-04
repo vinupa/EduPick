@@ -32,7 +32,7 @@ CREATE TABLE `admin` (
   `lastName` varchar(30) NOT NULL,
   `contactNumber` varchar(13) NOT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 --
 -- Dumping data for table `admin`
 --
@@ -69,7 +69,7 @@ CREATE TABLE `child` (
   `vanID` int DEFAULT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `isDeleted` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 -- --------------------------------------------------------
 --
 -- Table structure for table `driver`
@@ -80,7 +80,7 @@ CREATE TABLE `driver` (
   `password` varchar(255) NOT NULL,
   `firstName` varchar(30) NOT NULL,
   `lastName` varchar(30) NOT NULL,
-  `nic` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `nic` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `address` varchar(1000) NOT NULL,
   `contactNumber` varchar(13) NOT NULL,
   `ownerID` int DEFAULT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE `driver` (
   `doc_proofResidence` varchar(255) DEFAULT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `approvedState` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 -- --------------------------------------------------------
 --
 -- Table structure for table `incident`
@@ -106,7 +106,7 @@ CREATE TABLE `incident` (
   `parentID` int NOT NULL,
   `vehicleID` int NOT NULL,
   `resolvedState` varchar(30) NOT NULL DEFAULT 'Pending'
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 -- --------------------------------------------------------
 --
 -- Table structure for table `manager`
@@ -119,7 +119,7 @@ CREATE TABLE `manager` (
   `lastName` varchar(30) NOT NULL,
   `contactNumber` varchar(13) NOT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 -- --------------------------------------------------------
 --
 -- Table structure for table `owner`
@@ -132,7 +132,7 @@ CREATE TABLE `owner` (
   `lastName` varchar(30) NOT NULL,
   `contactNumber` varchar(13) NOT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 -- --------------------------------------------------------
 --
 -- Table structure for table `parent`
@@ -146,7 +146,7 @@ CREATE TABLE `parent` (
   `city` varchar(60) NOT NULL,
   `contactNumber` varchar(13) NOT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 -- --------------------------------------------------------
 --
 -- Table structure for table `vehicle`
@@ -159,7 +159,7 @@ CREATE TABLE `vehicle` (
   `ownerID` int NOT NULL,
   `features` varchar(1500) DEFAULT NULL,
   `approvedState` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 -- --------------------------------------------------------
 --
 -- Table structure for table `vehicledocuments`
@@ -169,7 +169,7 @@ CREATE TABLE `vehicledocuments` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `documentPath` varchar(255) NOT NULL,
   `vehicleID` int NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 -- --------------------------------------------------------
 --
 -- Table structure for table `vehiclephotos`
@@ -179,7 +179,7 @@ CREATE TABLE `vehiclephotos` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `photoPath` varchar(255) NOT NULL,
   `vehicleID` int NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 -- --------------------------------------------------------
 --
 -- Table structure for table `cities`
@@ -199,30 +199,30 @@ CREATE TABLE `school` (
   `city` varchar(60) NOT NULL,
   PRIMARY KEY (`schoolID`)
 );
--- --------------------------------------------------------
---
--- Table structure for table `vehicle_cities`
---
-CREATE TABLE `vehicle_cities` (
-  `vehicle_city_ID` int NOT NULL AUTO_INCREMENT,
-  `vehicleID` int NOT NULL,
-  `cityID` int NOT NULL,
-  PRIMARY KEY (`vehicle_city_ID`),
-  FOREIGN KEY (`vehicleID`) REFERENCES `vehicle`(`vehicleID`) ON DELETE CASCADE,
-  FOREIGN KEY (`cityID`) REFERENCES `city`(`cityID`) ON DELETE CASCADE
-);
--- --------------------------------------------------------
---
--- Table structure for table `vehicle_schools`
---
-CREATE TABLE `vehicle_schools` (
-  `vehicle_school_ID` int NOT NULL AUTO_INCREMENT,
-  `vehicleID` int NOT NULL,
-  `schoolID` int NOT NULL,
-  PRIMARY KEY (`vehicle_school_ID`),
-  FOREIGN KEY (`vehicleID`) REFERENCES `vehicle`(`vehicleID`) ON DELETE CASCADE,
-  FOREIGN KEY (`schoolID`) REFERENCES `school`(`schoolID`) ON DELETE CASCADE
-);
+-- -- --------------------------------------------------------
+-- --
+-- -- Table structure for table `vehicle_cities`
+-- --
+-- CREATE TABLE `vehicle_cities` (
+--   `vehicle_city_ID` int NOT NULL AUTO_INCREMENT,
+--   `vehicleID` int NOT NULL,
+--   `cityID` int NOT NULL,
+--   PRIMARY KEY (`vehicle_city_ID`),
+--   FOREIGN KEY (`vehicleID`) REFERENCES `vehicle`(`vehicleID`) ON DELETE CASCADE,
+--   FOREIGN KEY (`cityID`) REFERENCES `city`(`cityID`) ON DELETE CASCADE
+-- );
+-- -- --------------------------------------------------------
+-- --
+-- -- Table structure for table `vehicle_schools`
+-- --
+-- CREATE TABLE `vehicle_schools` (
+--   `vehicle_school_ID` int NOT NULL AUTO_INCREMENT,
+--   `vehicleID` int NOT NULL,
+--   `schoolID` int NOT NULL,
+--   PRIMARY KEY (`vehicle_school_ID`),
+--   FOREIGN KEY (`vehicleID`) REFERENCES `vehicle`(`vehicleID`) ON DELETE CASCADE,
+--   FOREIGN KEY (`schoolID`) REFERENCES `school`(`schoolID`) ON DELETE CASCADE
+-- );
 --
 -- Indexes for dumped tables
 --

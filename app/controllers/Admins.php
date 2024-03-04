@@ -18,6 +18,105 @@
             $this->view('admins/index', $data);
         }
 
+        public function manageAdmins(){
+            $data = [
+                'admins' => $this->adminModel->getAdmins()
+            ];
+            $this->view('admins/manageAdmins', $data);
+        }
+
+        public function updateAdmin($adminID) {
+            // Check if the form is submitted (POST request)
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // Process form data
+                
+                // Sanitize POST data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        
+                // Collect form data
+                $data = [
+                    'adminID' => $adminID,
+                    'firstName' => trim($_POST['first_name']),
+                    'lastName' => trim($_POST['last_name']),
+                    'email' => trim($_POST['email']),
+                    'contactNumber' => trim($_POST['contact_number']),
+                    'firstName_err' => '',
+                    'lastName_err' => '',
+                    'email_err' => '',
+                    'contactNumber_err' => ''
+                ];
+        
+                // Validate form data (you can add more validation rules as needed)
+                if (empty($data['firstName'])) {
+                    $data['firstName_err'] = 'Please enter first name';
+                }
+        
+                if (empty($data['lastName'])) {
+                    $data['lastName_err'] = 'Please enter last name';
+                }
+        
+                if (empty($data['email'])) {
+                    $data['email_err'] = 'Please enter email';
+                }
+        
+                if (empty($data['contactNumber'])) {
+                    $data['contactNumber_err'] = 'Please enter contact number';
+                }
+        
+                // If no errors, update admin in the database
+                if (empty($data['firstName_err']) && empty($data['lastName_err']) && empty($data['email_err']) && empty($data['contactNumber_err'])) {
+                    // Update admin in the database
+                    if ($this->adminModel->updateAdmin($data)) {
+                        // Admin updated successfully
+                        flash('success', 'Admin updated');
+                        redirect('admins/index');
+                    } else {
+                        // Failed to update admin
+                        flash('error', 'Failed to update admin', 'alert alert-danger');
+                        redirect('admins/index');
+                    }
+                } else {
+                    // Load view with validation errors
+                    $this->view('admins/updateAdmin', $data); // Assuming you have a view named 'updateAdmin.php'
+                }
+            } else {
+                // If it's not a POST request, load the update admin form with existing data
+                $admin = $this->adminModel->getAdminById($adminID);
+        
+                if ($admin) {
+                    // Admin found, load the update admin form with existing data
+                    $data = [
+                        'adminID' => $adminID,
+                        'firstName' => $admin->firstName,
+                        'lastName' => $admin->lastName,
+                        'email' => $admin->email,
+                        'contactNumber' => $admin->contactNumber,
+                        'firstName_err' => '',
+                        'lastName_err' => '',
+                        'email_err' => '',
+                        'contactNumber_err' => ''
+                    ];
+                    $this->view('admins/updateAdmin', $data); // Assuming you have a view named 'updateAdmin.php'
+                } else {
+                    // Admin not found, display an error message or redirect
+                    flash('error', 'Admin not found', 'alert alert-danger');
+                    redirect('admins/index');
+                }
+            }
+        }
+
+        public function removeAdmin($adminID){
+            // Reject the vehicle with the given ID
+            if($this->adminModel->removeAdmin($adminID)){
+                // Redirect to view vehicle requests page
+                flash('success', 'Admin Removed');
+                redirect('admins/index');
+            } else {
+                flash('error', 'Failed to remove admin', 'alert alert-danger');
+                redirect('admins/index');
+            }
+        }
+
         public function vehicleApproval(){
             // Fetch all vehicle requests awaiting approval
             $vehicleRequests = $this->adminModel->getVehicleRequests();

@@ -162,12 +162,13 @@
             }
         }
 
-        public function registerAdmin($data){
-            $this->db->query('INSERT INTO admin (first_name, last_name, email, password) VALUES(:first_name, :last_name, :email, :password)');
+        public function adminRegister($data){
+            $this->db->query('INSERT INTO admin (firstName, lastName, email, contactNumber, password) VALUES(:first_name, :last_name, :email, :contact_number, :password)');
             // Bind values
             $this->db->bind(':first_name', $data['first_name']);
             $this->db->bind(':last_name', $data['last_name']);
             $this->db->bind(':email', $data['email']);
+            $this->db->bind(':contact_number', $data['contact_number']);
             $this->db->bind(':password', $data['password']);
     
             // Execute

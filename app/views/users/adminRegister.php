@@ -28,26 +28,32 @@
               <h2>Register</h2>
 
               <div class="auth-err">
-                <p><?php echo $data['fname_err']; ?></p>
-                <p><?php echo $data['lname_err']; ?></p>
+                <p><?php echo $data['first_name_err']; ?></p>
+                <p><?php echo $data['last_name_err']; ?></p>
                 <p><?php echo $data['email_err']; ?></p>
+                <p><?php echo $data['contact_number_err']; ?></p>
                 <p><?php echo $data['password_err']; ?></p>
                 <p><?php echo $data['confirm_password_err']; ?></p>
               </div>
 
               <div class="input_box">
                 <p>First Name:</p>
-                <input type="text" id="first_name" name="first_name" value="<?php echo $data['fname']; ?>" />
+                <input type="text" id="first_name" name="first_name" value="<?php echo $data['first_name']; ?>" />
               </div>
 
               <div class="input_box">
                 <p>Last Name:</p>
-                <input type="text" id="last_name" name="last_name" value="<?php echo $data['lname']; ?>" />
+                <input type="text" id="last_name" name="last_name" value="<?php echo $data['last_name']; ?>" />
               </div>
 
               <div class="input_box">
                 <p>Email:</p>
                 <input type="email" id="email" name="email" value="<?php echo $data['email']; ?>" />
+              </div>
+
+              <div class="input_box">
+                <p>Contact Number:</p>
+                <input type="text" id="contact_number" name="contact_number" value="<?php echo $data['contact_number']; ?>" />
               </div>
 
               <div class="input_box">
@@ -57,7 +63,7 @@
 
               <div class="input_box">
                 <p>Confirm Password:</p>
-                <input type="password" id="confirm-password" name="confirm-password" value="<?php echo $data['confirm_password']; ?>" />
+                <input type="password" id="confirm_password" name="confirm_password" value="<?php echo $data['confirm_password']; ?>" />
               </div>
               
               <button class="button" type="submit">Register</button>

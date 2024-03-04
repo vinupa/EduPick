@@ -7,7 +7,7 @@
     </div>
     <div class="menu-items">
         <ul class="nav-links">
-            <li><a href="<?php echo URLROOT; ?>/admins/index">
+            <li><a href="<?php echo URLROOT; ?>/admins/manageAdmins">
                 <i class="uil uil-estate"></i>
                 <span class="link-name">Dahsboard</span>
             </a></li>

@@ -180,83 +180,77 @@
             }
         }
 
-                public function updateChild($child_id){
-                // Get child data from child id and fill the form
-                $child = $this->parentModel->getChild($child_id);
+        public function updateChild($child_id){
+            // Get child data from child id and fill the form
+            $child = $this->parentModel->getChild($child_id);
+            if($child->parentID != $_SESSION['user_id']){
+                redirect('parents/manageChildren');
+            }
+            // Init data
+            $data = [
+                'child_id' => $child_id,
+                'firstName' => $child->firstName,
+                'lastName' => $child->lastName,
+                'school' => $child->school,
+                'grade' => $child->grade,
+                'parentID' => $child->parentID,
+                'firstName_err' => '',
+                'lastName_err' => '',
+                'school_err' => '',
+                'grade_err' => ''
+            ];
+            // Load view
+            $this->view('parents/updateChild', $data);
+        }
+        
+        public function selectChild(){
+            // Check for POST
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // Process form
 
-                if($child->parentID != $_SESSION['user_id']){
-                    redirect('parents/manageChildren');
-                }
+                // Sanitize POST data
+                $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
 
-                // Init data
                 $data = [
-                    'child_id' => $child_id,
-                    'firstName' => $child->firstName,
-                    'lastName' => $child->lastName,
-                    'school' => $child->school,
-                    'grade' => $child->grade,
-                    'parentID' => $child->parentID,
-                    'firstName_err' => '',
-                    'lastName_err' => '',
-                    'school_err' => '',
-                    'grade_err' => ''
+                    'childID' => trim($_POST['child'])
                 ];
 
-                // Load view
-                $this->view('parents/updateChild', $data);
-                
-            }
-
-            public function selectChild(){
-
-                // Check for POST
-                if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                    // Process form
-    
-                    // Sanitize POST data
-                    $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
-    
-                    $data = [
-                        'childID' => trim($_POST['child'])
-                    ];
-    
-                    // Validate childID
-                    if(empty($data['childID'])){
-                        redirect('parents/selectChild');
-                    } else {
-                        // Execute
-                        $child = $this->parentModel->getChild($data['childID']);
-                        if($child){
-                            // Redirect to manage
-                            // redirect('parents/manageChildren');
-                            $_SESSION['childSchool'] = $child->school;
-                            $_SESSION['childGrade'] = $child->grade;
-                            $_SESSION['childID'] = $child->childID;
-                            $_SESSION['childName'] = $child->firstName . ' ' . $child->lastName;
-    
-                            redirect('parents/searchVehicles');
-                        } else {
-                            die('Something went wrong');
-                        }
-                    }
-                } else {
-                    $data = [
-                        'children' => $this->parentModel->getChildren($_SESSION['user_id'])
-                    ];
-                    $this->view('parents/selectChild', $data);
-                }
-            }
-
-            public function searchVehicles(){
-
-                if(!isset($_SESSION['childID'])){
+                // Validate childID
+                if(empty($data['childID'])){
                     redirect('parents/selectChild');
+                } else {
+                    // Execute
+                    $child = $this->parentModel->getChild($data['childID']);
+                    if($child){
+                        // Redirect to manage
+                        // redirect('parents/manageChildren');
+                        $_SESSION['childSchool'] = $child->school;
+                        $_SESSION['childGrade'] = $child->grade;
+                        $_SESSION['childID'] = $child->childID;
+                        $_SESSION['childName'] = $child->firstName . ' ' . $child->lastName;
+
+                        redirect('parents/searchVehicles');
+                    } else {
+                        die('Something went wrong');
+                    }
                 }
-                
-                // $data = [
-                //     'vehicles' => $this->parentModel->searchVehicles($_SESSION['childSchool'], $_SESSION['childGrade'])
-                // ];
-                $data = [];
-                $this->view('parents/searchVehicles', $data);
+            } else {
+                $data = [
+                    'children' => $this->parentModel->getChildren($_SESSION['user_id'])
+                ];
+                $this->view('parents/selectChild', $data);
             }
         }
+
+        public function searchVehicles(){
+            if(!isset($_SESSION['childID'])){
+                redirect('parents/selectChild');
+            }
+            
+            // $data = [
+            //     'vehicles' => $this->parentModel->searchVehicles($_SESSION['childSchool'], $_SESSION['childGrade'])
+            // ];
+            $data = [];
+            $this->view('parents/searchVehicles', $data);
+        }
+}
