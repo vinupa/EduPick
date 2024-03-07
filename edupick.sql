@@ -31,7 +31,8 @@ CREATE TABLE `admin` (
   `firstName` varchar(30) NOT NULL,
   `lastName` varchar(30) NOT NULL,
   `contactNumber` varchar(13) NOT NULL,
-  `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `IsDeleted` BOOLEAN NOT NULL DEFAULT 0
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 --
 -- Dumping data for table `admin`

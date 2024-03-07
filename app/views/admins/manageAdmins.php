@@ -77,15 +77,16 @@
                     <?php foreach ($data['admins'] as $admin): ?>
                         <span class="data-list">
                             <div class="delete-edit-icons">
-                                <a href="<?php echo URLROOT; ?>/parents/removeChild/<?php echo $admin->adminID; ?>"
-                                    onclick="return confirm('Are you sure you want to remove this admin?');"><i
-                                        class="uil uil-trash-alt"></i></a>
-                                <a href="<?php echo URLROOT; ?>/admins/updateAdmin/<?php echo $admin->adminID; ?>"><i
-                                        class="uil uil-edit"></i></a>
+                                <?php if ($admin->adminID == 1 || $_SESSION['user_id'] != 1): ?>
+                                    <i class="uil uil-trash-alt disabled" style="color: #a19c9c"></i>
+                                <?php else: ?>
+                                    <a href="<?php echo URLROOT; ?>/admins/removeAdmin/<?php echo $admin->adminID; ?>"
+                                        onclick="return confirm('Are you sure you want to remove this admin?');"><i class="uil uil-trash-alt"></i></a>
+                                <?php endif; ?>
+                                <a href="<?php echo URLROOT; ?>/admins/updateAdmin/<?php echo $admin->adminID; ?>"><i class="uil uil-edit"></i></a>
                             </div>
                         </span>
                     <?php endforeach; ?>
-
                 </div>
             </div>
         </div>

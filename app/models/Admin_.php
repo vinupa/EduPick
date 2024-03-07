@@ -8,7 +8,7 @@ class Admin_ {
 
     public function getAdmins(){
         // Execute the SQL query to select all admins except adminID = 1
-        $this->db->query('SELECT * FROM admin WHERE adminID != 1');
+        $this->db->query('SELECT * FROM admin WHERE adminID != 1 AND IsDeleted = 0');
         
         // Retrieve the result set
         $results = $this->db->resultSet();
@@ -36,17 +36,16 @@ class Admin_ {
         }
     }
 
-    // public function removeChild($child_id){
-    //     // $this->db->query('DELETE FROM child WHERE childID = :child_id');
-    //     $this->db->query('UPDATE child SET isDeleted = 1 WHERE childID = :child_id');
-    //     $this->db->bind(':child_id', $child_id);
-
-    //     if($this->db->execute()){
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
+    public function deleteAdmin($adminID){
+        $this->db->query('UPDATE admin SET IsDeleted = 1 WHERE adminID = :adminID');
+        $this->db->bind(':adminID', $adminID);
+    
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function getAdminById($adminID){
         // Prepare SQL query to select admin by ID

@@ -105,15 +105,26 @@
             }
         }
 
-        public function removeAdmin($adminID){
-            // Reject the vehicle with the given ID
-            if($this->adminModel->removeAdmin($adminID)){
-                // Redirect to view vehicle requests page
-                flash('success', 'Admin Removed');
-                redirect('admins/index');
+        public function removeAdmin($adminID) {
+            // Check if the logged-in admin is the super admin (adminID = 1)
+            if ($_SESSION['user_type'] == 'admin' && $_SESSION['user_id'] == 1) {
+                // Check if the admin to be deleted is not the super admin
+                if ($adminID != 1) {
+                    // Attempt to delete the admin
+                    if ($this->adminModel->deleteAdmin($adminID)) {
+                        flash('success', 'Admin removed');
+                        redirect('admins/manageAdmins');
+                    } else {
+                        flash('error', 'Failed to remove admin', 'alert alert-danger');
+                        redirect('admins/manageAdmins');
+                    }
+                } else {
+                    flash('error', 'Super admin cannot be removed', 'alert alert-danger');
+                    redirect('admins/manageAdmins');
+                }
             } else {
-                flash('error', 'Failed to remove admin', 'alert alert-danger');
-                redirect('admins/index');
+                flash('error', 'Permission denied', 'alert alert-danger');
+                redirect('admins/manageAdmins');
             }
         }
 
