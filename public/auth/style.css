@@ -213,6 +213,13 @@ body.adjusted {
   height: calc(100vh - 140px);
 }
 
+.admin-update {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 140px);
+}
+
 .home.show {
   display: flex;
   align-items: center;

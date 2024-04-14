@@ -162,6 +162,39 @@
             }
         }
 
+        public function adminRegister($data){
+            $this->db->query('INSERT INTO admin (firstName, lastName, email, contactNumber, password) VALUES(:first_name, :last_name, :email, :contact_number, :password)');
+            // Bind values
+            $this->db->bind(':first_name', $data['first_name']);
+            $this->db->bind(':last_name', $data['last_name']);
+            $this->db->bind(':email', $data['email']);
+            $this->db->bind(':contact_number', $data['contact_number']);
+            $this->db->bind(':password', $data['password']);
+    
+            // Execute
+            if($this->db->execute()){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    
+        // Find admin by email
+        public function findAdminByEmail($email){
+            $this->db->query('SELECT * FROM admin WHERE email = :email');
+            // Bind value
+            $this->db->bind(':email', $email);
+    
+            $row = $this->db->single();
+    
+            // Check row
+            if($this->db->rowCount() > 0){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
 
         // Login User
         public function login($email, $password){
