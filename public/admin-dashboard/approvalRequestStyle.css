@@ -1,0 +1,78 @@
+.blog-card{
+    height: 370px;
+    width: 940px;
+    max-width: 950px;
+    margin-bottom: 40px;
+    border-radius: 25px;
+    background: white;
+    box-shadow: 0px 10px 50px var(--primary-color);
+  }
+  .inner-part{
+    position: absolute;
+    display: flex;
+    height: 360px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 25px;
+  }
+  .inner-part .img{
+    height: 260px;
+    width: 260px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 2px 3px 15px var(--primary-color);
+  }
+  .img img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 100%;
+    transition: .6s;
+  }
+
+  .content{
+    padding: 0 20px 0 35px;
+    width: 530px;
+    margin-left: 50px;
+    opacity: 100%;
+    transition: .6s;
+  } 
+  .content .vehicle-title{
+    font-size: 30px;
+    font-weight: 700;
+    color: #0d0925;
+    margin-bottom: 20px;
+  }
+  .content .text{
+    color: #4e4a67;
+    font-size: 19px;
+    margin-bottom: 30px;
+    line-height: 1.5em;
+    text-align: justify;
+  }
+  .content .text .vehicle-details{
+    margin-left: 20px;
+  }
+  .content button{
+    display: inline-flex;
+    padding: 15px 20px;
+    border: none;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #fff0e6;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 50px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid var(--primary-color);
+    background:  var(--primary-color) ;
+  }
+  .content button:hover{
+    background: var(--box1-color);
+    border: 1px solid var(--box1-color);
+  }
+
+  
