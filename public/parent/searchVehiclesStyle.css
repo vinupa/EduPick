@@ -1,0 +1,149 @@
+.overview {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+    padding: 10px;
+}
+
+.selected-child {
+    /* width: 20%; */
+    margin: 1rem 0;
+    padding: 1rem;
+    /* background-color: var(--child-card-color);
+    transition: var(--tran-05);
+    cursor: pointer; */
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    background-color: var(--child-card-color);
+    transition: var(--tran-05);
+
+    &:hover {
+        box-shadow: 0px 0px 10px 0 var(--black-light-color);
+    }
+}
+
+.child-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    color: var(--text-color);
+}
+
+.child-name {
+    margin-left: 5px;
+}
+
+.change-child {
+    display: flex;
+    justify-content: center;
+}
+
+.change-child a {
+    color: #4DA3FF;
+}
+
+.location-line {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 10px;
+    padding: 0 10px;
+    color: var(--text-color);
+    font-size: large;
+}
+
+.location-name {
+    color: #4DA3FF;
+}
+
+.filters {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 10px;
+    color: var(--text-color);
+}
+
+.filter {
+    margin-left: 20px;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    background-color: var(--child-card-color);
+    transition: var(--tran-05);
+
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+
+    &:hover {
+        box-shadow: 0px 0px 10px 0 var(--black-light-color);
+    }
+}
+
+.filter label {
+    color: var(--text-color);
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+}
+
+.filter-input {
+    display: none;
+}
+
+/* .filter-input:checked ~ .filter{
+    background-color: var(--delete-edit-color);
+    color: var(--title-icon-color);
+} */
+
+.vehicle-list {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    overflow-y: scroll;
+    height: 58vh;
+}
+
+.vehicle-card {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-color);
+}
+
+.vehicle-image img {
+    height: 4.5rem;
+    width: 8rem;
+    object-fit: cover;
+}
+
+.vehicle-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.vehicle-variables {
+    display: none;
+}
+
+.connect-button a {
+    border-radius: 8px;
+    padding: 8px 30px;
+    background-color: var(--primary-color);
+    color: var(--title-icon-color);
+    border: 5px solid var(--border-color);
+    font-size: 16px;
+    text-decoration: none;
+
+    &:hover {
+        box-shadow: 0px 0px 10px 0 var(--black-light-color);
+    }
+}

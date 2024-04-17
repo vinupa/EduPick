@@ -66,5 +66,13 @@
             }
         }
 
+        public function getParent($parent_id){
+            $this->db->query('SELECT * FROM parent WHERE parentID = :parent_id');
+            $this->db->bind(':parent_id', $parent_id);
+
+            $row = $this->db->single();
+
+            return $row;
+        }
 
     }

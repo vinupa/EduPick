@@ -459,7 +459,7 @@ class Users extends Controller
 
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
-            print_r($_POST);
+            // print_r($_POST);
 
             $data = [
                 'email' => trim($_POST['email']),
