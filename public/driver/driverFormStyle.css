@@ -1,0 +1,90 @@
+.intro-content {
+    color: var(--text-color);
+    line-height: 1.8;
+    opacity: 1;
+    transition: var(--tran-05);
+}
+
+.intro-content b {
+    color: var(--delete-edit-color);
+}
+
+nav.close .intro-content {
+    opacity: 0;
+    height: 10px;
+}
+
+.driver-form {
+    color: var(--text-color);
+}
+
+.driver-form-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.driver-form-left {
+    width: 50%;
+    padding: 0px 20px;
+}
+
+.driver-form-right {
+    width: 50%;
+    padding: 0px 20px;
+}
+
+.driver-form form {
+    /* width: 40%; */
+}
+
+.input-box {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: var(--tran-05);
+    background-color: var(--form-input-color);
+    color: var(--text-color);
+}
+
+.input-box select {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: var(--tran-05);
+}
+
+.submit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.submit-button input {
+    border-radius: 8px;
+    padding: 8px 30px;
+    background-color: var(--primary-color);
+    color: var(--title-icon-color);
+    border: 5px solid var(--border-color);
+    cursor: pointer;
+}
+
+.error-messages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    color: white;
+    padding: 10px;
+}

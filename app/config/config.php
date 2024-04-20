@@ -14,3 +14,6 @@
 
     // Site Name
     define('SITENAME', 'EduPick');
+    
+    // Upload Root
+    define('UPLOADROOT', dirname(dirname(dirname(__FILE__))) . '\public\uploads\\');
