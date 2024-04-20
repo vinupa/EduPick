@@ -143,7 +143,7 @@
 
                 // Sanitize POST data
                 $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
-
+ 
 
                 $data = [
                     'vehicle_id' => trim($_POST['vehicle_id']),

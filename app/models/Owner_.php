@@ -22,7 +22,7 @@
             } else {
                 return false;
             }
-        }
+        } 
 
         
         public function getVehicles($owner_id){
