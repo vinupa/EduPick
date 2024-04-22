@@ -20,11 +20,6 @@
             </div>
 
         </div>
-        <?php //echo dirname(dirname(dirname(dirname(__FILE__)))); ?>
-
-        <!-- <div class="intro-content">
-            Thank you for choosing <b>EduPick</b>, the trusted School Transport Management System. Please fill in the form below to get verified as a driver on the platform. Make sure to submit accurate proof documents to ensure a smooth verification process.
-        </div> -->
 
         <div class="driver-form">
             <div class="driver-form-flex">

@@ -70,6 +70,15 @@ class Users extends Controller
             if (empty($data['contact_number'])) {
                 $data['contact_number_err'] = 'Please enter contact number';
             }
+            else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
+                $data['contact_number_err'] = 'Invalid Contact Number length, please use 07X XXX XXXX format or +94 XX XXX XXXX format';
+            }
+            else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
+                $data['contact_number_err'] = 'Invalid Contact Number format, please use 07X XXX XXXX format';
+            }
+            else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
+                $data['contact_number_err'] = 'Invalid Contact Number format, please use +94 XX XXX XXXX format';
+            }
 
             // Validate City
             if (empty($data['city'])) {
@@ -184,6 +193,15 @@ class Users extends Controller
             if (empty($data['contact_number'])) {
                 $data['contact_number_err'] = 'Please enter contact number';
             }
+            else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
+                $data['contact_number_err'] = 'Invalid Contact Number length, please use 07X XXX XXXX format or +94 XX XXX XXXX format';
+            }
+            else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
+                $data['contact_number_err'] = 'Invalid Contact Number format, please use 07X XXX XXXX format';
+            }
+            else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
+                $data['contact_number_err'] = 'Invalid Contact Number format, please use +94 XX XXX XXXX format';
+            }
 
             // Validate Password
             if (empty($data['password'])) {
@@ -293,6 +311,15 @@ class Users extends Controller
             if (empty($data['contact_number'])) {
                 $data['contact_number_err'] = 'Please enter contact number';
             }
+            else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
+                $data['contact_number_err'] = 'Invalid Contact Number length, please use 07X XXX XXXX format or +94 XX XXX XXXX format';
+            }
+            else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
+                $data['contact_number_err'] = 'Invalid Contact Number format, please use 07X XXX XXXX format';
+            }
+            else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
+                $data['contact_number_err'] = 'Invalid Contact Number format, please use +94 XX XXX XXXX format';
+            }
 
             // Validate Password
             if (empty($data['password'])) {
@@ -397,8 +424,18 @@ class Users extends Controller
                 $data['email_err'] = 'Email is already taken';
             }
 
+            // Validate Contact Number
             if (empty($data['contact_number'])) {
                 $data['contact_number_err'] = 'Please enter contact number';
+            }
+            else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
+                $data['contact_number_err'] = 'Invalid Contact Number length, please use 07X XXX XXXX format or +94 XX XXX XXXX format';
+            }
+            else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
+                $data['contact_number_err'] = 'Invalid Contact Number format, please use 07X XXX XXXX format';
+            }
+            else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
+                $data['contact_number_err'] = 'Invalid Contact Number format, please use +94 XX XXX XXXX format';
             }
 
             if(empty($data['password'])){

@@ -17,8 +17,6 @@ class Drivers extends Controller
 
     public function index()
     {
-        $data = [];
-
         $driver = $this->driverModel->getDriver($_SESSION['user_id']);
 
         $formState = $driver->formState;
@@ -33,7 +31,6 @@ class Drivers extends Controller
             redirect('drivers/driverDashboard');
         }
 
-        // $this->view('drivers/index', $data);
     }
 
     public function driverDashboard()
@@ -81,7 +78,7 @@ class Drivers extends Controller
             if (empty($data['nic'])) {
                 $data['data_err'] = 'Please enter NIC number';
             }
-            // validate nic to have either 10 or 12 characters, if 10 characters, it should be 9 integers with the last letter v or V, if 12 characters, all 12 should be integers
+            // validate NIC number
             if (strlen($data['nic']) != 10 && strlen($data['nic']) != 12) {
                 $data['data_err'] = 'NIC number invalid length';
             }
