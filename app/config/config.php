@@ -2,7 +2,7 @@
     // Database Parameters
     define('DB_HOST', 'localhost');
     define('DB_USER', 'root');
-    define('DB_PASS', '');
+    define('DB_PASS', 'asdf');
     define('DB_NAME', 'edupick');
       
     
@@ -14,3 +14,6 @@
 
     // Site Name
     define('SITENAME', 'EduPick');
+    
+    // Upload Root
+    define('UPLOADROOT', dirname(dirname(dirname(__FILE__))) . '\public\uploads\\');

@@ -1,0 +1,17 @@
+.vehicle-image {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.data-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4rem;
+}
+
+.delete-edit-icons a {
+    text-decoration: none;
+}

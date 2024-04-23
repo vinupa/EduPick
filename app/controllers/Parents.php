@@ -246,11 +246,10 @@
             if(!isset($_SESSION['childID'])){
                 redirect('parents/selectChild');
             }
-            
-            // $data = [
-            //     'vehicles' => $this->parentModel->searchVehicles($_SESSION['childSchool'], $_SESSION['childGrade'])
-            // ];
-            $data = [];
+
+            $data = [
+                'parent' => $this->parentModel->getParent($_SESSION['user_id'])
+            ];
             $this->view('parents/searchVehicles', $data);
         }
 }

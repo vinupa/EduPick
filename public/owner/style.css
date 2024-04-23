@@ -17,6 +17,7 @@
     --title-icon-color: #fff;
     --delete-edit-color: #4DA3FF;
     --child-card-color: #f2f2f2;
+    --form-input-color: #fff;
     
     --tran-05: all 0.5s ease;
     --tran-03: all 0.3s ease;
@@ -40,6 +41,7 @@ body.dark{
     --title-icon-color: #CCC;
     --delete-edit-color: #004a71;
     --child-card-color: #4D4C4C;
+    --form-input-color: #373737;
 }
 
 nav{
@@ -341,58 +343,6 @@ nav.close ~ .dashboard .top{
     padding-left: 8px;
 }
 
-
-/* Add / Edit Child */
-
-.add-child {
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    color: var(--text-color);
-}
-
-.add-child form {
-    width: 40%;
-}
-
-.input-box {
-    display: flex;
-    align-items:flex-start;
-    flex-direction: column;
-    margin-top: 20px;
-}
-
-.input-box input{
-    width: 100%;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: var(--tran-05);
-}
-
-.input-box select{
-    width: 100%;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: var(--tran-05);
-}
-
-.submit-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.submit-button input{
-    border-radius: 8px;
-    padding: 8px 30px;
-    background-color: var(--primary-color);
-    color: var(--title-icon-color);
-    border: 5px solid var(--border-color);
-}
-
 .goback-link {
     margin-left: 5%;
 }
@@ -403,19 +353,3 @@ nav.close ~ .dashboard .top{
     font-size: 18px;
     font-weight: 400;
 }
-
-.auth-err {
-    color: white;
-    background-color: red;
-    align-items: center;
-    margin-top: 5px;
-    /* padding-top: 5px;
-    padding-bottom: 5px; */
-    vertical-align: middle;
-    /* display: flex; */
-    justify-content: center;
-  }
-  
-  .auth-err p {
-    text-align: center;
-  }

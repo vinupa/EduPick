@@ -30,7 +30,7 @@
             </p>
             <div class="buttons">
                 <a href="<?php echo URLROOT; ?>/users/parentRegister/" class="join">Join Now</a>
-                <a href="#" class="learn">Learn More</a>
+                <a href="<?php echo URLROOT; ?>/users/login/" class="learn">Log In</a>
             </div>
         </div>
         <div class="img">
