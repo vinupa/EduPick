@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="data status">
-                    <span class="data-title">&nbsp;</span>
+                    <span class="data-title">Approval</span>
                     <?php foreach ($data['vehicles'] as $vehicle): ?>
                         <span class="data-list">
                             <?php if ($vehicle->approvedState == 0) : ?>

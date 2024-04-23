@@ -30,11 +30,14 @@ class Drivers extends Controller
         } elseif ($approvedState == 1 && $pendingState == 0 && $formState == 1) {
             redirect('drivers/driverDashboard');
         }
-
     }
 
     public function driverDashboard()
     {
+        if(!$this->driverModel->isDriverConnected($_SESSION['user_id'])){
+            redirect('drivers/findVehicles');
+        }
+
         $data = [];
         $this->view('drivers/driverDashboard', $data);
     }
@@ -98,7 +101,7 @@ class Drivers extends Controller
                 // Validation passed
                 //Execute
                 if ($this->driverModel->addDriverForm($data)) {
-                    if($this->driverModel->updateFormState($data['driver_id'])){
+                    if ($this->driverModel->updateFormState($data['driver_id'])) {
                         redirect('drivers/index');
                     } else {
                         die('Something went wrong');
@@ -110,7 +113,8 @@ class Drivers extends Controller
                 // Load view with errors
                 $this->view('drivers/driverForm', $data);
             }
-    }}
+        }
+    }
 
     public function driverPending()
     {
@@ -118,4 +122,57 @@ class Drivers extends Controller
         $this->view('drivers/driverPending', $data);
     }
 
+
+    public function findVehicles()
+    {
+        if($this->driverModel->driverRequestPending($_SESSION['user_id'])){
+            redirect('drivers/pendingRequest');
+        }
+
+        $data = [
+            'vehicles' => $this->driverModel->getVacantVehicles()
+        ];
+        $this->view('drivers/findVehicles', $data);
+    }
+
+    public function requestVehicle($vehicle_id)
+    {
+        $data = [
+            'driver_id' => $_SESSION['user_id'],
+            'vehicle_id' => $vehicle_id
+        ];
+
+        if ($this->driverModel->requestVehicle($data)) {
+            redirect('drivers/findVehicles');
+        } else {
+            die('Something went wrong');
+        }
+    }
+
+    public function pendingRequest()
+    {
+
+        if(!$this->driverModel->driverRequestPending($_SESSION['user_id'])){
+            redirect('drivers/findVehicles');
+        }
+
+        $data = [
+            'vehicle' => $this->driverModel->driverRequestedVehicle($_SESSION['user_id'])
+        ];
+        $this->view('drivers/pendingRequest', $data);
+    }
+
+    public function cancelRequest($vehicle_id)
+    {
+        $data = [
+            'driver_id' => $_SESSION['user_id'],
+            'vehicle_id' => $vehicle_id
+        ];
+
+        if ($this->driverModel->driverCancelRequest($data)) {
+            redirect('drivers/findVehicles');
+        } else {
+            die('Something went wrong');
+        }
+    }
 }

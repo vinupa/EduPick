@@ -9,22 +9,26 @@
 
     <div class="menu-items">
         <ul class="nav-links">
-            <li><a href="<?php echo URLROOT; ?>/parents/index">
+            <li><a href="#">
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Dashboard</span>
                 </a></li>
-            <li><a href="<?php echo URLROOT; ?>/parents/selectChild">
+            <li><a href="<?php echo URLROOT; ?>/drivers/findVehicles">
                     <i class="uil uil-search"></i>
                     <span class="link-name">Find Vehicles</span>
                 </a></li>
-            <li><a href="#">
+            <!-- <li><a href="<?php //echo URLROOT; ?>/drivers/pendingVehicles">
+                    <i class="uil uil-stopwatch"></i>
+                    <span class="link-name">Pending Requests</span>
+                </a></li> -->
+            <!-- <li><a href="#">
                     <i class="uil uil-chart"></i>
                     <span class="link-name">Manage Vehicles</span>
                 </a></li>
             <li><a href="#">
                     <i class="uil uil-bus-school"></i>
                     <span class="link-name">View Vehicles</span>
-                </a></li>
+                </a></li> -->
         </ul>
 
         <ul class="logout-mode">

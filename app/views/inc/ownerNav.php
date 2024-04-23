@@ -17,6 +17,10 @@
                     <i class="uil uil-bus-school"></i>
                     <span class="link-name">Manage Vehicles</span>
                 </a></li>
+            <li><a href="<?php echo URLROOT; ?>/owners/driverRequests">
+                    <i class="uil uil-streering"></i>
+                    <span class="link-name">Driver Requests</span>
+                </a></li>
         </ul>
 
         <ul class="logout-mode">

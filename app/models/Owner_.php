@@ -70,4 +70,58 @@
                 return false;
             }
         }
+
+        public function getDriverRequests($owner_id){
+            $this->db->query('SELECT drivervehiclerequest.*, driver.firstName, driver.lastName, driver.image_profilePhoto, driver.nic, driver.contactNumber, vehicle.model FROM drivervehiclerequest JOIN driver ON drivervehiclerequest.driverId = driver.driverId JOIN vehicle ON drivervehiclerequest.vehicleId = vehicle.vehicleId WHERE vehicle.ownerId = :owner_id AND drivervehiclerequest.declinedState = 0');
+            $this->db->bind(':owner_id', $owner_id);
+            $results = $this->db->resultSet();
+            return $results;
+        }
+
+        public function acceptRequest($request_id){
+
+            //get vehicle id and driver id from the request
+            $this->db->query('SELECT * FROM drivervehiclerequest WHERE requestId = :request_id');
+            $this->db->bind(':request_id', $request_id);
+            $result = $this->db->single();
+
+            //get owner id using the vehicle id from vehicle table
+            $this->db->query('SELECT ownerId FROM vehicle WHERE vehicleId = :vehicle_id');
+            $this->db->bind(':vehicle_id', $result->vehicleId);
+            $owner_data = $this->db->single();
+
+            //update the driver table with vehicle id and owner id
+            $this->db->query('UPDATE driver SET vehicleID = :vehicle_id, ownerID = :owner_id WHERE driverId = :driver_id');
+            $this->db->bind(':vehicle_id', $result->vehicleId);
+            $this->db->bind(':owner_id', $owner_data->ownerId);
+            $this->db->bind(':driver_id', $result->driverId);
+            $this->db->execute();
+
+            //update the vehicle table with driver id
+            $this->db->query('UPDATE vehicle SET driverId = :driver_id WHERE vehicleId = :vehicle_id');
+            $this->db->bind(':driver_id', $result->driverId);
+            $this->db->bind(':vehicle_id', $result->vehicleId);
+            $this->db->execute();
+
+            //delete the request from the drivervehiclerequest table
+            $this->db->query('DELETE FROM drivervehiclerequest WHERE requestId = :request_id');
+            $this->db->bind(':request_id', $request_id);
+
+            if($this->db->execute()){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function declineRequest($request_id){
+            $this->db->query('UPDATE drivervehiclerequest SET declinedState = 1 WHERE requestId = :request_id');
+            $this->db->bind(':request_id', $request_id);
+
+            if($this->db->execute()){
+                return true;
+            } else {
+                return false;
+            }
+        }
     }

@@ -106,4 +106,28 @@ class Owners extends Controller
             $this->view('owners/addVehicle', $data);
         }
     }
+
+    public function driverRequests()
+    {
+        $data = [
+            'requests' => $this->ownerModel->getDriverRequests($_SESSION['user_id'])
+        ];
+        $this->view('owners/driverRequests', $data);
+    }
+
+    public function acceptRequest($request_id){
+        if($this->ownerModel->acceptRequest($request_id)){
+            redirect('owners/manageVehicles');
+        } else {
+            die('Something went wrong');
+        }
+    }
+
+    public function declineRequest($request_id){
+        if($this->ownerModel->declineRequest($request_id)){
+            redirect('owners/manageVehicles');
+        } else {
+            die('Something went wrong');
+        }
+    }
 }
