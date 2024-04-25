@@ -136,7 +136,8 @@ class Users extends Controller
                 'city_err' => '',
                 'email_err' => '',
                 'password_err' => '',
-                'confirm_password_err' => ''
+                'confirm_password_err' => '',
+                'cities' => $this->userModel->getCities()
             ];
 
             // Load view

@@ -40,18 +40,18 @@
             <div class="location-name">
                 <i class="uil uil-map-marker"></i>
                 <span class="name">
-                    <?php echo $data['parent']->city; ?>
+                    <?php echo $data['city']; ?>
                 </span>
             </div>
             <span class="text">&nbsp;and&nbsp;</span>
             <div class="location-name">
                 <i class="uil uil-map-pin-alt"></i>
                 <span class="name">
-                    <?php echo $_SESSION['childSchool']; ?>
+                    <?php echo $data['school']; ?>
                 </span>
             </div>
         </div>
-
+        
         <div class="filters">
             <span class="text">Filters:</span>
             <div class="filter">
@@ -66,197 +66,57 @@
 
         <div class="vehicle-list">
 
+            <?php foreach ($data['vehicles'] as $vehicle) : ?>
             <div class="vehicle-card">
                 <div class="vehicle-image">
-                    <img src="<?php echo URLROOT; ?>/public/img/van-sample-image.jpg" alt="Vehicle Image">
+                    <img src="<?php echo URLROOT; ?>/uploads/<?php echo $vehicle->image_vehicle; ?>" alt="Vehicle Image">
                 </div>
                 <div class="vehicle-details">
                     <span class="vehicle-text" style="font-size: large;">
-                        <b>Toyota Hiace</b>
+                        <b><?php echo $vehicle->model; ?></b>
                     </span>
                     <span class="vehicle-text">
-                        Model Year: 2014
+                        Model Year: <?php echo $vehicle->modelYear; ?>
                     </span>
                 </div>
                 <div class="vehicle-details">
                     <span class="vehicle-text">
                         <i class="uil uil-users-alt"></i>
                         <b>Seats:&nbsp;</b>
-                        14
+                        <?php echo $vehicle->totalSeats; ?>
                     </span>
                     <span class="vehicle-text">
                         <i class="uil uil-wind"></i>
                         <b>A/C:&nbsp;</b>
-                        Yes
+                        <?php echo $vehicle->ac == 1 ? 'Yes' : 'No'; ?>
                     </span>
                 </div>
                 <div class="vehicle-details">
                     <span class="vehicle-text">
                         <b>Owner:&nbsp;</b>
-                        Saman Kumara
+                        <?php echo $vehicle->firstName; ?>&nbsp;<?php echo $vehicle->lastName; ?>
                     </span>
                     <span class="vehicle-text">
                         <b>High-Roof:&nbsp;</b>
-                        Yes
+                        <?php echo $vehicle->highroof == 1 ? 'Yes' : 'No'; ?>
                     </span>
                 </div>
                 <div class="vehicle-variables">
-                    <input type="checkbox" class="vehicle-variable-ac" checked>
-                    <input type="checkbox" class="vehicle-variable-hr" checked>
+                    <input type="checkbox" class="vehicle-variable-ac" <?php echo $vehicle->ac == 1 ? 'checked' : ''; ?>>
+                    <input type="checkbox" class="vehicle-variable-hr" <?php echo $vehicle->highroof == 1 ? 'checked' : ''; ?>>
                 </div>
                 <div class="vehicle-details">
                     <div class="connect-button">
-                        <a href="#">
+                        <?php $confirmationMessage = "Please contact the owner " . $vehicle->firstName . " " . $vehicle->lastName . " at " . $vehicle->contactNumber . " to confirm with them. Your request will be sent to the vehicle owner. Would you like to proceed?"; ?>
+                        <a href="<?php echo URLROOT; ?>/parents/requestVehicle/<?php echo $vehicle->vehicleId; ?>" onclick="return confirm('<?php echo $confirmationMessage; ?>');">
                             Connect&nbsp;
                             <i class="uil uil-step-forward"></i>
                         </a>
                     </div>
                 </div>
             </div>
-
-            <div class="vehicle-card">
-                <div class="vehicle-image">
-                    <img src="<?php echo URLROOT; ?>/public/img/van-sample-image.jpg" alt="Vehicle Image">
-                </div>
-                <div class="vehicle-details">
-                    <span class="vehicle-text" style="font-size: large;">
-                        <b>Toyota Hiace</b>
-                    </span>
-                    <span class="vehicle-text">
-                        Model Year: 2014
-                    </span>
-                </div>
-                <div class="vehicle-details">
-                    <span class="vehicle-text">
-                        <i class="uil uil-users-alt"></i>
-                        <b>Seats:&nbsp;</b>
-                        14
-                    </span>
-                    <span class="vehicle-text">
-                        <i class="uil uil-wind"></i>
-                        <b>A/C:&nbsp;</b>
-                        No
-                    </span>
-                </div>
-                <div class="vehicle-details">
-                    <span class="vehicle-text">
-                        <b>Owner:&nbsp;</b>
-                        Saman Kumara
-                    </span>
-                    <span class="vehicle-text">
-                        <b>High-Roof:&nbsp;</b>
-                        Yes
-                    </span>
-                </div>
-                <div class="vehicle-variables">
-                    <input type="checkbox" class="vehicle-variable-ac">
-                    <input type="checkbox" class="vehicle-variable-hr" checked>
-                </div>
-                <div class="vehicle-details">
-                    <div class="connect-button">
-                        <a href="#">
-                            Connect&nbsp;
-                            <i class="uil uil-step-forward"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="vehicle-card">
-                <div class="vehicle-image">
-                    <img src="<?php echo URLROOT; ?>/public/img/van-sample-image.jpg" alt="Vehicle Image">
-                </div>
-                <div class="vehicle-details">
-                    <span class="vehicle-text" style="font-size: large;">
-                        <b>Toyota Hiace</b>
-                    </span>
-                    <span class="vehicle-text">
-                        Model Year: 2014
-                    </span>
-                </div>
-                <div class="vehicle-details">
-                    <span class="vehicle-text">
-                        <i class="uil uil-users-alt"></i>
-                        <b>Seats:&nbsp;</b>
-                        14
-                    </span>
-                    <span class="vehicle-text">
-                        <i class="uil uil-wind"></i>
-                        <b>A/C:&nbsp;</b>
-                        Yes
-                    </span>
-                </div>
-                <div class="vehicle-details">
-                    <span class="vehicle-text">
-                        <b>Owner:&nbsp;</b>
-                        Saman Kumara
-                    </span>
-                    <span class="vehicle-text">
-                        <b>High-Roof:&nbsp;</b>
-                        No
-                    </span>
-                </div>
-                <div class="vehicle-variables">
-                    <input type="checkbox" class="vehicle-variable-ac" checked>
-                    <input type="checkbox" class="vehicle-variable-hr">
-                </div>
-                <div class="vehicle-details">
-                    <div class="connect-button">
-                        <a href="#">
-                            Connect&nbsp;
-                            <i class="uil uil-step-forward"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="vehicle-card">
-                <div class="vehicle-image">
-                    <img src="<?php echo URLROOT; ?>/public/img/van-sample-image.jpg" alt="Vehicle Image">
-                </div>
-                <div class="vehicle-details">
-                    <span class="vehicle-text" style="font-size: large;">
-                        <b>Toyota Hiace</b>
-                    </span>
-                    <span class="vehicle-text">
-                        Model Year: 2014
-                    </span>
-                </div>
-                <div class="vehicle-details">
-                    <span class="vehicle-text">
-                        <i class="uil uil-users-alt"></i>
-                        <b>Seats:&nbsp;</b>
-                        14
-                    </span>
-                    <span class="vehicle-text">
-                        <i class="uil uil-wind"></i>
-                        <b>A/C:&nbsp;</b>
-                        No
-                    </span>
-                </div>
-                <div class="vehicle-details">
-                    <span class="vehicle-text">
-                        <b>Owner:&nbsp;</b>
-                        Saman Kumara
-                    </span>
-                    <span class="vehicle-text">
-                        <b>High-Roof:&nbsp;</b>
-                        No
-                    </span>
-                </div>
-                <div class="vehicle-variables">
-                    <input type="checkbox" class="vehicle-variable-ac">
-                    <input type="checkbox" class="vehicle-variable-hr">
-                </div>
-                <div class="vehicle-details">
-                    <div class="connect-button">
-                        <a href="#">
-                            Connect&nbsp;
-                            <i class="uil uil-step-forward"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
+            
         </div>
     </div>
 

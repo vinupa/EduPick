@@ -39,9 +39,11 @@
                         <span class="details">School</span>
                         <select class="" id="school" name="school">
                             <option value="" disabled hidden selected>Select School</option>
-                            <option value="Royal College, Colombo">Royal College, Colombo</option>
-                            <option value="Ananda College, Colombo">Ananda College, Colombo</option>
-                            <option value="Thurstan College, Colombo">Thurstan College, Colombo</option>
+                            
+                            <?php foreach($data['schools'] as $school): ?>
+                                <option value="<?php echo $school->schoolId; ?>"><?php echo $school->name; ?></option>
+                            <?php endforeach; ?>
+
                         </select>
                     </div>
                     <div class="input-box">

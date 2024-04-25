@@ -14,8 +14,7 @@
         }
 
         public function index(){
-            $data = [];
-            $this->view('parents/index', $data);
+            redirect('parents/manageChildren');
         }
 
         public function manageChildren(){
@@ -95,7 +94,8 @@
                     'fname_err' => '',
                     'lname_err' => '',
                     'school_err' => '',
-                    'grade_err' => ''
+                    'grade_err' => '',
+                    'schools' => $this->parentModel->getSchools()
                 ];
 
                 // Load view
@@ -191,13 +191,14 @@
                 'child_id' => $child_id,
                 'firstName' => $child->firstName,
                 'lastName' => $child->lastName,
-                'school' => $child->school,
+                'school' => $child->schoolId,
                 'grade' => $child->grade,
                 'parentID' => $child->parentID,
                 'firstName_err' => '',
                 'lastName_err' => '',
                 'school_err' => '',
-                'grade_err' => ''
+                'grade_err' => '',
+                'schools' => $this->parentModel->getSchools()
             ];
             // Load view
             $this->view('parents/updateChild', $data);
@@ -224,7 +225,7 @@
                     if($child){
                         // Redirect to manage
                         // redirect('parents/manageChildren');
-                        $_SESSION['childSchool'] = $child->school;
+                        $_SESSION['childSchoolId'] = $child->schoolId;
                         $_SESSION['childGrade'] = $child->grade;
                         $_SESSION['childID'] = $child->childID;
                         $_SESSION['childName'] = $child->firstName . ' ' . $child->lastName;
@@ -236,7 +237,7 @@
                 }
             } else {
                 $data = [
-                    'children' => $this->parentModel->getChildren($_SESSION['user_id'])
+                    'children' => $this->parentModel->getUnassignedChildren($_SESSION['user_id'])
                 ];
                 $this->view('parents/selectChild', $data);
             }
@@ -247,9 +248,113 @@
                 redirect('parents/selectChild');
             }
 
+            if($this->parentModel->haspendingRequest($_SESSION['childID'])){
+                redirect('parents/pendingRequest');
+            }
+
+            $city = $this->parentModel->getCity($_SESSION['user_id']);
+            $school = $this->parentModel->getSchool($_SESSION['childSchoolId']);
+            $vehicles = $this->parentModel->getVehicles($city->cityId, $_SESSION['childSchoolId']);
+            
             $data = [
-                'parent' => $this->parentModel->getParent($_SESSION['user_id'])
+                'city' => $city->name,
+                'school' => $school->name,
+                'vehicles' => $vehicles
             ];
             $this->view('parents/searchVehicles', $data);
+        }
+
+        public function requestVehicle($vehicle_id){
+            if($this->parentModel->requestVehicle($vehicle_id, $_SESSION['childID'])){
+                redirect('parents/pendingRequest');
+            } else {
+                die('Something went wrong');
+            }
+        }
+
+        public function pendingRequest(){
+
+            if(!$this->parentModel->haspendingRequest($_SESSION['childID'])){
+                redirect('parents/searchVehicles');
+            }
+
+            $vehicle = $this->parentModel->pendingRequest($_SESSION['childID']);
+            $driver = $this->parentModel->getDriver($vehicle->driverId);
+            
+            $data = [
+                'vehicle' => $vehicle,
+                'driver' => $driver
+            ];
+            $this->view('parents/pendingRequest', $data);
+        }
+
+        public function cancelRequest($child_id){
+            if($this->parentModel->cancelRequest($child_id)){
+                redirect('parents/pendingRequest');
+            } else {
+                die('Something went wrong');
+            }
+        }
+
+        public function manageVehicles(){
+            $data = [
+                'children' => $this->parentModel->getAssignedChildren($_SESSION['user_id'])
+            ];
+            $this->view('parents/manageVehicles', $data);
+        }
+
+        public function childAttending($child_id){
+            if($this->parentModel->childAttending($child_id)){
+                redirect('parents/manageVehicles');
+            } else {
+                die('Something went wrong');
+            }
+        }
+
+        public function childAbsent($child_id){
+            if($this->parentModel->childAbsent($child_id)){
+                redirect('parents/manageVehicles');
+            } else {
+                die('Something went wrong');
+            }
+        }
+
+        public function disconnectVehicle($child_id){
+            if($this->parentModel->childAttending($child_id)){
+                if($this->parentModel->disconnectVehicle($child_id)){
+                    redirect('parents/manageVehicles');
+                } else {
+                    die('Something went wrong');
+                }   
+            } else {
+                die('Something went wrong');
+            }
+        }
+
+        public function reportIncident(){
+
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // Process form
+
+                // Sanitize POST data
+                $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
+
+                $data = [
+                    'parentID' => $_SESSION['user_id'],
+                    'vehicleID' => trim($_POST['vehicle']),
+                    'title' => trim($_POST['title']),
+                    'description' => trim($_POST['description'])
+                ];
+
+                if($this->parentModel->reportIncident($data)){
+                    redirect('parents/index');
+                } else {
+                    die('Something went wrong');
+                }
+            }
+            $data = [
+                'vehicles' => $this->parentModel->vehiclesListComplaint($_SESSION['user_id'])
+            ];
+            $this->view('parents/reportIncident', $data);
         }
 }

@@ -10,20 +10,20 @@
     <div class="menu-items">
         <ul class="nav-links">
             <li><a href="<?php echo URLROOT; ?>/parents/index">
-                    <i class="uil uil-estate"></i>
-                    <span class="link-name">Dashboard</span>
+                    <i class="uil uil-users-alt"></i>
+                    <span class="link-name">Manage Children</span>
                 </a></li>
             <li><a href="<?php echo URLROOT; ?>/parents/selectChild">
                     <i class="uil uil-search"></i>
                     <span class="link-name">Find Vehicles</span>
                 </a></li>
-            <li><a href="#">
+            <li><a href="<?php echo URLROOT; ?>/parents/manageVehicles">
                     <i class="uil uil-chart"></i>
                     <span class="link-name">Manage Vehicles</span>
                 </a></li>
-            <li><a href="#">
-                    <i class="uil uil-bus-school"></i>
-                    <span class="link-name">View Vehicles</span>
+            <li><a href="<?php echo URLROOT; ?>/parents/reportIncident">
+                    <i class="uil uil-exclamation-octagon"></i>
+                    <span class="link-name">Report Incident</span>
                 </a></li>
         </ul>
 
