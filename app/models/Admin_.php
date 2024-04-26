@@ -152,5 +152,84 @@ class Admin_ {
             return false; // Return false if something went wrong
         }
     }
+
+    public function getParentCount(){
+        // Prepare SQL query to count parents
+        $this->db->query('SELECT COUNT(*) AS parentCount FROM parent');
+    
+        // Execute the query and fetch the result
+        $result = $this->db->single();
+    
+        // Return the count of parents
+        return $result->parentCount;
+    }
+    
+    public function getOwnerCount(){
+        // Prepare SQL query to count owners
+        $this->db->query('SELECT COUNT(*) AS ownerCount FROM owner');
+    
+        // Execute the query and fetch the result
+        $result = $this->db->single();
+    
+        // Return the count of owners
+        return $result->ownerCount;
+    }
+    
+    public function getDriverCount(){
+        // Prepare SQL query to count drivers
+        $this->db->query('SELECT COUNT(*) AS driverCount FROM driver');
+    
+        // Execute the query and fetch the result
+        $result = $this->db->single();
+    
+        // Return the count of drivers
+        return $result->driverCount;
+    }
+
+    public function getRegistrationData() {
+        // Get the registration data for the past 30 days
+        $currentDate = new DateTime();
+        $currentDate->sub(new DateInterval('P30D'));
+        $startDate = $currentDate->format('Y-m-d');
+      
+        // Query the database to get the total number of registered users for each day in the past 30 days
+        $this->db->query('
+          SELECT 
+            DATE(regDate) AS date, 
+            SUM(CASE WHEN type = "parent" THEN 1 ELSE 0 END) AS parents,
+            SUM(CASE WHEN type = "owner" THEN 1 ELSE 0 END) AS owners,
+            SUM(CASE WHEN type = "driver" THEN 1 ELSE 0 END) AS drivers
+          FROM (
+            SELECT regDate, "parent" AS type FROM parent
+            UNION ALL
+            SELECT regDate, "owner" AS type FROM owner
+            UNION ALL
+            SELECT regDate, "driver" AS type FROM driver
+          ) AS combined
+          WHERE regDate >= :startDate
+          GROUP BY date
+          ORDER BY date DESC
+        ');
+      
+        // Bind the start date parameter
+        $this->db->bind(':startDate', $startDate);
+      
+        // Execute the query and get the result set
+        $results = $this->db->resultSet();
+      
+        // Format the data for Chart.js
+        $formattedData = [];
+        foreach ($results as $row) {
+          $formattedData[] = [
+            'date' => strtotime($row->date), // Convert the date string to a Unix timestamp
+            'parents' => $row->parents,
+            'owners' => $row->owners,
+            'drivers' => $row->drivers,
+          ];
+        }
+      
+        // Return the formatted data
+        return $formattedData;
+      }
 }
 ?>  
