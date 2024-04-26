@@ -13,22 +13,26 @@
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Dashboard</span>
                 </a></li>
-            <li><a href="<?php echo URLROOT; ?>/owners/Manage-vehicles">
-                    <i class="uil uil-chart"></i>
+            <li><a href="<?php echo URLROOT; ?>/owners/selectChild">
+                    <i class="uil uil-bus-school"></i>
                     <span class="link-name">Manage Vehicles</span>
                 </a></li>
-            <li><a href="<?php echo URLROOT; ?>/owners/View-drivers">
+            <li><a href="<?php echo URLROOT; ?>/owners/driverRequests">
+                    <i class="uil uil-streering"></i>
+                    <span class="link-name">Driver Requests</span>
+                </a></li>
+            <li><a href="<?php echo URLROOT; ?>/owners/childRequests">
+                    <i class="uil uil-user-circle"></i>
+                    <span class="link-name">Child Requests</span>
+                </a></li>
+            <li><a href="<?php echo URLROOT; ?>/owners/viewDrivers">
                     <i class="uil uil-eye"></i>
                     <span class="link-name">View Drivers</span>
                 </a></li>
-            <li><a href="<?php echo URLROOT; ?>/parents/View-customers">
+            <li><a href="<?php echo URLROOT; ?>/owners/viewParents">
                     <i class="uil uil-eye"></i>
-                    <span class="link-name">View Customers</span>
+                    <span class="link-name">View Parents</span>
                 </a></li>
-            <!--<li><a href="#">
-                    <i class="uil uil-eye"></i>
-                    <span class="link-name">View Customers</span>
-                </a></li>-->
         </ul>
 
         <ul class="logout-mode">
@@ -60,4 +64,10 @@
                 <?php echo $_SESSION['user_fname']; ?>
             </h2>
         </div>
-    </div> 
+    </div>
+
+
+
+
+
+

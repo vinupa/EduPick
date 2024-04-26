@@ -1,2 +1,2 @@
 <?php
-  redirect('owners/Owner-dashbord');
+redirect('owners/manageVehicles');

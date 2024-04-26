@@ -1,304 +1,334 @@
 <?php
-    #[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
+
+class Owners extends Controller
+{
+
+    public function __construct()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            redirect('users/login');
+        } elseif ($_SESSION['user_type'] != 'owner') {
+            redirect('users/login');
+        }
+
+        $this->ownerModel = $this->model('Owner_');
+    }
+
+    public function index()
+    {
+        $data = '';
+        $this->view('owners/index', $data);
+    }
+
+    public function manageVehicles()
+    {
+        $data = [
+            'vehicles' => $this->ownerModel->getAllVehicles($_SESSION['user_id'])
+        ];
+        $this->view('owners/manageVehicles', $data);
+    }
+
+    public function addVehicle()
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Check if a file is uploaded
+            $vehicleImagePath = $this->upload_image("image_vehicle", $_FILES, "vehicle\\vehicleImage\\");
+            $registrationDocPath = $this->upload_pdf("registrationDoc", $_FILES, "vehicle\\registrationDoc\\");
+            $emissionsReportPath = $this->upload_pdf("emissionsReport", $_FILES, "vehicle\\emissionsReport\\");
+
+            // Sanitize and validate other form data
+            $data = [
+                'owner_id' => $_SESSION['user_id'],
+                'licensePlate1' => trim(htmlspecialchars($_POST['licensePlate1'])),
+                'licensePlate2' => trim(htmlspecialchars($_POST['licensePlate2'])),
+                'licensePlate' => trim(htmlspecialchars($_POST['licensePlate1'])) . ' - ' . trim(htmlspecialchars($_POST['licensePlate2'])),
+                'model' => trim(htmlspecialchars($_POST['model'])),
+                'modelYear' => trim(htmlspecialchars($_POST['modelYear'])),
+                'ac' => isset($_POST['ac']) ? '1' : '0',
+                'highroof' => isset($_POST['highroof']) ? '1' : '0',
+                'totalSeats' => trim(htmlspecialchars($_POST['totalSeats'])),
+                'vacantSeats' => trim(htmlspecialchars($_POST['vacantSeats'])),
+                'vehicleImage' => $vehicleImagePath,
+                'registrationDoc' => $registrationDocPath,
+                'emissionsReport' => $emissionsReportPath,
+                'city' => $_POST['city'],
+                'school' => $_POST['school'],
+                'data_err' => '',
+            ];
+
+            // Validate form data
+            if (empty($data['licensePlate1']) || empty($data['licensePlate2'])) {
+                $data['data_err'] = 'Please enter license plate number';
+            }
+            if (empty($data['model'])) {
+                $data['data_err'] = 'Please enter vehicle model';
+            }
+            if (empty($data['totalSeats'])) {
+                $data['data_err'] = 'Please enter total seats';
+            }
+            if (empty($data['vacantSeats'])) {
+                $data['data_err'] = 'Please enter vacant seats';
+            }
+            if (empty($data['city'])) {
+                $data['data_err'] = 'Please select at least one city';
+            }
+            if (empty($data['school'])) {
+                $data['data_err'] = 'Please select at least one school';
+            }
+
+            if ($data['vacantSeats'] > $data['totalSeats']) {
+                $data['data_err'] = 'Vacant seats must be less than or equal to total seats';
+            }
+
+            // Make sure there are no errors
+            if (empty($data['data_err'])) {
+                // Validation passed
+                //Execute
+                if ($this->ownerModel->addVehicle($data)) {
+                    redirect('owners/manageVehicles');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                // Load view with errors
+                $data['city'] = $this->ownerModel->getCities();
+                $data['school'] = $this->ownerModel->getSchools();
+                $this->view('owners/addVehicle', $data);
+            }
+        } else {
+            $data = [
+                'city' => $this->ownerModel->getCities(),
+                'school' => $this->ownerModel->getSchools(),
+                'data_err' => ''
+            ];
+            $this->view('owners/addVehicle', $data);
+        }
+    }
+   
+    public function driverRequests()
+    {
+        $data = [
+            'requests' => $this->ownerModel->getDriverRequests($_SESSION['user_id'])
+        ];
+        $this->view('owners/driverRequests', $data);
+    }
+
+    public function acceptRequest($request_id){
+        if($this->ownerModel->acceptRequest($request_id)){
+            redirect('owners/manageVehicles');
+        } else {
+            die('Something went wrong');
+        }
+    }
+
+    public function declineRequest($request_id){
+        if($this->ownerModel->declineRequest($request_id)){
+            redirect('owners/manageVehicles');
+        } else {
+            die('Something went wrong');
+        }
+    }
+
+
+
     
-    class Owners extends Controller {
+    public function childRequests()
+    {
+        $data = [
+            'childrequests' => $this->ownerModel->getChildRequests($_SESSION['user_id'])
+        ];
+        $this->view('owners/childRequests', $data);
+    }
 
-        public function __construct(){
-            if(!isset($_SESSION['user_id'])){
-                redirect('users/login');
-            } elseif($_SESSION['user_type'] != 'owner'){
-                redirect('users/login');
-            }
-
-            $this->ownerModel = $this->model('Owner_');
+    public function acceptChildRequest($parent_id){
+        if($this->ownerModel->acceptChildRequest($parent_id)){
+            redirect('owners/viewParents');
+        } else {
+            die('Something went wrong');
         }
+    }
 
-        public function index(){
-            $data = [];
-            $this->view('owners/index', $data);
-        }
-
-        public function manageVehicles(){
-            $data = [
-                'vehicles' => $this->ownerModel->getVehicles($_SESSION['user_id'])
-            ];
-            $this->view('owners/Manage-vehicles', $data);
-        }
-
-        public function addVehicle(){
-
-            // Check for POST
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                // Process form
-
-                // Sanitize POST data
-                $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
-
-                $data = [
-                    'licensePlate' => trim($_POST['licensePlate']),
-                    'vacantSeats' => trim($_POST['vacantSeats']),
-                    'totalSeats' => trim($_POST['totalSeats']),
-                    'ownerID' => $_SESSION['user_id'],
-                    'cities' => trim($_POST['cities']),
-                    'schools' => trim($_POST['schools']),
-                    'features' => trim($_POST['features']),
-                    'licensePlate_err' => '',
-                    'vacantSeats_err' => '',
-                    'totalSeats_err' => '',
-                    'cities_err' => '',
-                    'schools_err' => '',
-                    'features_err' => ''
-                ];
-
-                
-
-                // Validate license plate 
-                if(empty($data['licensePlate'])){
-                    $data['licensePlate_err'] = 'Please enter licence plate number';
-                }
-
-                // Validate vacant seats
-                if (empty($data['vacantSeats'])) {
-                    $data['vacantSeats'] = 'Please enter the number of vacant seats';
-                } elseif ($data['vacantSeats'] < 0 || $data['vacantSeats'] > $data['totalSeats']) {
-                      $data['vacantSeats_err'] = 'Please enter a valid number of vacant seats';
-                }
-
-                // Validate total seats
-                if(empty($data['totalSeats'])){
-                    $data['totalSeats'] = 'Please enter total number of seats';
-                } elseif($data['totalSeats'] < 1 || $data['totalSeats'] > 55){
-                    $data['totalSeats_err'] = 'Please enter a valid number of seats';
-                }
-
-                // Validate cities
-                if(empty($data['cities'])){
-                    $data['cities_err'] = 'Please enter the cities ';
-                }
-
-                // Validate school
-                if(empty($data['school'])){
-                    $data['school_err'] = 'Please enter the schools';
-                }
-
-                 // Validate features
-                 if(empty($data['features'])){
-                    $data['features_err'] = 'Please enter the features (colour)';
-                }
-
-
-                // Make sure no errors
-                if(empty($data['licensePlate_err']) && empty($data['vacantSeats_err']) && empty($data['totalSeats_err']) && empty($data['cities_err']) && empty($data['schools_err']) && empty($data['features_err'])){
-                    // Validated
-
-                    // Execute
-                    if($this->ownerModel->addVehicle($data)){
-                        // Redirect to manage
-                        redirect('owners/Owner-dashbord');
-                    } else {
-                        die('Something went wrong');
-                    }
-                } else {
-                    // Load view with errors
-                    $this->view('owners/Vehicle-registration', $data);
-                }
-
-            } else {
-                // Init data
-                $data = [
-                    'licensePlate' => '',
-                    'vacantSeats' => '',
-                    'totalSeats' => '',
-                    'ownerID' => '',
-                    'cities' => '',
-                    'schools' => '',
-                    'features' => '',
-                    'licensePlate' => '',
-                    'vacantSeats' => '',
-                    'totalSeats' => '',
-                    'cities_err' => '',
-                    'schools_err' => '',
-                    'features_err' => ''
-                    
-                ];
-
-                // Load view
-                $this->view('owners/Vehicle-registration', $data);
+    public function declineChildRequest($parent_id){
+        if($this->ownerModel->declineChildRequest($parent_id)){
+            redirect('owners/viewParents');
+        } else {
+            die('Something went wrong');
         }
     }
 
 
-        public function removeVehicle($vehicle_id){
-            if($this->ownerModel->removeVehicle($vehicle_id)){
-                redirect('owners/Owner-dashbord');
-            } else {
-                die('Something went wrong');
-            }
-        }
+   /* public function viewParents()
+    {
+       $post =  $this->ownerModel->getAllParents($_SESSION['user_id']);
+       $child =  $this->ownerModel->getChild(2);
 
-        public function updateVehicledPost(){
-            // Check for POST
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                // Process form
+        $data = [
+            'parents' => $post,
+            'child' =>$child
+        ];
+        $this->view('owners/viewParents', $data);
+    }*/
 
-                // Sanitize POST data
-                $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
- 
-
-                $data = [
-                    'vehicle_id' => trim($_POST['vehicle_id']),
-                    'licensePlate' => trim($_POST['licensePlate']),
-                    'vacantSeats' => trim($_POST['vacantSeats']),
-                    'totalSeats' => trim($_POST['totalSeats']),
-                    'ownerID' => $_SESSION['user_id'],
-                    'cities' => trim($_POST['cities']),
-                    'schools' => trim($_POST['schools']),
-                    'features' => trim($_POST['features']),
-                    'licensePlate_err' => '',
-                    'vacantSeats_err' => '',
-                    'totalSeats_err' => '',
-                    'cities_err' => '',
-                    'schools_err' => '',
-                    'features_err' => ''
-                ];
+    public function viewParents()
+    {
+        $data = [
+            'parents' => $this->ownerModel->getAllParents($_SESSION['user_id'])
+         ];
+         $this->view('owners/viewParents', $data);
+     }
 
 
-                // Validate license plate 
-                if(empty($data['licensePlate'])){
-                    $data['licensePlate_err'] = 'Please enter licence plate number';
-                }
+    public function editVehicle($id)
+    {
+        $post = $this->ownerModel->getvehicleById($id);
+        $city = $this->ownerModel->getcityById($post->vehicleId);
+        $cityname = $this->ownerModel->getcitynameById($city->cityId);
+        $coveredCities = $this->ownerModel->getCities();
+        $coveredSchools = $this->ownerModel->getSchools();
+        
 
-                // Validate vacant seats
-                if (empty($data['vacantSeats'])) {
-                    $data['vacantSeats'] = 'Please enter the number of vacant seats';
-                } elseif ($data['vacantSeats'] < 0 || $data['vacantSeats'] > $data['totalSeats']) {
-                      $data['vacantSeats_err'] = 'Please enter a valid number of vacant seats';
-                }
-
-                // Validate total seats
-                if(empty($data['totalSeats'])){
-                    $data['totalSeats'] = 'Please enter total number of seats';
-                } elseif($data['totalSeats'] < 1 || $data['totalSeats'] > 55){
-                    $data['totalSeats_err'] = 'Please enter a valid number of seats';
-                }
-
-                // Validate cities
-                if(empty($data['cities'])){
-                    $data['cities_err'] = 'Please enter the cities ';
-                }
-
-                // Validate school
-                if(empty($data['school'])){
-                    $data['school_err'] = 'Please enter the schools';
-                }
-
-                 // Validate features
-                 if(empty($data['features'])){
-                    $data['features_err'] = 'Please enter the features (colour)';
-                }
+        $data = [
+            'vehicle'=> $post,
+            'city'=> $cityname,
+            'coveredCities' => $coveredCities,
+            'coveredSchools' => $coveredSchools,
+            'id' =>$id
+        ];
+        $this->view('owners/updateVehicle',$data);
+    }
 
 
-                // Make sure no errors
-                if(empty($data['licensePlate_err']) && empty($data['vacantSeats_err']) && empty($data['totalSeats_err']) && empty($data['cities_err']) && empty($data['schools_err']) && empty($data['features_err'])){
-                    // Validated
+    public function updateSchools($id)
+    {
+        $post = $this->ownerModel->getvehicleById($id);
+        $school = $this->ownerModel->getschoolById($post->vehicleId);
+        $schoolname = $this->ownerModel->getschoolnameById($school->schoolId);
+        $coveredSchools = $this->ownerModel->getSchools();
 
-                    // Execute
-                    if($this->ownerModel->updateVehicle($data)){
-                        // Redirect to Owner dashbord
-                        redirect('owners/Owner-dashbord');
-                    } else {
-                        die('Something went wrong');
-                    }
-                } else {
-                    // Load view with errors
-                    $this->view('parents/Vehicle-edit', $data);
-                }
+        $data = [
+            'vehicle'=> $post,
+            'school'=> $schoolname,
+            'coveredSchools' => $coveredSchools
+        ];
+        $this->view('owners/updateVehicle',$data);
+    }
 
-            }
-        }
+   
+    /*public function viewParents()
+    {
+        $data = [
+            'parents' => $this->ownerModel->getAllParents($_SESSION['user_id'])
+        ];
+        $this->view('owners/viewParents', $data); 
+    }*/
 
-        public function updateVehicle($vehicle_id){
-            // Get vehicle data from vehicle id and fill the form
-            $vehicle = $this->ownerModel->getvehicle($vehicle_id);
-            if($vehicle->ownerID != $_SESSION['user_id']){
-                redirect('owners/Owner-dashbord');
-            }
-            // Init data
-            $data = [
-                'vehicle_id' => $vehicle_id,
-                'licensePlate' => $vehicle->licensePlate,
-                'vacantSeats' => $vehicle->vacantSeats,
-                'totalSeats' => $vehicle->totalSeats,
-                'ownerID' => $vehicle->ownerID,
-                'cities' => $vehicle->cities,
-                'schools' => $vehicle->schools,
-                'features' => $vehicle->features,
-                'licensePlate_err' => '',
-                'vacantSeats_err' => '',
-                'totalSeats_err' => '',
-                'cities_err' => '',
-                'schools_err' => '',
-                'features_err' => ''
-            ];
-            // Load view
-            $this->view('parents/Vehicle-edit', $data);
-        }    
-
-        public function assignDriver(){
-
-            // Check for POST
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                // Process form
-
-                // Sanitize POST data
-                $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
-
-                if ($vehicleID = $_SESSION['user_id']; // Assuming vehicleID is stored in session
-                    $eligibleDrivers = $this->ownerModel->getEligibleDrivers($vehicleID);
-                    )
-
-                $data = [
-                   'vehicleID' => trim($_POST['vehicle_id']),
-                    'driverID' => $driverID,
-                    'driverID_err'=> ''
-
-                    /* 'vehicleID' => $vehicleID,
-                   'vehicleID' => $_SESSION['user_id'],
-                   'driverID' => trim($_POST['driverID'] ?? ''),*/
-
-                ];
-
-                // Validate driverID
-                if(empty($data['driverID'])){
-                    $data['driverID_err'] = 'Please select a driver';
-                }
-
-                 // Make sure no errors
-                 if(empty($data['driverID_err'])){
-                    // Validated
-
-                    // Execute
-                    if($this->ownerModel->assignDriver($data)){
-                        // Redirect to manage
-                        redirect('owners/Manage-vehicles');
-                    } else {
-                        die('Something went wrong');
-                    }
-                } else {
-                    // Load view with errors
-                    $this->view('owners/add-drivers', $data);
-                }
-
-            } else {
-       
-                // Init data
-                $data = [
-                    'driverID_err' => ''
-                ];
-
-                // Load view
-                $this->view('owners/add-drivers', $data);
+    public function removeChild($child_id){
+        if($this->ownerModel->removeChild($child_id)){
+            redirect('owners/viewParents');
+        } else {
+            die('Something went wrong');
         }
     }
 
+
+
+    public function viewDrivers()
+    {
+        $data = [
+            'drivers' => $this->ownerModel->getAllDrivers($_SESSION['user_id'])
+        ];
+        $this->view('owners/viewDrivers', $data); 
+    }
+    
+
+    public function updateVehicle($id)
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Check if a file is uploaded
+            // $vehicleImagePath = $this->upload_image("image_vehicle", $_FILES, "vehicle\\vehicleImage\\");
+            // $registrationDocPath = $this->upload_pdf("registrationDoc", $_FILES, "vehicle\\registrationDoc\\");
+            // $emissionsReportPath = $this->upload_pdf("emissionsReport", $_FILES, "vehicle\\emissionsReport\\");
+
+            // Sanitize and validate other form data
+            $data = [
+                'owner_id' => $_SESSION['user_id'],
+                'vehicle_id' => $id,
+                'licensePlate1' => trim(htmlspecialchars($_POST['licensePlate1'])),
+                'licensePlate2' => trim(htmlspecialchars($_POST['licensePlate2'])),
+                'licensePlate' => trim(htmlspecialchars($_POST['licensePlate1'])) . ' - ' . trim(htmlspecialchars($_POST['licensePlate2'])),
+                'model' => trim(htmlspecialchars($_POST['model'])),
+                'modelYear' => trim(htmlspecialchars($_POST['modelYear'])),
+                'ac' => isset($_POST['ac']) ? '1' : '0',
+                'highroof' => isset($_POST['highroof']) ? '1' : '0',
+                'totalSeats' => trim(htmlspecialchars($_POST['totalSeats'])),
+                'vacantSeats' => trim(htmlspecialchars($_POST['vacantSeats'])),
+                //'vehicleImage' => $vehicleImagePath,
+               // 'registrationDoc' => $registrationDocPath,
+                //'emissionsReport' => $emissionsReportPath,
+                'city' => $_POST['city'],
+                'school' => $_POST['school'],
+                'data_err' => '',
+            ];
+
+            // Validate form data
+            if (empty($data['licensePlate1']) || empty($data['licensePlate2'])) {
+                $data['data_err'] = 'Please enter license plate number';
+            }
+            if (empty($data['model'])) {
+                $data['data_err'] = 'Please enter vehicle model';
+            }
+            if (empty($data['totalSeats'])) {
+                $data['data_err'] = 'Please enter total seats';
+            }
+            if (empty($data['vacantSeats'])) {
+                $data['data_err'] = 'Please enter vacant seats';
+            }
+            if (empty($data['city'])) {
+                $data['data_err'] = 'Please select at least one city';
+            }
+            if (empty($data['school'])) {
+                $data['data_err'] = 'Please select at least one school';
+            }
+
+            if ($data['vacantSeats'] > $data['totalSeats']) {
+                $data['data_err'] = 'Vacant seats must be less than or equal to total seats';
+            }
+
+            // Make sure there are no errors
+            if (empty($data['data_err'])) {
+                // Validation passed
+                //Execute
+                if ($this->ownerModel->updateVehicle($data)) {
+                    redirect('owners/manageVehicles');
+                } else {
+                    die('Something went wrong');
+                }
+            } else {
+                // Load view with errors
+                // $data['city'] = $this->ownerModel->getCities();
+                // $data['school'] = $this->ownerModel->getSchools();
+                $this->view('owners/addVehicle', $data);
+            }
+        } else {
+            $data = [
+                'city' => $this->ownerModel->getCities(),
+                'school' => $this->ownerModel->getSchools(),
+                'data_err' => ''
+            ];
+            $this->view('owners/addVehicle', $data);
+        }
+    }
+
+    public function viewChild($owner_id)
+    {
+        $data = [
+            'child' => $this->ownerModel->getChild($owner_id)
+         ];
+         $this->view('owners/viewParents', $data);
+     }
+  
+   
 }
