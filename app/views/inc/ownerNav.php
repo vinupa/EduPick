@@ -9,10 +9,6 @@
 
     <div class="menu-items">
         <ul class="nav-links">
-            <li><a href="<?php echo URLROOT; ?>/owners/index">
-                    <i class="uil uil-estate"></i>
-                    <span class="link-name">Dashboard</span>
-                </a></li>
             <li><a href="<?php echo URLROOT; ?>/owners/manageVehicles">
                     <i class="uil uil-bus-school"></i>
                     <span class="link-name">Manage Vehicles</span>

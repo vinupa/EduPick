@@ -35,7 +35,7 @@
 
         <div class="request-message-line">
             <span class="text">
-                Your connection request for you child&nbsp;
+                Your connection request for your child&nbsp;
             </span>
             <div class="request-message-name">
                 <span class="name">

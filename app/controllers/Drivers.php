@@ -38,7 +38,9 @@ class Drivers extends Controller
             redirect('drivers/findVehicles');
         }
 
-        $data = [];
+        $data = [
+            'children' => $this->driverModel->getChildren($_SESSION['user_id']),
+        ];
         $this->view('drivers/driverDashboard', $data);
     }
 
@@ -129,6 +131,10 @@ class Drivers extends Controller
             redirect('drivers/pendingRequest');
         }
 
+        if($this->driverModel->isDriverConnected($_SESSION['user_id'])){
+            redirect('drivers/driverDashboard');
+        }
+
         $data = [
             'vehicles' => $this->driverModel->getVacantVehicles()
         ];
@@ -170,6 +176,23 @@ class Drivers extends Controller
         ];
 
         if ($this->driverModel->driverCancelRequest($data)) {
+            redirect('drivers/findVehicles');
+        } else {
+            die('Something went wrong');
+        }
+    }
+
+    public function vehicleDetails()
+    {
+        $data = [
+            'vehicle' => $this->driverModel->getVehicle($_SESSION['user_id'])
+        ];
+        $this->view('drivers/vehicleDetails', $data);
+    }
+
+    public function resignVehicle($driver_id)
+    {
+        if ($this->driverModel->resignVehicle($driver_id)) {
             redirect('drivers/findVehicles');
         } else {
             die('Something went wrong');

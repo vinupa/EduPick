@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
 <title>
-    <?php echo SITENAME; ?> | Report Incident
+    <?php echo SITENAME; ?> | New Incident Report
 </title>
 </head>
 
@@ -15,9 +15,16 @@
     <div class="dash-content">
         <div class="overview">
             <div class="title">
-                <i class="uil uil-exclamation-octagon"></i>
+                <i class="uil uil-clipboard"></i>
                 <span class="text">File a Complaint</span>
             </div>
+        </div>
+
+        <div class="goback-link">
+            <a href="<?php echo URLROOT; ?>/parents/incidentReports">
+                <i class="uil uil-backward"></i>
+                <span class="text">Back to Incident Reports</span>
+            </a>
         </div>
 
         <div class="incident-form">
@@ -37,11 +44,14 @@
                 </div>
                 <div class="input-box">
                     <span class="details">Title</span>
-                    <input type="text" id="title" name="title" placeholder="Title of the complaint" required>
+                    <input type="text" id="title" name="title" placeholder="Title of the complaint" value="<?php echo $data['title']; ?>" required>
                 </div>
                 <div class="input-box">
                     <span class="details">Description</span>
-                    <textarea id="description" name="description" placeholder="Enter a brief description of the problem" rows="6" required></textarea>
+                    <textarea id="description" name="description" placeholder="Enter a brief description of the problem" rows="6" required><?php echo $data['description']; ?></textarea>
+                </div>
+                <div class="auth-err">
+                    <p> <?php echo $data['vehicle_err']; ?></p>
                 </div>
                 <div class="submit-button">
                     <input type="submit" value="Submit Report">

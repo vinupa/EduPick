@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2024 at 06:24 AM
+-- Generation Time: Apr 26, 2024 at 12:59 PM
 -- Server version: 8.0.32
 -- PHP Version: 8.2.2
 
@@ -55,11 +55,11 @@ CREATE TABLE `child` (
   `childID` int NOT NULL,
   `firstName` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `lastName` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `school` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `schoolId` int NOT NULL,
   `grade` int NOT NULL,
   `absentState` tinyint(1) NOT NULL,
   `parentID` int NOT NULL,
-  `vanID` int DEFAULT NULL,
+  `vehicleId` int DEFAULT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `isDeleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -68,10 +68,23 @@ CREATE TABLE `child` (
 -- Dumping data for table `child`
 --
 
-INSERT INTO `child` (`childID`, `firstName`, `lastName`, `school`, `grade`, `absentState`, `parentID`, `vanID`, `regDate`, `isDeleted`) VALUES
-(16, 'Ravien', 'Dalpatadu', 'Royal College, Colombo', 5, 0, 11, NULL, '2024-04-14 17:14:56', 0),
-(17, 'Danudu', 'Madusha', 'Thurstan College, Colombo', 11, 0, 11, NULL, '2024-04-14 17:15:08', 0),
-(18, 'Liviru', 'Samarawickrama', 'Ananda College, Colombo', 13, 0, 11, NULL, '2024-04-14 17:15:54', 0);
+INSERT INTO `child` (`childID`, `firstName`, `lastName`, `schoolId`, `grade`, `absentState`, `parentID`, `vehicleId`, `regDate`, `isDeleted`) VALUES
+(16, 'Ravien', 'Dalpatadu', 1, 5, 0, 11, 1, '2024-04-14 17:14:56', 0),
+(17, 'Danudu', 'Madusha', 3, 11, 0, 11, NULL, '2024-04-14 17:15:08', 0),
+(18, 'Liviru', 'Samarawickrama', 2, 13, 0, 11, NULL, '2024-04-14 17:15:54', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `childvehiclerequest`
+--
+
+CREATE TABLE `childvehiclerequest` (
+  `requestId` int NOT NULL,
+  `childId` int NOT NULL,
+  `vehicleId` int NOT NULL,
+  `declinedState` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -129,7 +142,8 @@ CREATE TABLE `driver` (
 --
 
 INSERT INTO `driver` (`driverID`, `email`, `password`, `firstName`, `lastName`, `nic`, `address`, `contactNumber`, `ownerID`, `vehicleID`, `image_profilePhoto`, `image_nicFront`, `image_nicBack`, `image_licenseFront`, `image_licenseBack`, `doc_policeReport`, `doc_proofResidence`, `regDate`, `formState`, `pendingState`, `approvedState`) VALUES
-(4, 'kasun@gmail.com', '$2y$10$4IWo9ZrQ24lJ2fXttjvuBuXk7XMkhwBKSsnZ.g9nSbgf.5Q1M64T6', 'Kasun', 'Hansamal', '123456789v', '29/3, Kaduwela Road, Malabe', '0717897890', NULL, NULL, 'driver\\profilePhoto\\6623536cb39018.06674227.jpg', 'driver\\nicFront\\6623536cb3bdf4.99934571.jpg', 'driver\\nicBack\\6623536cb3dd82.29576842.jpg', 'driver\\licenseFront\\6623536cb3fb04.37079381.jpg', 'driver\\licenseBack\\6623536cb42d80.22740070.jpg', 'driver\\policeReport\\6623536cb44af8.86251921.pdf', 'driver\\proofResidence\\6623536cb464b5.82286233.pdf', '2024-04-17 06:23:31', 1, 0, 1);
+(4, 'kasun@gmail.com', '$2y$10$4IWo9ZrQ24lJ2fXttjvuBuXk7XMkhwBKSsnZ.g9nSbgf.5Q1M64T6', 'Kasun', 'Hansamal', '123456789v', '29/3, Kaduwela Road, Malabe', '0717897890', 5, 1, 'driver\\profilePhoto\\6623536cb39018.06674227.jpg', 'driver\\nicFront\\6623536cb3bdf4.99934571.jpg', 'driver\\nicBack\\6623536cb3dd82.29576842.jpg', 'driver\\licenseFront\\6623536cb3fb04.37079381.jpg', 'driver\\licenseBack\\6623536cb42d80.22740070.jpg', 'driver\\policeReport\\6623536cb44af8.86251921.pdf', 'driver\\proofResidence\\6623536cb464b5.82286233.pdf', '2024-04-17 06:23:31', 1, 0, 1),
+(5, 'sanath@gmail.com', '$2y$10$XqeSMSG5voshzxsjujVCcuSnwC9k0kl1OTGauAOJDPlA8v/qBiWpW', 'Sanath', 'Kumara', '200012345678', '12/1, Kottawa Road, Piliyandala', '0786476872', 5, 2, 'driver\\profilePhoto\\662b32d963aa47.39598700.jpeg', 'driver\\nicFront\\662b32d96412a8.68128360.jpg', 'driver\\nicBack\\662b32d9646700.22779572.jpg', 'driver\\licenseFront\\662b32d964b930.41914513.jpg', 'driver\\licenseBack\\662b32d96502d9.12055821.jpg', 'driver\\policeReport\\662b32d9656499.86806408.pdf', 'driver\\proofResidence\\662b32d965b6f0.53852456.pdf', '2024-04-26 04:49:37', 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -152,12 +166,20 @@ CREATE TABLE `drivervehiclerequest` (
 
 CREATE TABLE `incident` (
   `incidentID` int NOT NULL,
+  `title` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `description` varchar(1000) COLLATE utf8mb4_general_ci NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `parentID` int NOT NULL,
   `vehicleID` int NOT NULL,
-  `resolvedState` varchar(30) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Pending'
+  `resolvedState` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `incident`
+--
+
+INSERT INTO `incident` (`incidentID`, `title`, `description`, `timestamp`, `parentID`, `vehicleID`, `resolvedState`) VALUES
+(1, 'Arriving late in the morning', 'Vehicle is late to pick up the child in the morning.', '2024-04-25 10:53:03', 11, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -194,7 +216,7 @@ CREATE TABLE `parent` (
   `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `firstName` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `lastName` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
-  `city` varchar(60) COLLATE utf8mb4_general_ci NOT NULL,
+  `cityId` int NOT NULL,
   `contactNumber` varchar(13) COLLATE utf8mb4_general_ci NOT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -203,8 +225,9 @@ CREATE TABLE `parent` (
 -- Dumping data for table `parent`
 --
 
-INSERT INTO `parent` (`parentID`, `email`, `password`, `firstName`, `lastName`, `city`, `contactNumber`, `regDate`) VALUES
-(11, 'nisal@gmail.com', '$2y$10$sc95vWPSxmWTeSbw/QKk0O5kGkQhO1mCngsC4SSuwoQY9BSWuzPPW', 'Nisal', 'Peiris', 'Kottawa', '0712341234', '2024-04-14 17:14:39');
+INSERT INTO `parent` (`parentID`, `email`, `password`, `firstName`, `lastName`, `cityId`, `contactNumber`, `regDate`) VALUES
+(11, 'nisal@gmail.com', '$2y$10$sc95vWPSxmWTeSbw/QKk0O5kGkQhO1mCngsC4SSuwoQY9BSWuzPPW', 'Nisal', 'Peiris', 3, '0712341234', '2024-04-14 17:14:39'),
+(12, 'indusara@gmail.com', '$2y$10$u7oSsgg8OQL.xGsSOiJ.O.ubKmF9KQu4m6WV/VZEV1zFcOaYO1yJG', 'Indusara', 'Udantha', 2, '0761234123', '2024-04-23 09:37:44');
 
 -- --------------------------------------------------------
 
@@ -254,7 +277,8 @@ CREATE TABLE `vehicle` (
 --
 
 INSERT INTO `vehicle` (`vehicleId`, `licensePlate`, `model`, `modelYear`, `vacantSeats`, `totalSeats`, `ownerId`, `driverId`, `ac`, `highroof`, `image_vehicle`, `doc_emissions`, `doc_registration`, `approvedState`) VALUES
-(1, 'PH - 2556', 'Toyota Hiace', '2011', 4, 9, 5, NULL, 1, 0, 'vehicle\\vehicleImage\\6625da6d7739e4.09669164.jpg', 'vehicle\\emissionsReport\\6625da6d7784e9.08419725.pdf', 'vehicle\\registrationDoc\\6625da6d775fa8.94803719.pdf', 0);
+(1, 'PH - 2556', 'Toyota Hiace', '2011', 4, 9, 5, 4, 1, 0, 'vehicle\\vehicleImage\\6625da6d7739e4.09669164.jpg', 'vehicle\\emissionsReport\\6625da6d7784e9.08419725.pdf', 'vehicle\\registrationDoc\\6625da6d775fa8.94803719.pdf', 1),
+(2, '65 - 1234', 'Nisssan Caravan', '1998', 4, 12, 5, 5, 0, 1, 'vehicle\\vehicleImage\\662b31a8ba4640.57861183.jpg', 'vehicle\\emissionsReport\\662b31a8bb07a6.40822399.pdf', 'vehicle\\registrationDoc\\662b31a8bab3b4.36249619.pdf', 1);
 
 -- --------------------------------------------------------
 
@@ -275,7 +299,10 @@ CREATE TABLE `vehiclecities` (
 INSERT INTO `vehiclecities` (`vehicleCityId`, `vehicleId`, `cityId`) VALUES
 (1, 1, 1),
 (2, 1, 2),
-(3, 1, 3);
+(3, 1, 3),
+(4, 2, 1),
+(5, 2, 2),
+(6, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -295,7 +322,9 @@ CREATE TABLE `vehicleschools` (
 
 INSERT INTO `vehicleschools` (`vehicleSchoolId`, `vehicleId`, `schoolId`) VALUES
 (1, 1, 1),
-(2, 1, 3);
+(2, 1, 3),
+(3, 2, 1),
+(4, 2, 2);
 
 --
 -- Indexes for dumped tables
@@ -312,6 +341,12 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `child`
   ADD PRIMARY KEY (`childID`);
+
+--
+-- Indexes for table `childvehiclerequest`
+--
+ALTER TABLE `childvehiclerequest`
+  ADD PRIMARY KEY (`requestId`);
 
 --
 -- Indexes for table `city`
@@ -390,6 +425,12 @@ ALTER TABLE `child`
   MODIFY `childID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
+-- AUTO_INCREMENT for table `childvehiclerequest`
+--
+ALTER TABLE `childvehiclerequest`
+  MODIFY `requestId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `city`
 --
 ALTER TABLE `city`
@@ -399,19 +440,19 @@ ALTER TABLE `city`
 -- AUTO_INCREMENT for table `driver`
 --
 ALTER TABLE `driver`
-  MODIFY `driverID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `driverID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `drivervehiclerequest`
 --
 ALTER TABLE `drivervehiclerequest`
-  MODIFY `requestId` int NOT NULL AUTO_INCREMENT;
+  MODIFY `requestId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `incident`
 --
 ALTER TABLE `incident`
-  MODIFY `incidentID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `incidentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `owner`
@@ -423,7 +464,7 @@ ALTER TABLE `owner`
 -- AUTO_INCREMENT for table `parent`
 --
 ALTER TABLE `parent`
-  MODIFY `parentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `parentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `school`
@@ -435,19 +476,19 @@ ALTER TABLE `school`
 -- AUTO_INCREMENT for table `vehicle`
 --
 ALTER TABLE `vehicle`
-  MODIFY `vehicleId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `vehicleId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `vehiclecities`
 --
 ALTER TABLE `vehiclecities`
-  MODIFY `vehicleCityId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `vehicleCityId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `vehicleschools`
 --
 ALTER TABLE `vehicleschools`
-  MODIFY `vehicleSchoolId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `vehicleSchoolId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

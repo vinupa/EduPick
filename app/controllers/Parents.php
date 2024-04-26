@@ -42,7 +42,8 @@
                     'fname_err' => '',
                     'lname_err' => '',
                     'school_err' => '',
-                    'grade_err' => ''
+                    'grade_err' => '',                    
+                    'schools' => $this->parentModel->getSchools()
                 ];
 
                 // Validate first name
@@ -136,7 +137,8 @@
                     'firstName_err' => '',
                     'lastName_err' => '',
                     'school_err' => '',
-                    'grade_err' => ''
+                    'grade_err' => '',
+                    'schools' => $this->parentModel->getSchools()
                 ];
 
                 // Validate first name
@@ -339,22 +341,65 @@
                 // Sanitize POST data
                 $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
 
+                if (isset($_POST['vehicle'])) {
+                    $vehicle = trim($_POST['vehicle']);
+                } else {
+                    $vehicle = null;
+                }
+
                 $data = [
                     'parentID' => $_SESSION['user_id'],
-                    'vehicleID' => trim($_POST['vehicle']),
+                    'vehicleID' => $vehicle,
                     'title' => trim($_POST['title']),
-                    'description' => trim($_POST['description'])
+                    'description' => trim($_POST['description']),
+                    'vehicle_err' => ''
                 ];
 
+                if(empty($data['vehicleID'])){
+                    $data['vehicle_err'] = 'Please select associated vehicle';
+                }
+
+                if(!empty($data['vehicle_err'])){
+                    $data['vehicles'] = $this->parentModel->vehiclesListComplaint($_SESSION['user_id']);
+                    $this->view('parents/reportIncident', $data);
+                    return;
+                }
+
                 if($this->parentModel->reportIncident($data)){
-                    redirect('parents/index');
+                    redirect('parents/incidentReports');
                 } else {
                     die('Something went wrong');
                 }
             }
             $data = [
-                'vehicles' => $this->parentModel->vehiclesListComplaint($_SESSION['user_id'])
+                'title' => '',
+                'description' => '',
+                'vehicles' => $this->parentModel->vehiclesListComplaint($_SESSION['user_id']),
+                'vehicle_err' => ''
             ];
             $this->view('parents/reportIncident', $data);
+        }
+
+        public function incidentReports(){
+            $data = [
+                'reports' => $this->parentModel->getIncidentReports($_SESSION['user_id'])
+            ];
+            $this->view('parents/incidentReports', $data);
+        }
+
+        public function reportResolved($incidentID){
+            if($this->parentModel->reportResolved($incidentID)){
+                redirect('parents/incidentReports');
+            } else {
+                die('Something went wrong');
+            }
+        }
+
+        public function reportDelete($incidentID){
+            if($this->parentModel->reportDelete($incidentID)){
+                redirect('parents/incidentReports');
+            } else {
+                die('Something went wrong');
+            }
         }
 }

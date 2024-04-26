@@ -21,7 +21,7 @@
                     <i class="uil uil-chart"></i>
                     <span class="link-name">Manage Vehicles</span>
                 </a></li>
-            <li><a href="<?php echo URLROOT; ?>/parents/reportIncident">
+            <li><a href="<?php echo URLROOT; ?>/parents/incidentReports">
                     <i class="uil uil-exclamation-octagon"></i>
                     <span class="link-name">Report Incident</span>
                 </a></li>

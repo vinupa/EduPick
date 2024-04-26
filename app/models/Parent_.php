@@ -228,4 +228,35 @@
                 return false;
             }
         }
+
+        public function getIncidentReports($parent_id){
+            $this->db->query('SELECT incident.*, vehicle.licensePlate, driver.firstName as driverFirstName, driver.lastName as driverLastName FROM incident JOIN vehicle ON incident.vehicleID = vehicle.vehicleId JOIN driver ON vehicle.driverId = driver.driverId WHERE parentID = :parent_id');
+            $this->db->bind(':parent_id', $parent_id);
+
+            $results = $this->db->resultSet();
+
+            return $results;
+        }
+
+        public function reportResolved($incident_id){
+            $this->db->query('UPDATE incident SET resolvedState = 1 WHERE incidentID = :incident_id');
+            $this->db->bind(':incident_id', $incident_id);
+
+            if($this->db->execute()){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public function reportDelete($incident_id){
+            $this->db->query('DELETE FROM incident WHERE incidentID = :incident_id');
+            $this->db->bind(':incident_id', $incident_id);
+
+            if($this->db->execute()){
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
