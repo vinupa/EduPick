@@ -27,42 +27,57 @@
                 <?php foreach ($data['childrequests'] as $childrequest) : ?>
 
                     <div class="request-card">
-                        <div class="request-image">
-                            <img src="<?php echo URLROOT; ?>/uploads/<?php echo $childrequest->image_profilePhoto; ?>" alt="parent Image">
-                        </div>
+
                         <div class="request-details">
-                            <span class="request-text" style="font-size: large;">
-                                <b>
-                                    <?php echo $childrequest->firstName; ?>&nbsp;<?php echo $childrequest->lastName; ?>
-                                </b>
-                            </span>
-                            <span class="request-text">
-                                School: <?php echo $childrequest->model; ?>
-                            </span>
-                        </div>
-                        <div class="request-details">
-                            <span class="request-text">
-                             <i class="uil uil-user-square"></i>
-                                <b>NIC:&nbsp;</b>
-                                <?php echo $request->nic; ?>
+                            <span class="request-text"  style="font-size: large;">
+                                Parent: <?php echo $childrequest->firstName;  ?>
                             </span>
                             <span class="request-text">
                                 <i class="uil uil-phone"></i>
                                 <b>Tel:&nbsp;</b>
-                                <?php echo $request->contactNumber; ?>
-                            </span>
+                                <?php echo $childrequest->contactNumber; ?>
+                            </span>   
                         </div>
+
+                        <div class="request-details">
+                        <span class="request-text" style="font-size: large;">
+                                <b>
+                                 Child: <?php echo $childrequest->childFirstName;  ?>
+                                </b>
+                            </span>
+                            <span class="request-text">
+                             <i class="uil uil-estate"></i>
+                                <b>School:&nbsp;</b>
+                                <?php echo $childrequest->school; ?>
+                            </span>   
+                        </div>
+
+                        <div class="request-details">
+                        <span class="request-text">
+                                <b>
+                                 Driver: <?php echo $childrequest->driverFirstName; ?>
+                                </b>
+                            </span>
+                            <span class="request-text">
+                             <i class="uil uil-bus-school"></i>
+                                <b>Registration No:&nbsp;</b>
+                                <?php echo $childrequest->licensePlate; ?>
+                            </span>
+                            
+                        </div>
+
+
                         <div class="request-buttons">
                             <div class="accept-button">
-                                <?php $confirmationMessage = "Are you sure you want to Accept the connection request of " . $request->firstName . " " . $request->lastName . " for your vehicle " . $request->model . "?"; ?>
-                                <a href="<?php echo URLROOT; ?>/owners/acceptRequest/<?php echo $request->requestId; ?>" onclick="return confirm('<?php echo $confirmationMessage; ?>');">
+                                <?php $confirmationMessage = "Are you sure you want to Accept the connection request of " . $childrequest->childFirstName . "for your vehicle " . $childrequest->licensePlate . "?"; ?>
+                                <a href="<?php echo URLROOT; ?>/owners/acceptChildRequest/<?php echo $childrequest->parentID; ?>" onclick="return confirm('<?php echo $confirmationMessage; ?>');">
                                     Accept&nbsp;
                                     <i class="uil uil-check"></i>
                                 </a>
                             </div>
                             <div class="decline-button">
-                                <?php $confirmationMessage = "Are you sure you want to Decline the connection request of " . $request->firstName . " " . $request->lastName . " for your vehicle " . $request->model . "?"; ?>
-                                <a href="<?php echo URLROOT; ?>/owners/declineRequest/<?php echo $request->requestId; ?>" onclick="return confirm('<?php echo $confirmationMessage; ?>');">
+                                <?php $confirmationMessage = "Are you sure you want to Decline the connection request of " . $childrequest->childFirstName . " for your vehicle " . $childrequest->licensePlate . "?"; ?>
+                                <a href="<?php echo URLROOT; ?>/owners/declineChildRequest/<?php echo $childrequest->parentID; ?>" onclick="return confirm('<?php echo $confirmationMessage; ?>');">
                                     Decline&nbsp;
                                     <i class="uil uil-times"></i>
                                 </a>

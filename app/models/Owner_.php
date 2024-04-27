@@ -285,10 +285,12 @@
 
 
         public function getChildRequests($owner_id){
-            $this->db->query('SELECT parent.firstName, parent.lastName, parent.contactNumber, child.firstName, child.lastName, child.school, vehicle.licensePlate
+            $this->db->query('SELECT parent.firstName, parent.lastName, parent.contactNumber, child.firstName AS childFirstName, child.lastName AS childLastName, driver.firstName AS driverFirstName, child.school, vehicle.licensePlate
             FROM child 
             JOIN parent 
             ON child.parentID = parent.parentID 
+            JOIN driver
+            ON child.vehicleId = driver.vehicleID
             JOIN vehicle 
             ON child.vehicleId = vehicle.vehicleId 
             WHERE vehicle.ownerId = :owner_id AND child.vehicleId IS NULL');
