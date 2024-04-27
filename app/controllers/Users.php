@@ -51,7 +51,7 @@ class Users extends Controller
                 $data['email_err'] = 'Please enter email';
             } else {
                 // Check email
-                if ($this->userModel->findParentByEmail($data['email'])) {
+                if ($this->userModel->findUserByEmail($data['email'])) {
                     $data['email_err'] = 'Email is already taken';
                 }
             }
@@ -74,7 +74,7 @@ class Users extends Controller
                 $data['contact_number_err'] = 'Invalid Contact Number length, please use 07X XXX XXXX format or +94 XX XXX XXXX format';
             }
             else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
-                $data['contact_number_err'] = 'Invalid Contact Number format, please use 07X XXX XXXX format';
+                $data['contact_number_err'] = 'Invalid Contact Number format, please use 0XX XXX XXXX format';
             }
             else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
                 $data['contact_number_err'] = 'Invalid Contact Number format, please use +94 XX XXX XXXX format';
@@ -175,7 +175,7 @@ class Users extends Controller
                 $data['email_err'] = 'Please enter email';
             } else {
                 // Check email
-                if ($this->userModel->findOwnerByEmail($data['email'])) {
+                if ($this->userModel->findUserByEmail($data['email'])) {
                     $data['email_err'] = 'Email is already taken';
                 }
             }
@@ -293,7 +293,7 @@ class Users extends Controller
                 $data['email_err'] = 'Please enter email';
             } else {
                 // Check email
-                if ($this->userModel->findDriverByEmail($data['email'])) {
+                if ($this->userModel->findUserByEmail($data['email'])) {
                     $data['email_err'] = 'Email is already taken';
                 }
             }
@@ -393,7 +393,7 @@ class Users extends Controller
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             // Process form
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
 
             $data = [
                 'first_name' => trim($_POST['first_name']),
@@ -421,7 +421,7 @@ class Users extends Controller
 
             if(empty($data['email'])){
                 $data['email_err'] = 'Please enter email';
-            } elseif($this->userModel->findAdminByEmail($data['email'])){
+            } elseif($this->userModel->findUserByEmail($data['email'])){
                 $data['email_err'] = 'Email is already taken';
             }
 

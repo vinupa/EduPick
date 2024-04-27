@@ -21,7 +21,7 @@
     </header>
 
     <section class="home-reg">
-        <d  iv class="form_container">
+        <div class="form_container">
           <!-- Register Form -->
           <div class="form login_form">
             <form action="<?php echo URLROOT; ?>/users/driverRegister" method="POST">
