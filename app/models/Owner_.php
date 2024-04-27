@@ -133,83 +133,7 @@
         }
 
 
-        public function getChildRequests($owner_id){
-            $this->db->query('SELECT parent.firstName, parent.lastName,p parent.contactNumber, child.firstName, child.lastName, child.school, vehicle.licensePlate
-            FROM child 
-            JOIN parent 
-            ON child.parentID = parent.parentID 
-            JOIN vehicle 
-            ON child.vehicleId = vehicle.vehicleId 
-            WHERE vehicle.ownerId = :owner_id AND child.vehicleId IS NULL');
-            $this->db->bind(':owner_id', $owner_id);
-            $results = $this->db->resultSet();
-            return $results;
-        }
 
-
-        public function acceptChildRequest($parent_id){
-
-            //get vehicle id and parent id from the request
-            $this->db->query('SELECT * FROM child WHERE parentID = :parent_id');
-            $this->db->bind(':parent_id', $parent_id);
-            $result = $this->db->single();
-
-            //get owner id using the vehicle id from vehicle table
-            $this->db->query('SELECT ownerId FROM vehicle WHERE vehicleId = :vehicle_id');
-            $this->db->bind(':vehicle_id', $result->vehicleId);
-            $owner_data = $this->db->single();
-
-            //update the child table with vehicle id and owner id
-            $this->db->query('UPDATE child SET vehicleId = :vehicle_id, ownerId =:owner_id WHERE parentId = :parent_id');
-            $this->db->bind(':vehicle_id', $result->vehicleId);
-            $this->db->bind(':owner_id', $owner_data->ownerId);
-            $this->db->bind(':parent_id', $result->parentId);
-            $this->db->execute();
-
-            // Calculate the updated number of vacant seats
-            $vacantSeats = $vehicle->totalSeats - 1; // Assuming one seat is occupied
-
-            // Update the vehicle table with the new number of vacant seats
-            $this->db->query('UPDATE vehicle SET vacantSeats = :vacant_seats WHERE vehicleId = :vehicle_id');
-            $this->db->bind(':vacant_seats', $vacantSeats);
-            $this->db->bind(':vehicle_id', $result->vehicleId);
-            $this->db->execute();
-            
-            //delete the request from the drivervehiclerequest table
-            $this->db->query('DELETE FROM child WHERE parentID = :parent_id');
-            $this->db->bind(':parent_id', $parent_id);
-
-            if($this->db->execute()){
-                return true;
-            } else {
-                return false;
-            }
-        }
-        
-
-        public function declineChildRequest($parent_id){
-            $this->db->query('UPDATE child SET vehicleId IS NULL WHERE requestId = :request_id');
-            $this->db->bind(':request_id', $request_id);
-
-            if($this->db->execute()){
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-
-        public function removeChild($child_id){
-            // $this->db->query('DELETE FROM child WHERE childID = :child_id');
-            $this->db->query('UPDATE child SET isDeleted = 1 WHERE childID = :child_id');
-            $this->db->bind(':child_id', $child_id);
-
-            if($this->db->execute()){
-                return true;
-            } else {
-                return false;
-            }
-        }
 
         public function updateVehicle($data){
             $this->db->query('UPDATE vehicle SET licensePlate = :licensePlate, model = :model, modelYear = :modelYear, vacantSeats = :vacantSeats, totalSeats = :totalSeats, ac = :ac, highroof = :highroof WHERE vehicleId = :vehicle_id');
@@ -359,6 +283,71 @@
         
 
 
+
+        public function getChildRequests($owner_id){
+            $this->db->query('SELECT parent.firstName, parent.lastName, parent.contactNumber, child.firstName, child.lastName, child.school, vehicle.licensePlate
+            FROM child 
+            JOIN parent 
+            ON child.parentID = parent.parentID 
+            JOIN vehicle 
+            ON child.vehicleId = vehicle.vehicleId 
+            WHERE vehicle.ownerId = :owner_id AND child.vehicleId IS NULL');
+            $this->db->bind(':owner_id', $owner_id);
+            $results = $this->db->resultSet();
+            return $results;
+
+        }
+
+        public function acceptChildRequest($parent_id){
+            // Fetch child data including vehicleId
+            $this->db->query('SELECT * FROM child WHERE parentID = :parent_id');
+            $this->db->bind(':parent_id', $parent_id);
+            $childData = $this->db->single();
+        
+            // Fetch vehicle data
+            $this->db->query('SELECT * FROM vehicle WHERE vehicleId = :vehicle_id');
+            $this->db->bind(':vehicle_id', $childData->vehicleId);
+            $vehicleData = $this->db->single();
+        
+            // Update child table with vehicleId and ownerId
+            $this->db->query('UPDATE child SET vehicleId = :vehicle_id, ownerId = :owner_id WHERE parentID = :parent_id');
+            $this->db->bind(':vehicle_id', $childData->vehicleId);
+            $this->db->bind(':owner_id', $vehicleData->ownerId);
+            $this->db->bind(':parent_id', $parent_id);
+            $this->db->execute();
+        
+            // Calculate the updated number of vacant seats
+            $vacantSeats = $vehicleData->totalSeats - 1; // Assuming one seat is occupied
+        
+            // Update the vehicle table with the new number of vacant seats
+            $this->db->query('UPDATE vehicle SET vacantSeats = :vacant_seats WHERE vehicleId = :vehicle_id');
+            $this->db->bind(':vacant_seats', $vacantSeats);
+            $this->db->bind(':vehicle_id', $childData->vehicleId);
+            $this->db->execute();
+        
+            // Delete the request from the child table
+            $this->db->query('DELETE FROM child WHERE parentID = :parent_id');
+            $this->db->bind(':parent_id', $parent_id);
+        
+            if($this->db->execute()){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public function declineChildRequest($parent_id){
+            // Update child table to set vehicleId to NULL
+            $this->db->query('UPDATE child SET vehicleId = NULL WHERE parentID = :parent_id');
+            $this->db->bind(':parent_id', $parent_id);
+        
+            if($this->db->execute()){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
         
 
     }

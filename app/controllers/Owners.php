@@ -133,32 +133,6 @@ class Owners extends Controller
 
 
 
-    
-    public function childRequests()
-    {
-        $data = [
-            'childrequests' => $this->ownerModel->getChildRequests($_SESSION['user_id'])
-        ];
-        $this->view('owners/childRequests', $data);
-    }
-
-    public function acceptChildRequest($parent_id){
-        if($this->ownerModel->acceptChildRequest($parent_id)){
-            redirect('owners/viewParents');
-        } else {
-            die('Something went wrong');
-        }
-    }
-
-    public function declineChildRequest($parent_id){
-        if($this->ownerModel->declineChildRequest($parent_id)){
-            redirect('owners/viewParents');
-        } else {
-            die('Something went wrong');
-        }
-    }
-
-
    /* public function viewParents()
     {
        $post =  $this->ownerModel->getAllParents($_SESSION['user_id']);
@@ -330,5 +304,31 @@ class Owners extends Controller
          $this->view('owners/viewParents', $data);
      }
   
-   
+
+
+     public function childRequests()
+     {
+         $data = [
+             'childrequests' => $this->ownerModel->getChildRequests($_SESSION['user_id'])
+         ];
+         $this->view('owners/childRequests', $data);
+     }
+     
+     public function acceptChildRequest($parent_id){
+         if($this->ownerModel->acceptChildRequest($parent_id)){
+             redirect('owners/childRequests');
+         } else {
+             die('Something went wrong');
+         }
+     }
+     
+     public function declineChildRequest($parent_id){
+         if($this->ownerModel->declineChildRequest($parent_id)){
+             redirect('owners/childRequests');
+         } else {
+             die('Something went wrong');
+         }
+     }
+        
+     
 }
