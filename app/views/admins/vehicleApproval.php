@@ -23,7 +23,7 @@
             <div class="blog-card">
                 <div class="inner-part">
                    <label for="imgTap" class="img">
-                   <img class="img-3" src="../Dashboards/Images/schoolbus2.png">
+                   <img class="img-3" src="<?php echo URLROOT; ?>/uploads/<?php echo $vehicleRequest->image_vehicle; ?>" alt="vehicle photo">
                    </label>
                    <div class="content">
                       <div class="vehicle-title">
@@ -34,7 +34,7 @@
                             <li>Vehicle Number: <?php echo $vehicleRequest->licensePlate; ?></li>
                             <li>Total Seats: <?php echo $vehicleRequest->totalSeats; ?></li>
                       </div>
-                      <a href="<?php echo URLROOT; ?>/admins/vehicleApprovalDetails/<?php echo $vehicleRequest->vehicleID; ?>"><button>Read more</button></a>
+                      <a href="<?php echo URLROOT; ?>/admins/vehicleApprovalDetails/<?php echo $vehicleRequest->vehicleId; ?>"><button>Read more</button></a>
                    </div>
                 </div>
              </div>

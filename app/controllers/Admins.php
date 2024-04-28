@@ -25,6 +25,24 @@
             $this->view('admins/manageAdmins', $data);
         }
 
+        public function adminDashboard(){
+            $parentCount = $this->adminModel->getParentCount();
+            $ownerCount = $this->adminModel->getOwnerCount();
+            $driverCount = $this->adminModel->getDriverCount();
+
+            $registrationData = $this->adminModel->getRegistrationData();
+
+            // Pass data to the view
+            $data = [
+                'parentCount' => $parentCount,
+                'ownerCount' => $ownerCount,
+                'driverCount' => $driverCount,
+                'registrationData' => $registrationData
+            ];
+
+            $this->view('admins/adminDashboard', $data);
+        }
+
         public function updateAdmin($adminID) {
             // Check if the form is submitted (POST request)
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
