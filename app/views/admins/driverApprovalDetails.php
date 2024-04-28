@@ -15,7 +15,6 @@
             <div class="approve-details-container">
                 <div class="approve-details-box">
                     <div class="images">
-                        <!-- If you have multiple images, loop through them here -->
                         <div class="img-holder">
                         <img src="<?php echo URLROOT; ?>/uploads/<?php echo $data['driverDetails']->image_profilePhoto; ?>" alt="driver photo">
                         </div>

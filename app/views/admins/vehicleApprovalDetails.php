@@ -15,7 +15,6 @@
             <di v class="approve-details-container">
                 <div class="approve-details-box">
                     <div class="images">
-                        <!-- If you have multiple images, loop through them here -->
                         <div class="img-holder">
                         <img src="<?php echo URLROOT; ?>/uploads/<?php echo $data['vehicleDetails']->image_vehicle; ?>" alt="vehicle photo">
                         </div>
@@ -33,8 +32,8 @@
                             <li><i class="uil uil-check-square"></i>Emission Report: <a href="<?php echo URLROOT; ?>/uploads/<?php echo $data['vehicleDetails']->doc_emissions; ?>" target="_blank">View Document</a></li>
                         </ul>
                         <div class="options">
-                            <a href="<?php echo URLROOT; ?>/admins/approveVehicle/<?php echo $data['vehicleDetails']->vehicleId; ?>" onclick="return confirmVehicleApproval();">Approve</a>
-                            <a href="<?php echo URLROOT; ?>/admins/rejectVehicle/<?php echo $data['vehicleDetails']->vehicleId; ?>" onclick="return confirmVehicleRejection();">Reject</a>
+                            <a href="<?php echo URLROOT; ?>/admins/approveVehicle/<?php echo $data['vehicleDetails']->vehicleId; ?>" onclick="return confirmApproval();">Approve</a>
+                            <a href="<?php echo URLROOT; ?>/admins/rejectVehicle/<?php echo $data['vehicleDetails']->vehicleId; ?>" onclick="return confirmRejection();">Reject</a>
                         </div>
                     </div>
                 </div>
