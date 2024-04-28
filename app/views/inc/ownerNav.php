@@ -17,6 +17,18 @@
                     <i class="uil uil-streering"></i>
                     <span class="link-name">Driver Requests</span>
                 </a></li>
+            <li><a href="<?php echo URLROOT; ?>/owners/childRequests">
+                    <i class="uil uil-user-plus"></i>
+                    <span class="link-name">Parent Requests</span>
+                </a></li>
+            <li><a href="<?php echo URLROOT; ?>/owners/manageDrivers">
+                    <i class="uil uil-car-sideview"></i>
+                    <span class="link-name">Manage Drivers</span>
+                </a></li>
+            <li><a href="<?php echo URLROOT; ?>/owners/manageChildren">
+                    <i class="uil uil-clipboard-notes"></i>
+                    <span class="link-name">Registry</span>
+                </a></li>
         </ul>
 
         <ul class="logout-mode">

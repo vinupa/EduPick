@@ -196,6 +196,17 @@
         }
 
         public function disconnectVehicle($child_id){
+            //get the vehicle id from child table
+            $this->db->query('SELECT vehicleId FROM child WHERE childID = :child_id');
+            $this->db->bind(':child_id', $child_id);
+            $row = $this->db->single();
+
+            //increase vacant seat of the vehicle
+            $this->db->query('UPDATE vehicle SET vacantSeats = vacantSeats + 1 WHERE vehicleId = :vehicle_id');
+            $this->db->bind(':vehicle_id', $row->vehicleId);
+            $this->db->execute();
+
+            //update the child table
             $this->db->query('UPDATE child SET vehicleId = NULL WHERE childID = :child_id');
             $this->db->bind(':child_id', $child_id);
 

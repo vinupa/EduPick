@@ -2,3 +2,4 @@ app/config/config.php
 app/helpers/creds.php
 .vscode/
 public/uploads/
+app/libraries/tcpdf/

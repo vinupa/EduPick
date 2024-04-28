@@ -120,6 +120,11 @@ class Drivers extends Controller
 
     public function driverPending()
     {
+        $driver = $this->driverModel->getDriver($_SESSION['user_id']);
+        if ($driver->approvedState == 1) {
+            redirect('drivers/driverDashboard');
+        }
+
         $data = [];
         $this->view('drivers/driverPending', $data);
     }
