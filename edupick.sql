@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 26, 2024 at 12:59 PM
+-- Generation Time: Apr 28, 2024 at 06:01 AM
 -- Server version: 8.0.32
 -- PHP Version: 8.2.2
 
@@ -35,15 +35,16 @@ CREATE TABLE `admin` (
   `lastName` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `contactNumber` varchar(13) COLLATE utf8mb4_general_ci NOT NULL,
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `IsDeleted` tinyint(1) NOT NULL DEFAULT '0'
+  `IsDeleted` tinyint(1) NOT NULL DEFAULT '0',
+  `codeVerified` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`adminID`, `email`, `password`, `firstName`, `lastName`, `contactNumber`, `regDate`, `IsDeleted`) VALUES
-(1, 'admin@edupick.com', '$2y$10$nGsc6BxLxT4GwBlhmurBM.d/8whBz9YIs69i1cA3y1DYkF.7dqh0O', 'Admin', 'EduPick', '0712341234', '2024-02-07 18:13:42', 0);
+INSERT INTO `admin` (`adminID`, `email`, `password`, `firstName`, `lastName`, `contactNumber`, `regDate`, `IsDeleted`, `codeVerified`) VALUES
+(1, 'admin@edupick.com', '$2y$10$nGsc6BxLxT4GwBlhmurBM.d/8whBz9YIs69i1cA3y1DYkF.7dqh0O', 'Admin', 'EduPick', '0712341234', '2024-02-07 18:13:42', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -134,16 +135,16 @@ CREATE TABLE `driver` (
   `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `formState` tinyint(1) NOT NULL DEFAULT '0',
   `pendingState` tinyint(1) NOT NULL DEFAULT '0',
-  `approvedState` tinyint(1) NOT NULL DEFAULT '0'
+  `approvedState` tinyint(1) NOT NULL DEFAULT '0',
+  `codeVerified` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `driver`
 --
 
-INSERT INTO `driver` (`driverID`, `email`, `password`, `firstName`, `lastName`, `nic`, `address`, `contactNumber`, `ownerID`, `vehicleID`, `image_profilePhoto`, `image_nicFront`, `image_nicBack`, `image_licenseFront`, `image_licenseBack`, `doc_policeReport`, `doc_proofResidence`, `regDate`, `formState`, `pendingState`, `approvedState`) VALUES
-(4, 'kasun@gmail.com', '$2y$10$4IWo9ZrQ24lJ2fXttjvuBuXk7XMkhwBKSsnZ.g9nSbgf.5Q1M64T6', 'Kasun', 'Hansamal', '123456789v', '29/3, Kaduwela Road, Malabe', '0717897890', 5, 1, 'driver\\profilePhoto\\6623536cb39018.06674227.jpg', 'driver\\nicFront\\6623536cb3bdf4.99934571.jpg', 'driver\\nicBack\\6623536cb3dd82.29576842.jpg', 'driver\\licenseFront\\6623536cb3fb04.37079381.jpg', 'driver\\licenseBack\\6623536cb42d80.22740070.jpg', 'driver\\policeReport\\6623536cb44af8.86251921.pdf', 'driver\\proofResidence\\6623536cb464b5.82286233.pdf', '2024-04-17 06:23:31', 1, 0, 1),
-(5, 'sanath@gmail.com', '$2y$10$XqeSMSG5voshzxsjujVCcuSnwC9k0kl1OTGauAOJDPlA8v/qBiWpW', 'Sanath', 'Kumara', '200012345678', '12/1, Kottawa Road, Piliyandala', '0786476872', 5, 2, 'driver\\profilePhoto\\662b32d963aa47.39598700.jpeg', 'driver\\nicFront\\662b32d96412a8.68128360.jpg', 'driver\\nicBack\\662b32d9646700.22779572.jpg', 'driver\\licenseFront\\662b32d964b930.41914513.jpg', 'driver\\licenseBack\\662b32d96502d9.12055821.jpg', 'driver\\policeReport\\662b32d9656499.86806408.pdf', 'driver\\proofResidence\\662b32d965b6f0.53852456.pdf', '2024-04-26 04:49:37', 1, 0, 1);
+INSERT INTO `driver` (`driverID`, `email`, `password`, `firstName`, `lastName`, `nic`, `address`, `contactNumber`, `ownerID`, `vehicleID`, `image_profilePhoto`, `image_nicFront`, `image_nicBack`, `image_licenseFront`, `image_licenseBack`, `doc_policeReport`, `doc_proofResidence`, `regDate`, `formState`, `pendingState`, `approvedState`, `codeVerified`) VALUES
+(4, 'kasun@gmail.com', '$2y$10$4IWo9ZrQ24lJ2fXttjvuBuXk7XMkhwBKSsnZ.g9nSbgf.5Q1M64T6', 'Kasun', 'Hansamal', '123456789v', '29/3, Kaduwela Road, Malabe', '0717897890', 5, 1, 'driver\\profilePhoto\\6623536cb39018.06674227.jpg', 'driver\\nicFront\\6623536cb3bdf4.99934571.jpg', 'driver\\nicBack\\6623536cb3dd82.29576842.jpg', 'driver\\licenseFront\\6623536cb3fb04.37079381.jpg', 'driver\\licenseBack\\6623536cb42d80.22740070.jpg', 'driver\\policeReport\\6623536cb44af8.86251921.pdf', 'driver\\proofResidence\\6623536cb464b5.82286233.pdf', '2024-04-17 06:23:31', 1, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -194,15 +195,16 @@ CREATE TABLE `owner` (
   `firstName` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `lastName` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `contactNumber` varchar(13) COLLATE utf8mb4_general_ci NOT NULL,
-  `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `codeVerified` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `owner`
 --
 
-INSERT INTO `owner` (`ownerID`, `email`, `password`, `firstName`, `lastName`, `contactNumber`, `regDate`) VALUES
-(5, 'dasun@gmail.com', '$2y$10$ZtqU0z9v71HzDhR2EmgcpuBjN/LNV7eozE87XxnLcRqhKqE/TW.Yu', 'Dasun', 'Thathsara', '0798769876', '2024-04-21 04:52:20');
+INSERT INTO `owner` (`ownerID`, `email`, `password`, `firstName`, `lastName`, `contactNumber`, `regDate`, `codeVerified`) VALUES
+(5, 'dasun@gmail.com', '$2y$10$ZtqU0z9v71HzDhR2EmgcpuBjN/LNV7eozE87XxnLcRqhKqE/TW.Yu', 'Dasun', 'Thathsara', '0798769876', '2024-04-21 04:52:20', 1);
 
 -- --------------------------------------------------------
 
@@ -218,16 +220,17 @@ CREATE TABLE `parent` (
   `lastName` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `cityId` int NOT NULL,
   `contactNumber` varchar(13) COLLATE utf8mb4_general_ci NOT NULL,
-  `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `regDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `codeVerified` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `parent`
 --
 
-INSERT INTO `parent` (`parentID`, `email`, `password`, `firstName`, `lastName`, `cityId`, `contactNumber`, `regDate`) VALUES
-(11, 'nisal@gmail.com', '$2y$10$sc95vWPSxmWTeSbw/QKk0O5kGkQhO1mCngsC4SSuwoQY9BSWuzPPW', 'Nisal', 'Peiris', 3, '0712341234', '2024-04-14 17:14:39'),
-(12, 'indusara@gmail.com', '$2y$10$u7oSsgg8OQL.xGsSOiJ.O.ubKmF9KQu4m6WV/VZEV1zFcOaYO1yJG', 'Indusara', 'Udantha', 2, '0761234123', '2024-04-23 09:37:44');
+INSERT INTO `parent` (`parentID`, `email`, `password`, `firstName`, `lastName`, `cityId`, `contactNumber`, `regDate`, `codeVerified`) VALUES
+(11, 'nisal@gmail.com', '$2y$10$sc95vWPSxmWTeSbw/QKk0O5kGkQhO1mCngsC4SSuwoQY9BSWuzPPW', 'Nisal', 'Peiris', 3, '0712341234', '2024-04-14 17:14:39', 1),
+(12, 'indusara@gmail.com', '$2y$10$u7oSsgg8OQL.xGsSOiJ.O.ubKmF9KQu4m6WV/VZEV1zFcOaYO1yJG', 'Indusara', 'Udantha', 2, '0761234123', '2024-04-23 09:37:44', 1);
 
 -- --------------------------------------------------------
 
@@ -269,16 +272,16 @@ CREATE TABLE `vehicle` (
   `image_vehicle` varchar(255) DEFAULT NULL,
   `doc_emissions` varchar(255) DEFAULT NULL,
   `doc_registration` varchar(255) DEFAULT NULL,
-  `approvedState` tinyint(1) NOT NULL DEFAULT '0'
+  `approvedState` tinyint(1) NOT NULL DEFAULT '0',
+  `pendingState` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `vehicle`
 --
 
-INSERT INTO `vehicle` (`vehicleId`, `licensePlate`, `model`, `modelYear`, `vacantSeats`, `totalSeats`, `ownerId`, `driverId`, `ac`, `highroof`, `image_vehicle`, `doc_emissions`, `doc_registration`, `approvedState`) VALUES
-(1, 'PH - 2556', 'Toyota Hiace', '2011', 4, 9, 5, 4, 1, 0, 'vehicle\\vehicleImage\\6625da6d7739e4.09669164.jpg', 'vehicle\\emissionsReport\\6625da6d7784e9.08419725.pdf', 'vehicle\\registrationDoc\\6625da6d775fa8.94803719.pdf', 1),
-(2, '65 - 1234', 'Nisssan Caravan', '1998', 4, 12, 5, 5, 0, 1, 'vehicle\\vehicleImage\\662b31a8ba4640.57861183.jpg', 'vehicle\\emissionsReport\\662b31a8bb07a6.40822399.pdf', 'vehicle\\registrationDoc\\662b31a8bab3b4.36249619.pdf', 1);
+INSERT INTO `vehicle` (`vehicleId`, `licensePlate`, `model`, `modelYear`, `vacantSeats`, `totalSeats`, `ownerId`, `driverId`, `ac`, `highroof`, `image_vehicle`, `doc_emissions`, `doc_registration`, `approvedState`, `pendingState`) VALUES
+(1, 'PH - 2556', 'Toyota Hiace', '2011', 4, 9, 5, 4, 1, 0, 'vehicle\\vehicleImage\\6625da6d7739e4.09669164.jpg', 'vehicle\\emissionsReport\\6625da6d7784e9.08419725.pdf', 'vehicle\\registrationDoc\\6625da6d775fa8.94803719.pdf', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -325,6 +328,20 @@ INSERT INTO `vehicleschools` (`vehicleSchoolId`, `vehicleId`, `schoolId`) VALUES
 (2, 1, 3),
 (3, 2, 1),
 (4, 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `verification`
+--
+
+CREATE TABLE `verification` (
+  `verificationID` int NOT NULL,
+  `userId` int NOT NULL,
+  `type` varchar(6) NOT NULL,
+  `code` int NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indexes for dumped tables
@@ -409,6 +426,12 @@ ALTER TABLE `vehicleschools`
   ADD PRIMARY KEY (`vehicleSchoolId`);
 
 --
+-- Indexes for table `verification`
+--
+ALTER TABLE `verification`
+  ADD PRIMARY KEY (`verificationID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -458,13 +481,13 @@ ALTER TABLE `incident`
 -- AUTO_INCREMENT for table `owner`
 --
 ALTER TABLE `owner`
-  MODIFY `ownerID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ownerID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `parent`
 --
 ALTER TABLE `parent`
-  MODIFY `parentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `parentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `school`
@@ -489,6 +512,12 @@ ALTER TABLE `vehiclecities`
 --
 ALTER TABLE `vehicleschools`
   MODIFY `vehicleSchoolId` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `verification`
+--
+ALTER TABLE `verification`
+  MODIFY `verificationID` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
