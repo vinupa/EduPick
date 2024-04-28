@@ -28,6 +28,16 @@ class User
         }
     }
 
+    public function getParentByEmail($email)
+    {
+        $this->db->query('SELECT * FROM parent WHERE email = :email');
+        $this->db->bind(':email', $email);
+
+        $row = $this->db->single();
+
+        return $row;
+    }
+
     // Register Parent
     public function registerOwner($data)
     {
@@ -47,6 +57,15 @@ class User
         }
     }
 
+    public function getOwnerByEmail($email)
+    {
+        $this->db->query('SELECT * FROM `owner` WHERE email = :email');
+        $this->db->bind(':email', $email);
+
+        $row = $this->db->single();
+
+        return $row;
+    }
 
     // Register Driver
     public function registerDriver($data)
@@ -66,6 +85,16 @@ class User
         } else {
             return false;
         }
+    }
+
+    public function getDriverByEmail($email)
+    {
+        $this->db->query('SELECT * FROM driver WHERE email = :email');
+        $this->db->bind(':email', $email);
+
+        $row = $this->db->single();
+
+        return $row;
     }
 
     public function adminRegister($data)
@@ -222,5 +251,65 @@ class User
         $results = $this->db->resultSet();
 
         return $results;
+    }
+
+    public function generateVerificationCode($user_id, $user_type)
+    {
+        $code = mt_rand(100000, 999999); // Generate a random 6-digit code
+
+        $this->db->query('INSERT INTO verification (userId, `type`, code) VALUES(:userId, :user_type, :code)');
+        $this->db->bind(':userId', $user_id);
+        $this->db->bind(':user_type', $user_type);
+        $this->db->bind(':code', $code);
+
+        if ($this->db->execute()) {
+            return $code; // Return the generated code
+        } else {
+            return false;
+        }
+    }
+
+    public function getVerificationCode($user_id, $user_type)
+    {
+        $this->db->query('SELECT code FROM verification WHERE userId = :userId AND `type` = :user_type ORDER BY `timestamp` DESC LIMIT 1');
+        $this->db->bind(':userId', $user_id);
+        $this->db->bind(':user_type', $user_type);
+
+        $row = $this->db->single();
+
+        return $row;
+    }
+
+    public function setParentVerified($parentID){
+        $this->db->query('UPDATE parent SET codeVerified = 1 WHERE parentID = :parentID');
+        $this->db->bind(':parentID', $parentID);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function setOwnerVerified($ownerID){
+        $this->db->query('UPDATE `owner` SET codeVerified = 1 WHERE ownerId = :ownerId');
+        $this->db->bind(':ownerId', $ownerID);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function setDriverVerified($driverID){
+        $this->db->query('UPDATE driver SET codeVerified = 1 WHERE driverId = :driverId');
+        $this->db->bind(':driverId', $driverID);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
