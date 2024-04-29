@@ -404,9 +404,9 @@ class Users extends Controller
     public function adminRegister()
     {
         // Check if the user is logged in and is an admin
-        // if(!$this->userModel->isAdminLoggedIn()){
-        //     redirect('pages/index');
-        // }
+        if(!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'admin'){
+            redirect('pages/index');
+        }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
@@ -472,8 +472,8 @@ class Users extends Controller
 
                 // Register Admin
                 if ($this->userModel->adminRegister($data)) {
-                    flash('register_success', 'You are now registered as an Admin');
-                    redirect('users/login');
+                    // flash('register_success', 'You are now registered as an Admin');
+                    redirect('admins/manageAdmins');
                 } else {
                     die('Something went wrong');
                 }

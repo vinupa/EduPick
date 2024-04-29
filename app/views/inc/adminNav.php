@@ -23,6 +23,10 @@
                 <i class="uil uil-streering"></i>
                 <span class="link-name">Approve Drivers</span>
             </a></li>
+            <li><a href="<?php echo URLROOT; ?>/admins/incidentReports">
+                <i class="uil uil-exclamation-octagon"></i>
+                <span class="link-name">Incident Reports</span>
+            </a></li>
         </ul>
         
         <ul class="logout-mode">

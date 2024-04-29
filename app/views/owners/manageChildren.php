@@ -52,10 +52,10 @@
                 </div>
 
                 <div class="data type">
-                    <span class="data-title">Hometown</span>
+                    <span class="data-title">Vehicle</span>
                     <?php foreach ($data['children'] as $child): ?>
                         <span class="data-list">
-                            <?php echo $child->city; ?>
+                            <?php echo $child->licensePlate; ?>
                         </span>
                     <?php endforeach; ?>
                 </div>

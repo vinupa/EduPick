@@ -53,7 +53,7 @@ class Driver_
 
     public function getVacantVehicles()
     {
-        $this->db->query('SELECT vehicle.*, owner.firstName, owner.lastName, owner.contactNumber FROM vehicle JOIN owner ON vehicle.ownerId = owner.ownerID WHERE vehicle.driverId IS NULL');
+        $this->db->query('SELECT vehicle.*, owner.firstName, owner.lastName, owner.contactNumber FROM vehicle JOIN owner ON vehicle.ownerId = owner.ownerID WHERE vehicle.driverId IS NULL AND (vehicle.pendingState = 1 AND vehicle.approvedState = 0) OR (vehicle.pendingState = 0 AND vehicle.approvedState = 1)');
         $rows = $this->db->resultSet();
 
         return $rows;
