@@ -23,10 +23,6 @@
                 <i class="uil uil-streering"></i>
                 <span class="link-name">Approve Drivers</span>
             </a></li>
-            <li><a href="<?php echo URLROOT; ?>/users/adminRegister">
-                <i class="uil uil-sign-in-alt"></i>
-                <span class="link-name">Admin Registration</span>
-            </a></li>
         </ul>
         
         <ul class="logout-mode">

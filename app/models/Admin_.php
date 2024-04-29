@@ -211,19 +211,19 @@ class Admin_ {
     }
 
     public function getParentRegistrationData($fromDate, $toDate) {
-        
         $this->db->query("
             SELECT 
-                parentID, 
-                email, 
-                firstName, 
-                lastName, 
-                city, 
-                contactNumber, 
-                regDate
-            FROM parent
-            WHERE regDate BETWEEN :fromDate AND :toDate
-            ORDER BY regDate DESC
+                p.parentID, 
+                p.email, 
+                p.firstName, 
+                p.lastName, 
+                c.name AS city, 
+                p.contactNumber, 
+                p.regDate
+            FROM parent p
+            INNER JOIN city c ON p.cityId = c.cityId  
+            WHERE p.regDate BETWEEN :fromDate AND :toDate
+            ORDER BY p.regDate DESC
         ");
     
         $this->db->bind(':fromDate', $fromDate);
