@@ -35,7 +35,7 @@
 
                 <div class="data names">
                     <span class="data-title">Vehicle</span>
-                    <?php foreach ($data['vehicles'] as $vehicle): ?>
+                    <?php foreach ($data['vehicles'] as $vehicle) : ?>
                         <span class="data-list">
                             <img src="<?php echo URLROOT; ?>/uploads/<?php echo $vehicle->image_vehicle; ?>" alt="vehicle photo" class="vehicle-image">
                         </span>
@@ -44,7 +44,7 @@
 
                 <div class="data email">
                     <span class="data-title">Registration Number</span>
-                    <?php foreach ($data['vehicles'] as $vehicle): ?>
+                    <?php foreach ($data['vehicles'] as $vehicle) : ?>
                         <span class="data-list">
                             <?php echo $vehicle->licensePlate; ?>
                         </span>
@@ -53,7 +53,7 @@
 
                 <div class="data joined">
                     <span class="data-title">Total Seats</span>
-                    <?php foreach ($data['vehicles'] as $vehicle): ?>
+                    <?php foreach ($data['vehicles'] as $vehicle) : ?>
                         <span class="data-list data-grade">
                             <?php echo $vehicle->totalSeats; ?>
                         </span>
@@ -62,7 +62,7 @@
 
                 <div class="data type">
                     <span class="data-title">Vacant Seats</span>
-                    <?php foreach ($data['vehicles'] as $vehicle): ?>
+                    <?php foreach ($data['vehicles'] as $vehicle) : ?>
                         <span class="data-list" style="color: rgb(18, 207, 18)">
                             <?php echo $vehicle->vacantSeats; ?>
                         </span>
@@ -71,7 +71,7 @@
 
                 <div class="data status">
                     <span class="data-title">Vehicle Driver</span>
-                    <?php foreach ($data['vehicles'] as $vehicle): ?>
+                    <?php foreach ($data['vehicles'] as $vehicle) : ?>
                         <span class="data-list">
                             <?php if (!empty($vehicle->firstName)) : ?>
                                 <?php echo $vehicle->firstName; ?> <?php echo $vehicle->lastName; ?>
@@ -84,10 +84,14 @@
 
                 <div class="data status">
                     <span class="data-title">Approval</span>
-                    <?php foreach ($data['vehicles'] as $vehicle): ?>
+                    <?php foreach ($data['vehicles'] as $vehicle) : ?>
                         <span class="data-list">
                             <?php if ($vehicle->approvedState == 0) : ?>
                                 <span style="color: rgb(255, 0, 0);"><i class="uil uil-info-circle"></i>&nbsp;Pending</span>
+                                <?php $confirmationMessage = "Are you sure you want to remove your vehicle " . $vehicle->licensePlate . "?"; ?>
+                                <a href="<?php echo URLROOT; ?>/owners/deleteVehicle/<?php echo $vehicle->vehicleId; ?>" onclick="return confirm('<?php echo $confirmationMessage; ?>');" class="disconnect-btn pending-remove">
+                                    <i class="uil uil-trash-alt"></i>
+                                </a>
                             <?php else : ?>
                                 <span style="color: rgb(18, 207, 18);"><i class="uil uil-check-circle"></i>&nbsp;Approved</span>
                             <?php endif; ?>

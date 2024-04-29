@@ -198,7 +198,7 @@ class Owner_
 
     public function disconnectDriver($driver_id)
     {
-        $this->db->query('UPDATE driver SET vehicleId = NULL WHERE driverId = :driver_id');
+        $this->db->query('UPDATE driver SET vehicleID = NULL, ownerID = NULL WHERE driverID = :driver_id');
         $this->db->bind(':driver_id', $driver_id);
 
         if ($this->db->execute()) {
@@ -235,6 +235,29 @@ class Owner_
             } else {
                 return false;
             }
+        } else {
+            return false;
+        }
+    }
+
+    public function deleteVehicle($vehicle_id)
+    {
+        //if a driver has this vehicle, remove the vehicle id and owner id from the driver table
+        $this->db->query('UPDATE driver SET vehicleId = NULL, ownerID = NULL WHERE vehicleId = :vehicle_id');
+        $this->db->bind(':vehicle_id', $vehicle_id);
+        $this->db->execute();
+
+        //if there were pending driver requests for this vehicle, decline them
+        $this->db->query('UPDATE drivervehiclerequest SET declinedState = 1 WHERE vehicleId = :vehicle_id AND declinedState = 0');
+        $this->db->bind(':vehicle_id', $vehicle_id);
+        $this->db->execute();
+
+        //remove the vehicle from the vehicle table
+        $this->db->query('DELETE FROM vehicle WHERE vehicleId = :vehicle_id');
+        $this->db->bind(':vehicle_id', $vehicle_id);
+
+        if ($this->db->execute()) {
+            return true;
         } else {
             return false;
         }

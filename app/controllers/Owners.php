@@ -186,4 +186,12 @@ class Owners extends Controller
             die('Something went wrong');
         }
     }
+
+    public function deleteVehicle($vehicle_id){
+        if($this->ownerModel->deleteVehicle($vehicle_id)){
+            redirect('owners/manageVehicles');
+        } else {
+            die('Something went wrong');
+        }
+    }
 }
