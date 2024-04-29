@@ -105,10 +105,21 @@ class Admin_ {
 
     public function rejectVehicle($vehicleID){
    
-        $this->db->query('UPDATE vehicle SET approvedState = 0, pendingState = 0 WHERE vehicleID = :vehicle_id');
-      
+        
+
+        //if vehicle had a driver assigned, remove the driver
+        $this->db->query('UPDATE driver SET vehicleID = NULL, ownerID = NULL WHERE vehicleID = :vehicle_id');
         $this->db->bind(':vehicle_id', $vehicleID);
-    
+        $this->db->execute();
+
+        $this->db->query('UPDATE vehicle SET driverId = NULL WHERE vehicleId = :vehicle_id');
+        $this->db->bind(':vehicle_id', $vehicleID);
+        $this->db->execute();
+
+        //reject the vehicle
+        $this->db->query('UPDATE vehicle SET approvedState = 0, pendingState = 0 WHERE vehicleID = :vehicle_id');
+        $this->db->bind(':vehicle_id', $vehicleID);
+        
         if($this->db->execute()){
             return true;
         } else {
@@ -280,5 +291,35 @@ class Admin_ {
     
         return $results;
     }
+
+    public function getIncidentReports(){
+
+        $this->db->query('SELECT incident.*, vehicle.licensePlate, driver.firstName as driverFirstName, driver.lastName as driverLastName, parent.firstName as parentFirstName, parent.lastName as parentLastName FROM incident JOIN vehicle ON incident.vehicleID = vehicle.vehicleId JOIN driver ON vehicle.driverId = driver.driverId JOIN parent ON incident.parentID = parent.parentID ORDER BY incident.resolvedState ASC, incident.timestamp DESC');
+    
+        $results = $this->db->resultSet();
+    
+        return $results;
+    }
+
+    public function reportResolved($incident_id){
+        $this->db->query('UPDATE incident SET resolvedState = 1 WHERE incidentID = :incident_id');
+        $this->db->bind(':incident_id', $incident_id);
+
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function reportDelete($incident_id){
+        $this->db->query('DELETE FROM incident WHERE incidentID = :incident_id');
+        $this->db->bind(':incident_id', $incident_id);
+
+        if($this->db->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
-?>  
