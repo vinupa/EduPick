@@ -31,7 +31,7 @@
                       <div class="text">
                         <ul class="vehicle-details">
                             <li>NIC Number: <?php echo $driverRequest->nic; ?></li>
-                            <li>Owner Name: <?php echo $driverRequest->ownerFirstName . ' ' . $driverRequest->ownerLastName; ?></li>
+                            <li>Contact Number: <?php echo $driverRequest->contactNumber ?></li>
                       </div>
                       <a href="<?php echo URLROOT; ?>/admins/driverApprovalDetails/<?php echo $driverRequest->driverID; ?>"><button>Read more</button></a>
                    </div>
