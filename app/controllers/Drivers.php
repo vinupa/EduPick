@@ -29,12 +29,14 @@ class Drivers extends Controller
             redirect('drivers/driverPending');
         } elseif ($approvedState == 1 && $pendingState == 0 && $formState == 1) {
             redirect('drivers/driverDashboard');
+        } elseif ($approvedState == 0 && $pendingState == 0 && $formState == 1) {
+            redirect('drivers/driverRejected');
         }
     }
 
     public function driverDashboard()
     {
-        if(!$this->driverModel->isDriverConnected($_SESSION['user_id'])){
+        if (!$this->driverModel->isDriverConnected($_SESSION['user_id'])) {
             redirect('drivers/findVehicles');
         }
 
@@ -121,22 +123,33 @@ class Drivers extends Controller
     public function driverPending()
     {
         $driver = $this->driverModel->getDriver($_SESSION['user_id']);
-        if ($driver->approvedState == 1) {
-            redirect('drivers/driverDashboard');
+
+        if ($driver->pendingState == 0) {
+            if ($driver->approvedState == 1) {
+                redirect('drivers/driverDashboard');
+            } else {
+                redirect('drivers/driverRejected');
+            }
         }
 
         $data = [];
         $this->view('drivers/driverPending', $data);
     }
 
+    public function driverRejected()
+    {
+        $data = [];
+        $this->view('drivers/driverRejected', $data);
+    }
+
 
     public function findVehicles()
     {
-        if($this->driverModel->driverRequestPending($_SESSION['user_id'])){
+        if ($this->driverModel->driverRequestPending($_SESSION['user_id'])) {
             redirect('drivers/pendingRequest');
         }
 
-        if($this->driverModel->isDriverConnected($_SESSION['user_id'])){
+        if ($this->driverModel->isDriverConnected($_SESSION['user_id'])) {
             redirect('drivers/driverDashboard');
         }
 
@@ -163,7 +176,7 @@ class Drivers extends Controller
     public function pendingRequest()
     {
 
-        if(!$this->driverModel->driverRequestPending($_SESSION['user_id'])){
+        if (!$this->driverModel->driverRequestPending($_SESSION['user_id'])) {
             redirect('drivers/findVehicles');
         }
 

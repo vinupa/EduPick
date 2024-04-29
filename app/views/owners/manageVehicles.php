@@ -87,7 +87,13 @@
                     <?php foreach ($data['vehicles'] as $vehicle) : ?>
                         <span class="data-list">
                             <?php if ($vehicle->approvedState == 0) : ?>
-                                <span style="color: rgb(255, 0, 0);"><i class="uil uil-info-circle"></i>&nbsp;Pending</span>
+                                
+                                <?php if ($vehicle->pendingState == 1) : ?>
+                                    <span style="color: orange;"><i class="uil uil-info-circle"></i>&nbsp;Pending</span>
+                                <?php else : ?>
+                                    <span style="color: red;"><i class="uil uil-times"></i>&nbsp;Rejected</span>
+                                <?php endif; ?>
+
                                 <?php $confirmationMessage = "Are you sure you want to remove your vehicle " . $vehicle->licensePlate . "?"; ?>
                                 <a href="<?php echo URLROOT; ?>/owners/deleteVehicle/<?php echo $vehicle->vehicleId; ?>" onclick="return confirm('<?php echo $confirmationMessage; ?>');" class="disconnect-btn pending-remove">
                                     <i class="uil uil-trash-alt"></i>

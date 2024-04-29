@@ -33,6 +33,7 @@
         <div class="form_container">
           <!-- Register Form -->
           <div class="form login_form">
+            <a href="<?php echo URLROOT; ?>/admins/manageAdmins" style="text-decoration: none; color: blue;">< Back</a>
             <form action="<?php echo URLROOT; ?>/users/adminRegister" method="POST">
               <h2>Register</h2>
 

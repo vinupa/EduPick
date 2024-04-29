@@ -40,7 +40,7 @@ class Owner_
 
     public function addVehicle($data)
     {
-        $this->db->query('INSERT INTO vehicle (licensePlate, model, modelYear, ac, highroof, totalSeats, vacantSeats, ownerId, image_vehicle, doc_registration, doc_emissions) VALUES (:licensePlate, :model, :modelYear, :ac, :highroof, :totalSeats, :vacantSeats, :owner_id, :vehicleImage, :registrationDoc, :emissionsReport)');
+        $this->db->query('INSERT INTO vehicle (licensePlate, model, modelYear, ac, highroof, totalSeats, vacantSeats, ownerId, image_vehicle, doc_registration, doc_emissions, pendingState) VALUES (:licensePlate, :model, :modelYear, :ac, :highroof, :totalSeats, :vacantSeats, :owner_id, :vehicleImage, :registrationDoc, :emissionsReport, 1)');
 
         $this->db->bind(':owner_id', $data['owner_id']);
         $this->db->bind(':licensePlate', $data['licensePlate']);
@@ -216,7 +216,7 @@ class Owner_
 
     public function getChildren($owner_id)
     {
-        $this->db->query('SELECT child.*, parent.contactNumber, vehicle.licensePlate, city.name as city, school.name as schoolName FROM child JOIN parent ON child.parentID = parent.parentID JOIN vehicle ON child.vehicleId = vehicle.vehicleId JOIN city ON parent.cityId = city.cityId JOIN school ON child.schoolId = school.schoolId WHERE vehicle.ownerId = :owner_id');
+        $this->db->query('SELECT child.*, parent.contactNumber, vehicle.licensePlate, school.name as schoolName FROM child JOIN parent ON child.parentID = parent.parentID JOIN vehicle ON child.vehicleId = vehicle.vehicleId JOIN school ON child.schoolId = school.schoolId WHERE vehicle.ownerId = :owner_id ORDER BY vehicle.licensePlate');
         $this->db->bind(':owner_id', $owner_id);
         $results = $this->db->resultSet();
         return $results;
