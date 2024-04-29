@@ -7,16 +7,20 @@
     </div>
     <div class="menu-items">
         <ul class="nav-links">
-            <li><a href="<?php echo URLROOT; ?>/admins/manageAdmins">
+            <li><a href="<?php echo URLROOT; ?>/admins/adminDashboard">
                 <i class="uil uil-estate"></i>
                 <span class="link-name">Dashboard</span>
+            </a></li>
+            <li><a href="<?php echo URLROOT; ?>/admins/manageAdmins">
+                <i class="uil uil-user-circle"></i>
+                <span class="link-name">Manage Admins</span>
             </a></li>
             <li><a href="<?php echo URLROOT; ?>/admins/vehicleApproval">
                 <i class="uil uil-bus-school"></i>
                 <span class="link-name">Approve Vehicles</span>
             </a></li>
             <li><a href="<?php echo URLROOT; ?>/admins/driverApproval">
-                <i class="uil uil-user-circle"></i>
+                <i class="uil uil-streering"></i>
                 <span class="link-name">Approve Drivers</span>
             </a></li>
             <li><a href="<?php echo URLROOT; ?>/users/adminRegister">

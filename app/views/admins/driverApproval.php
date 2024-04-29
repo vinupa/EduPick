@@ -18,12 +18,11 @@
                 <span class="text">Requests</span>
             </div>
             
-            <!-- Iterate over driver requests and generate cards dynamically -->
             <?php foreach($data['driverRequests'] as $driverRequest): ?>
             <div class="blog-card">
                 <div class="inner-part">
                    <label for="imgTap" class="img">
-                   <img class="img-3" src="../Dashboards/Images/driver_avatar.png">
+                   <img class="img-3" src="<?php echo URLROOT; ?>/uploads/<?php echo $driverRequest->image_profilePhoto; ?>" alt="driver photo">
                    </label>
                    <div class="content">
                       <div class="vehicle-title">

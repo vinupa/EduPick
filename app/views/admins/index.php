@@ -1,2 +1,2 @@
 <?php
-  redirect('admins/manageAdmins');
+  redirect('admins/adminDashboard');

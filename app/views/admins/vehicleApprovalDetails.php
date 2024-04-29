@@ -15,9 +15,8 @@
             <di v class="approve-details-container">
                 <div class="approve-details-box">
                     <div class="images">
-                        <!-- If you have multiple images, loop through them here -->
-                        <div class="img-holder active">
-                            <img src="">
+                        <div class="img-holder">
+                        <img src="<?php echo URLROOT; ?>/uploads/<?php echo $data['vehicleDetails']->image_vehicle; ?>" alt="vehicle photo">
                         </div>
                     </div>
                     <div class="basic-info">
@@ -28,13 +27,13 @@
                             <li><i class="uil uil-check-square"></i>Owner Name: <?php echo $data['vehicleDetails']->ownerFirstName . ' ' . $data['vehicleDetails']->ownerLastName; ?></li>
                             <li><i class="uil uil-check-square"></i>Vehicle Number: <?php echo $data['vehicleDetails']->licensePlate; ?></li>
                             <li><i class="uil uil-check-square"></i>Total Seats: <?php echo $data['vehicleDetails']->totalSeats; ?></li>
-                            <li><i class="uil uil-check-square"></i>Features: <?php echo $data['vehicleDetails']->features; ?></li>
                             <li><i class="uil uil-check-square"></i>Contact Information: <?php echo $data['vehicleDetails']->ownerContactNumber; ?></li>
-                            <li><i class="uil uil-check-square"></i>Vehicle Registration Document: <a href="" target="_blank">View Document</a></li>
+                            <li><i class="uil uil-check-square"></i>Vehicle Registration Document: <a href="<?php echo URLROOT; ?>/uploads/<?php echo $data['vehicleDetails']->doc_registration; ?>" target="_blank">View Document</a></li>
+                            <li><i class="uil uil-check-square"></i>Emission Report: <a href="<?php echo URLROOT; ?>/uploads/<?php echo $data['vehicleDetails']->doc_emissions; ?>" target="_blank">View Document</a></li>
                         </ul>
                         <div class="options">
-                            <a href="<?php echo URLROOT; ?>/admins/approveVehicle/<?php echo $data['vehicleDetails']->vehicleID; ?>" onclick="return confirmApproval();">Approve</a>
-                            <a href="<?php echo URLROOT; ?>/admins/rejectVehicle/<?php echo $data['vehicleDetails']->vehicleID; ?>" onclick="return confirmRejection();">Reject</a>
+                            <a href="<?php echo URLROOT; ?>/admins/approveVehicle/<?php echo $data['vehicleDetails']->vehicleId; ?>" onclick="return confirmApproval();">Approve</a>
+                            <a href="<?php echo URLROOT; ?>/admins/rejectVehicle/<?php echo $data['vehicleDetails']->vehicleId; ?>" onclick="return confirmRejection();">Reject</a>
                         </div>
                     </div>
                 </div>
