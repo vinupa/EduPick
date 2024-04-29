@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="basic-info">
-                        <h1>High Roof Van</h1>
+                        <h1><?php echo $data['vehicleDetails']->model; ?></h1>
                     </div>
                     <div class="description">
                         <ul class="features">

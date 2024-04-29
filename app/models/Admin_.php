@@ -76,17 +76,19 @@ class Admin_ {
 
     public function getDriverRequests(){
 
-        $this->db->query('SELECT driver.*, owner.firstName AS ownerFirstName, owner.lastName AS ownerLastName, owner.contactNumber AS ownerContactNumber FROM driver INNER JOIN owner ON driver.ownerID = owner.ownerID WHERE driver.approvedState = 0 && driver.pendingState = 1');
+        $this->db->query('SELECT driver.*, owner.firstName AS ownerFirstName, owner.lastName AS ownerLastName, owner.contactNumber AS ownerContactNumber FROM driver LEFT JOIN owner ON driver.ownerID = owner.ownerID WHERE driver.approvedState = 0 && driver.pendingState = 1');
 
         return $this->db->resultSet();
     }
 
     public function getDriverDetails($driverID){
-
-        $this->db->query('SELECT driver.*, owner.firstName AS ownerFirstName, owner.lastName AS ownerLastName, owner.contactNumber AS ownerContactNumber FROM driver INNER JOIN owner ON driver.ownerID = owner.ownerID WHERE driver.driverID = :driver_id');
+        $this->db->query('SELECT driver.*, owner.firstName AS ownerFirstName, owner.lastName AS ownerLastName, owner.contactNumber AS ownerContactNumber 
+                            FROM driver 
+                            LEFT JOIN owner ON driver.ownerID = owner.ownerID 
+                            WHERE driver.driverID = :driver_id');
         
         $this->db->bind(':driver_id', $driverID);
-
+    
         return $this->db->single();
     }
 
