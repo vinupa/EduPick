@@ -138,11 +138,7 @@
         <div>
             <div>
                 <div class="parent-registration-data">
-                    <div class="title">
-                        <i class="uil uil-users-alt"></i>
-                        <span class="text">Parent Registration Data</span>
-                    </div>
-                    <div class="date-filter" style="margin-bottom: 30px; margin-left: 15px;">
+                    <div class="date-filter" style="margin-bottom: 30px; margin-top: 60px;">
                         <form method="post" action="<?php echo URLROOT; ?>/admins/adminDashboard">
                             <label for="from_date">From:</label>
                             <input type="date" id="from_date" name="from_date" value="<?php echo isset($_POST['from_date']) ? $_POST['from_date'] : ''; ?>" required>
@@ -151,7 +147,10 @@
                             <button type="submit" class="btn btn-primary">Filter</button>
                         </form>
                     </div>
-
+                    <div class="title">
+                        <i class="uil uil-users-alt"></i>
+                        <span class="text">Parent Registration Data</span>
+                    </div>
                     <div class="activity" style = "margin-bottom: 50px">
                         <div class="activity-data">
                             <?php if (isset($data['parentRegistrationData'])) : ?>
