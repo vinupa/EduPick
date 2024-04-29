@@ -1,6 +1,7 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
 
 <link rel="stylesheet" href="<?php echo URLROOT; ?>/auth/style.css">
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 <title><?php echo SITENAME; ?> | Register</title>
 
   </head>
@@ -19,8 +20,16 @@
         </div>
       </nav>
     </header>
-
+    <div style="position: relative; margin-left: 180px;">
+      <a href="<?php echo URLROOT; ?>/admins/adminDashboard" style="text-decoration: none;">
+        <div style="background-color: #066ca3; color: white; padding: 10px 20px; border-radius: 20px; display: inline-block;">
+          <i class="uil uil-backward"></i>
+          <span style="margin-left: 5px;">Go Back</span>
+        </div>
+      </a>
+    </div>
     <section class="home-reg">
+        
         <div class="form_container">
           <!-- Register Form -->
           <div class="form login_form">
