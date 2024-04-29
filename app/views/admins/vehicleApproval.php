@@ -18,7 +18,6 @@
                 <span class="text">Requests</span>
             </div>
             
-            <!-- Iterate over vehicle requests and generate cards dynamically -->
             <?php foreach($data['vehicleRequests'] as $vehicleRequest): ?>
             <div class="blog-card">
                 <div class="inner-part">
@@ -39,8 +38,6 @@
                 </div>
              </div>
              <?php endforeach; ?>
-             <!-- End of dynamic card generation -->
-             
         </div>
     </div>
    </section>

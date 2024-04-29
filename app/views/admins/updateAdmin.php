@@ -16,7 +16,6 @@
             
             <section style="display: flex; justify-content: center; height: calc(100vh - 140px);">
                 <div class="form_container">
-                  <!-- Update Form -->
                   <div class="form login_form">
                     <form action="<?php echo URLROOT; ?>/admins/updateAdmin/<?php echo $data['adminID']; ?>" method="POST">
                       <h2>Update</h2>

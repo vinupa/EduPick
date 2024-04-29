@@ -1,3 +1,5 @@
 app/config/config.php
 .vscode/
 public/uploads/
+
+app/libraries/tcpdf

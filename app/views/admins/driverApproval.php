@@ -18,7 +18,6 @@
                 <span class="text">Requests</span>
             </div>
             
-            <!-- Iterate over driver requests and generate cards dynamically -->
             <?php foreach($data['driverRequests'] as $driverRequest): ?>
             <div class="blog-card">
                 <div class="inner-part">
