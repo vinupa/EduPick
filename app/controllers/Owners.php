@@ -130,4 +130,68 @@ class Owners extends Controller
             die('Something went wrong');
         }
     }
+
+    public function childRequests()
+    {
+        $data = [
+            'requests' => $this->ownerModel->getChildRequests($_SESSION['user_id'])
+        ];
+        $this->view('owners/childRequests', $data);
+    }
+
+    public function acceptChildRequest($request_id){
+        if($this->ownerModel->acceptChildRequest($request_id)){
+            redirect('owners/childRequests');
+        } else {
+            die('Something went wrong');
+        }
+    }
+
+    public function declineChildRequest($request_id){
+        if($this->ownerModel->declineChildRequest($request_id)){
+            redirect('owners/childRequests');
+        } else {
+            die('Something went wrong');
+        }
+    }
+
+    public function manageDrivers()
+    {
+        $data = [
+            'drivers' => $this->ownerModel->getDrivers($_SESSION['user_id'])
+        ];
+        $this->view('owners/manageDrivers', $data);
+    }
+
+    public function manageChildren()
+    {
+        $data = [
+            'children' => $this->ownerModel->getChildren($_SESSION['user_id'])
+        ];
+        $this->view('owners/manageChildren', $data);
+    }
+
+    public function disconnectDriver($driver_id){
+        if($this->ownerModel->disconnectDriver($driver_id)){
+            redirect('owners/manageDrivers');
+        } else {
+            die('Something went wrong');
+        }
+    }
+
+    public function disconnectChild($child_id){
+        if($this->ownerModel->disconnectChild($child_id)){
+            redirect('owners/manageChildren');
+        } else {
+            die('Something went wrong');
+        }
+    }
+
+    public function deleteVehicle($vehicle_id){
+        if($this->ownerModel->deleteVehicle($vehicle_id)){
+            redirect('owners/manageVehicles');
+        } else {
+            die('Something went wrong');
+        }
+    }
 }

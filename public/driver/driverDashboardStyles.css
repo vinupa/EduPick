@@ -1,0 +1,38 @@
+.activity-data {
+    border: 2px solid var(--border-color);
+    padding: 10px;
+}
+
+.data-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4rem;
+}
+
+.delete-edit-icons a {
+    text-decoration: none;
+}
+
+.subtopic {
+    margin: 0 10px;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-left: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.subtopic i {
+    font-size: 26px;
+    color: var(--delete-edit-color);
+
+}
+
+.subtopic .text {
+    margin-left: 10px;
+}

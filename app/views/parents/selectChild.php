@@ -47,7 +47,7 @@
                             </div>
                             <div class="child-details-right">
                                 <span class="child-school">
-                                    <?php echo $child->school; ?>
+                                    <?php echo $child->schoolName; ?>
                                 </span>
                                 <span class="child-grade">Grade
                                     <?php echo $child->grade; ?>

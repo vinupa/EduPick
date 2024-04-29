@@ -29,24 +29,26 @@
                 <form action="<?php echo URLROOT; ?>/parents/addChild" method="POST">
                     <div class="input-box">
                         <span class="details">First Name</span>
-                        <input type="text" id="first_name" name="first_name">
+                        <input type="text" id="first_name" name="first_name" <?php echo !empty($data['fname']) ? "value=".$data['fname'] : '' ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">Last Name</span>
-                        <input type="text" id="last_name" name="last_name">
+                        <input type="text" id="last_name" name="last_name" <?php echo !empty($data['lname']) ? "value=".$data['lname'] : '' ?>>
                     </div>
                     <div class="input-box">
                         <span class="details">School</span>
                         <select class="" id="school" name="school">
                             <option value="" disabled hidden selected>Select School</option>
-                            <option value="Royal College, Colombo">Royal College, Colombo</option>
-                            <option value="Ananda College, Colombo">Ananda College, Colombo</option>
-                            <option value="Thurstan College, Colombo">Thurstan College, Colombo</option>
+                            
+                            <?php foreach($data['schools'] as $school): ?>
+                                <option value="<?php echo $school->schoolId; ?>" <?php echo ($data['school'] == $school->schoolId) ? " selected" : '' ?>><?php echo $school->name; ?></option>
+                            <?php endforeach; ?>
+
                         </select>
                     </div>
                     <div class="input-box">
                         <span class="details">Grade</span>
-                        <input type="number" id="grade" name="grade">
+                        <input type="number" id="grade" name="grade" <?php echo !empty($data['grade']) ? "value=".$data['grade'] : '' ?>>
                     </div>
                     
                     <!-- error messages -->

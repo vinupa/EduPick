@@ -21,7 +21,7 @@
     </header>
 
     <section class="home">
-        <d  iv class="form_container">
+        <div class="form_container">
           <!-- Login Form -->
           <div class="form login_form">
             <form action="<?php echo URLROOT; ?>/users/login" method="POST">
@@ -40,14 +40,6 @@
                 <p>Password:</p>
                 <input type="password" placeholder="**********" id="password" name="password" required />
               </div>
-  
-              <!-- <div class="option_field">
-                <span class="checkbox">
-                  <input type="checkbox" id="check" />
-                  <label for="check">Remember me</label>
-                </span>
-                <a href="#" class="forgot_pw">Forgot password?</a>
-              </div> -->
               
               <button class="button" type="submit">Login Now</button>
   

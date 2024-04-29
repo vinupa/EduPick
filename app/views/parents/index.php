@@ -1,2 +1,0 @@
-<?php
-  redirect('parents/manageChildren');

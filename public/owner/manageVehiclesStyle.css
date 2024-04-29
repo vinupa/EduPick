@@ -15,3 +15,23 @@
 .delete-edit-icons a {
     text-decoration: none;
 }
+
+.disconnect-btn {
+    border-radius: 30px;
+    padding: 5px 10px;
+    background-color: var(--panel-color);
+    color: red;
+    border: none;
+    font-size: 16px;
+    text-decoration: none;
+
+    &:hover {
+        box-shadow: 0px 0px 10px 0 red;
+        background-color: red;
+        color: white;
+    }
+}
+
+.pending-remove {
+    margin-left: 15px;
+}

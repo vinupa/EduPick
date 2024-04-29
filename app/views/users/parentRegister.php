@@ -21,7 +21,7 @@
     </header>
 
     <section class="home-reg">
-        <d  iv class="form_container">
+        <div class="form_container">
           <!-- Register Form -->
           <div class="form login_form">
             <form action="<?php echo URLROOT; ?>/users/parentRegister" method="POST">
@@ -72,10 +72,14 @@
                 <p>Nearest City:</p>
                 <select id="nearest_city" name="nearest_city">
                   <option value="" disabled selected hidden>Select Your City</option>
-                  <option value="Nugegoda">Nugegoda</option>
+                  <!-- <option value="Nugegoda">Nugegoda</option>
                   <option value="Maharagama">Maharagama</option>
                   <option value="Kottawa">Kottawa</option>
-                  <option value="Homagama">Homagama</option>
+                  <option value="Homagama">Homagama</option> -->
+                  <?php print_r($data['cities']); ?>
+                  <?php foreach($data['cities'] as $city): ?>
+                    <option value="<?php echo $city->cityId; ?>"><?php echo $city->name; ?></option>
+                  <?php endforeach; ?>
                 </select>
               </div>
   

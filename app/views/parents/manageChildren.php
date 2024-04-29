@@ -14,8 +14,8 @@
     <div class="dash-content">
         <div class="overview">
             <div class="title">
-                <i class="uil uil-tachometer-fast-alt"></i>
-                <span class="text">Dashboard</span>
+                <i class="uil uil-users-alt"></i>
+                <span class="text">Manage Children</span>
             </div>
 
             <div class="boxes">
@@ -46,7 +46,7 @@
                     <span class="data-title">School</span>
                     <?php foreach ($data['children'] as $child): ?>
                         <span class="data-list">
-                            <?php echo $child->school; ?>
+                            <?php echo $child->schoolName; ?>
                         </span>
                     <?php endforeach; ?>
                 </div>
@@ -61,10 +61,10 @@
                 </div>
 
                 <div class="data type">
-                    <span class="data-title">Vehicle Owner</span>
+                    <span class="data-title">Vehicle</span>
                     <?php foreach ($data['children'] as $child): ?>
                         <span class="data-list">
-                            <?php echo $child->vanID; ?>
+                            <?php echo $child->licensePlate ? $child->licensePlate : '<i>N/A</i>'; ?>
                         </span>
                     <?php endforeach; ?>
                 </div>
@@ -73,7 +73,7 @@
                     <span class="data-title">Vehicle Driver</span>
                     <?php foreach ($data['children'] as $child): ?>
                         <span class="data-list">
-                            <?php echo $child->vanID; ?>
+                            <?php echo $child->driverFirstName ? $child->driverFirstName . ' ' . $child->driverLastName : '<i>N/A</i>'; ?>
                         </span>
                     <?php endforeach; ?>
                 </div>
@@ -83,11 +83,18 @@
                     <?php foreach ($data['children'] as $child): ?>
                         <span class="data-list">
                             <div class="delete-edit-icons">
-                                <a href="<?php echo URLROOT; ?>/parents/removeChild/<?php echo $child->childID; ?>"
-                                    onclick="return confirm('Are you sure you want to remove this child?');"><i
-                                        class="uil uil-trash-alt"></i></a>
-                                <a href="<?php echo URLROOT; ?>/parents/updateChild/<?php echo $child->childID; ?>"><i
-                                        class="uil uil-edit"></i></a>
+                                <!-- show the two links only if licensePlate is null -->
+                                <?php if (!$child->licensePlate): ?>
+                                    <a href="<?php echo URLROOT; ?>/parents/removeChild/<?php echo $child->childID; ?>"
+                                        onclick="return confirm('Are you sure you want to remove this child?');"><i
+                                            class="uil uil-trash-alt"></i></a>
+                                    <a href="<?php echo URLROOT; ?>/parents/updateChild/<?php echo $child->childID; ?>"><i
+                                            class="uil uil-edit"></i></a>
+                                <?php else: ?>
+                                    <span class="linked-text">
+                                        <i class="uil uil-info-circle"></i>&nbsp;Linked
+                                    </span>
+                                <?php endif; ?>
                             </div>
                         </span>
                     <?php endforeach; ?>

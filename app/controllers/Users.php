@@ -51,7 +51,7 @@ class Users extends Controller
                 $data['email_err'] = 'Please enter email';
             } else {
                 // Check email
-                if ($this->userModel->findParentByEmail($data['email'])) {
+                if ($this->userModel->findUserByEmail($data['email'])) {
                     $data['email_err'] = 'Email is already taken';
                 }
             }
@@ -69,14 +69,11 @@ class Users extends Controller
             // Validate Contact Number
             if (empty($data['contact_number'])) {
                 $data['contact_number_err'] = 'Please enter contact number';
-            }
-            else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
+            } else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
                 $data['contact_number_err'] = 'Invalid Contact Number length, please use 07X XXX XXXX format or +94 XX XXX XXXX format';
-            }
-            else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
-                $data['contact_number_err'] = 'Invalid Contact Number format, please use 07X XXX XXXX format';
-            }
-            else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
+            } else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
+                $data['contact_number_err'] = 'Invalid Contact Number format, please use 0XX XXX XXXX format';
+            } else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
                 $data['contact_number_err'] = 'Invalid Contact Number format, please use +94 XX XXX XXXX format';
             }
 
@@ -110,8 +107,17 @@ class Users extends Controller
 
                 // Register User
                 if ($this->userModel->registerParent($data)) {
-                    flash('register_success', 'You are Registered and can Log in');
-                    redirect('users/login');
+
+                    $id = $this->userModel->getParentByEmail($data['email']);
+                    $full_name = $data['fname'] . ' ' . $data['lname'];
+                    // $this->verify_code($id->parentID, 'parent', $data['email'], $full_name);
+                    $_SESSION['verify_id'] = $id->parentID;
+                    $_SESSION['verify_type'] = 'parent';
+                    $_SESSION['verify_email'] = $data['email'];
+                    $_SESSION['verify_name'] = $full_name;
+
+                    flash('register_success', 'You have Registered Successfully');
+                    $this->view('users/registered');
                 } else {
                     die('Something went wrong');
                 }
@@ -119,7 +125,6 @@ class Users extends Controller
                 // Load view with errors
                 $this->view('users/parentRegister', $data);
             }
-
         } else {
             // Init data
             $data = [
@@ -136,7 +141,8 @@ class Users extends Controller
                 'city_err' => '',
                 'email_err' => '',
                 'password_err' => '',
-                'confirm_password_err' => ''
+                'confirm_password_err' => '',
+                'cities' => $this->userModel->getCities()
             ];
 
             // Load view
@@ -174,7 +180,7 @@ class Users extends Controller
                 $data['email_err'] = 'Please enter email';
             } else {
                 // Check email
-                if ($this->userModel->findOwnerByEmail($data['email'])) {
+                if ($this->userModel->findUserByEmail($data['email'])) {
                     $data['email_err'] = 'Email is already taken';
                 }
             }
@@ -192,14 +198,11 @@ class Users extends Controller
             // Validate Contact Number
             if (empty($data['contact_number'])) {
                 $data['contact_number_err'] = 'Please enter contact number';
-            }
-            else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
+            } else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
                 $data['contact_number_err'] = 'Invalid Contact Number length, please use 07X XXX XXXX format or +94 XX XXX XXXX format';
-            }
-            else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
+            } else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
                 $data['contact_number_err'] = 'Invalid Contact Number format, please use 07X XXX XXXX format';
-            }
-            else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
+            } else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
                 $data['contact_number_err'] = 'Invalid Contact Number format, please use +94 XX XXX XXXX format';
             }
 
@@ -228,8 +231,15 @@ class Users extends Controller
 
                 // Register User
                 if ($this->userModel->registerOwner($data)) {
-                    flash('register_success', 'You are registered and can log in');
-                    redirect('users/login');
+                    $id = $this->userModel->getOwnerByEmail($data['email']);
+                    $full_name = $data['fname'] . ' ' . $data['lname'];
+                    $_SESSION['verify_id'] = $id->ownerID;
+                    $_SESSION['verify_type'] = 'owner';
+                    $_SESSION['verify_email'] = $data['email'];
+                    $_SESSION['verify_name'] = $full_name;
+
+                    flash('register_success', 'You have Registered Successfully');
+                    $this->view('users/registered');
                 } else {
                     die('Something went wrong');
                 }
@@ -292,7 +302,7 @@ class Users extends Controller
                 $data['email_err'] = 'Please enter email';
             } else {
                 // Check email
-                if ($this->userModel->findDriverByEmail($data['email'])) {
+                if ($this->userModel->findUserByEmail($data['email'])) {
                     $data['email_err'] = 'Email is already taken';
                 }
             }
@@ -310,14 +320,11 @@ class Users extends Controller
             // Validate Contact Number
             if (empty($data['contact_number'])) {
                 $data['contact_number_err'] = 'Please enter contact number';
-            }
-            else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
+            } else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
                 $data['contact_number_err'] = 'Invalid Contact Number length, please use 07X XXX XXXX format or +94 XX XXX XXXX format';
-            }
-            else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
+            } else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
                 $data['contact_number_err'] = 'Invalid Contact Number format, please use 07X XXX XXXX format';
-            }
-            else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
+            } else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
                 $data['contact_number_err'] = 'Invalid Contact Number format, please use +94 XX XXX XXXX format';
             }
 
@@ -351,8 +358,18 @@ class Users extends Controller
 
                 // Register User
                 if ($this->userModel->registerDriver($data)) {
-                    flash('register_success', 'You are registered and can log in');
-                    redirect('users/login');
+                    // flash('register_success', 'You are registered and can log in');
+                    // redirect('users/login');
+
+                    $id = $this->userModel->getDriverByEmail($data['email']);
+                    $full_name = $data['fname'] . ' ' . $data['lname'];
+                    $_SESSION['verify_id'] = $id->driverID;
+                    $_SESSION['verify_type'] = 'driver';
+                    $_SESSION['verify_email'] = $data['email'];
+                    $_SESSION['verify_name'] = $full_name;
+
+                    flash('register_success', 'You have Registered Successfully');
+                    $this->view('users/registered');
                 } else {
                     die('Something went wrong');
                 }
@@ -384,15 +401,16 @@ class Users extends Controller
         }
     }
 
-    public function adminRegister(){
+    public function adminRegister()
+    {
         // Check if the user is logged in and is an admin
         // if(!$this->userModel->isAdminLoggedIn()){
         //     redirect('pages/index');
         // }
 
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
 
             $data = [
                 'first_name' => trim($_POST['first_name']),
@@ -410,53 +428,50 @@ class Users extends Controller
             ];
 
             // Validate input
-            if(empty($data['first_name'])){
+            if (empty($data['first_name'])) {
                 $data['first_name_err'] = 'Please enter first name';
             }
 
-            if(empty($data['last_name'])){
+            if (empty($data['last_name'])) {
                 $data['last_name_err'] = 'Please enter last name';
             }
 
-            if(empty($data['email'])){
+            if (empty($data['email'])) {
                 $data['email_err'] = 'Please enter email';
-            } elseif($this->userModel->findAdminByEmail($data['email'])){
+            } elseif ($this->userModel->findUserByEmail($data['email'])) {
                 $data['email_err'] = 'Email is already taken';
             }
 
             // Validate Contact Number
             if (empty($data['contact_number'])) {
                 $data['contact_number_err'] = 'Please enter contact number';
-            }
-            else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
+            } else if (strlen($data['contact_number']) != 10 && strlen($data['contact_number']) != 12) {
                 $data['contact_number_err'] = 'Invalid Contact Number length, please use 07X XXX XXXX format or +94 XX XXX XXXX format';
-            }
-            else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
+            } else if (strlen($data['contact_number']) == 10 && !preg_match('/^0\d{9}$/', $data['contact_number'])) {
                 $data['contact_number_err'] = 'Invalid Contact Number format, please use 07X XXX XXXX format';
-            }
-            else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
+            } else if (strlen($data['contact_number']) == 12 && !preg_match('/^\+94\d{9}$/', $data['contact_number'])) {
                 $data['contact_number_err'] = 'Invalid Contact Number format, please use +94 XX XXX XXXX format';
             }
 
-            if(empty($data['password'])){
+            if (empty($data['password'])) {
                 $data['password_err'] = 'Please enter password';
-            } elseif(strlen($data['password']) < 6){
+            } elseif (strlen($data['password']) < 6) {
                 $data['password_err'] = 'Password must be at least 6 characters';
             }
 
-            if(empty($data['confirm_password'])){
+            if (empty($data['confirm_password'])) {
                 $data['confirm_password_err'] = 'Please confirm password';
-            } elseif($data['password'] != $data['confirm_password']){
+            } elseif ($data['password'] != $data['confirm_password']) {
                 $data['confirm_password_err'] = 'Passwords do not match';
             }
 
             // Make sure errors are empty
-            if(empty($data['first_name_err']) && empty($data['last_name_err']) && empty($data['email_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['contact_number_err'])){
+            if (empty($data['first_name_err']) && empty($data['last_name_err']) && empty($data['email_err']) && empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['contact_number_err'])) {
                 // Hash password
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
                 // Register Admin
-                if($this->userModel->adminRegister($data)){
+                if ($this->userModel->adminRegister($data)) {
                     flash('register_success', 'You are now registered as an Admin');
                     redirect('users/login');
                 } else {
@@ -466,7 +481,6 @@ class Users extends Controller
                 // Load view with errors
                 $this->view('users/adminRegister', $data);
             }
-
         } else {
             // Load form
             $data = [
@@ -530,8 +544,30 @@ class Users extends Controller
                 $loggedInUser = $this->userModel->login($data['email'], $data['password']);
 
                 if ($loggedInUser) {
-                    // Create Session
-                    $this->createUserSession($loggedInUser);
+                    // Check if user is verified
+                    if ($loggedInUser->codeVerified == 0) {
+
+                        $_SESSION['verify_type'] = $loggedInUser->type;
+                        if ($loggedInUser->type == 'parent') {
+                            $id = $this->userModel->getParentByEmail($data['email']);
+                            $_SESSION['verify_id'] = $id->parentID;
+                        } else if ($loggedInUser->type == 'owner') {
+                            $id = $this->userModel->getOwnerByEmail($data['email']);
+                            $_SESSION['verify_id'] = $id->ownerID;
+                        } else if ($loggedInUser->type == 'driver') {
+                            $id = $this->userModel->getDriverByEmail($data['email']);
+                            $_SESSION['verify_id'] = $id->driverID;
+                        }
+
+                        $full_name = $loggedInUser->firstName . ' ' . $loggedInUser->lastName;
+                        $_SESSION['verify_email'] = $loggedInUser->email;
+                        $_SESSION['verify_name'] = $full_name;
+
+                        $this->view('users/registered');
+                    } else {
+                        // Create Session
+                        $this->createUserSession($loggedInUser);
+                    }
                 } else {
                     $data['password_err'] = 'Password incorrect';
 
@@ -541,7 +577,6 @@ class Users extends Controller
                 // Load view with errors
                 $this->view('users/login', $data);
             }
-
         } else {
             // Init data
             $data = [
@@ -628,4 +663,226 @@ class Users extends Controller
         }
     }
 
+    public function registered()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $verify_id = $_SESSION['verify_id'];
+            $verify_type = $_SESSION['verify_type'];
+            $verify_email = $_SESSION['verify_email'];
+            $verify_name = $_SESSION['verify_name'];
+
+            $this->verify_code($verify_id, $verify_type, $verify_email, $verify_name);
+            $this->view('users/verify');
+        } else {
+            $this->view('users/registered');
+        }
+    }
+
+    public function verify()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_SESSION['verify_id']) && isset($_SESSION['verify_email']) && isset($_SESSION['verify_type'])) {
+                if (isset($_POST['code'])) {
+
+                    $code = trim(htmlspecialchars($_POST['code']));
+                    $id = $_SESSION['verify_id'];
+                    $type = $_SESSION['verify_type'];
+                    $email = $_SESSION['verify_email'];
+
+                    if ($this->checkVerificationCode($id, $type, $code)) {
+                        
+                        if ($type == 'parent') {
+                            $this->userModel->setParentVerified($id);
+                            $loggedInUser = $this->userModel->getParentByEmail($email);
+                        } else if ($type == 'owner') {
+                            $this->userModel->setOwnerVerified($id);
+                            $loggedInUser = $this->userModel->getOwnerByEmail($email);
+                        } else if ($type == 'driver') {
+                            $this->userModel->setDriverVerified($id);
+                            $loggedInUser = $this->userModel->getDriverByEmail($email);
+                        }
+
+                        if ($loggedInUser) {
+                            $loggedInUser->type = $type;
+                            $this->createUserSession($loggedInUser);
+                            redirect('pages/index');
+                        }
+                    } else {
+                        $data['code_err'] = 'Invalid verification code';
+                        $this->view('users/verify', $data);
+                    }
+                } else {
+                    $data['code_err'] = 'Please enter verification code';
+                    $this->view('users/verify', $data);
+                }
+            } else {
+                redirect('users/login');
+            }
+        } else {
+            $data = [
+                'code_err' => '',
+            ];
+            $this->view('users/verify', $data);
+        }
+    }
+
+    public function checkVerificationCode($user_id, $type, $code)
+    {
+        $verify = $this->userModel->getVerificationCode($user_id, $type);
+        if ($verify) {
+            if ($verify->code == $code) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    
+    private function verify_code($user_id, $type, $receiver, $receiver_name)
+    {
+        $this->userModel->generateVerificationCode($user_id, $type);
+        $code = $this->userModel->getVerificationCode($user_id, $type);
+        $date = date('d M Y');
+        $subject = 'EduPick Verification Code';
+        // $body_string = 'Your verification code is: ' . $code->code;
+        $body_string = '
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+            <title>EduPick OTP Email</title>
+
+            <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+            rel="stylesheet"
+            />
+        </head>
+        <body
+            style="
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: #ffffff;
+            font-size: 14px;
+            "
+        >
+            <div
+            style="
+                max-width: 680px;
+                margin: 0 auto;
+                padding: 45px 30px 60px;
+                background: rgb(255,255,255);
+                background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(214,244,255,1) 35%, rgba(8,159,189,1) 100%); 
+                background-repeat: no-repeat;
+                background-size: 800px 452px;
+                background-position: top center;
+                font-size: 14px;
+                color: #434343;
+            "
+            >
+            <header>
+                <table style="width: 100%;">
+                <tbody>
+                    <tr style="height: 0;">
+                    <td>
+                        <h1 style="color: black;"><span style="color: #e44d26;">Edu</span>Pick</h2>
+                    </td>
+                    <td style="text-align: right;">
+                        <span
+                        style="font-size: 16px; line-height: 30px; color: #ffffff;"
+                        >' . $date . '</span
+                        >
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+            </header>
+
+            <main>
+                <div
+                style="
+                    margin: 0;
+                    margin-top: 70px;
+                    padding: 92px 30px 115px;
+                    background: #ffffff;
+                    border-radius: 30px;
+                    text-align: center;
+                "
+                >
+                <div style="width: 100%; max-width: 489px; margin: 0 auto;">
+                    <h1
+                    style="
+                        margin: 0;
+                        font-size: 24px;
+                        font-weight: 500;
+                        color: #1f1f1f;
+                    "
+                    >
+                    EduPick Verification Code
+                    </h1>
+                    <p
+                    style="
+                        margin: 0;
+                        margin-top: 17px;
+                        font-size: 16px;
+                        font-weight: 500;
+                    "
+                    >
+                    Hey ' . $receiver_name . ',
+                    </p>
+                    <p
+                    style="
+                        margin: 0;
+                        margin-top: 17px;
+                        font-weight: 500;
+                        letter-spacing: 0.56px;
+                    "
+                    >
+                    Thank you for choosing EduPick School Transport Management System. Use the following Verification Code
+                    to verify your email address.<br>Do not share this code with anyone.
+                    </p>
+                    <p
+                    style="
+                        margin: 0;
+                        margin-top: 60px;
+                        font-size: 40px;
+                        font-weight: 600;
+                        letter-spacing: 25px;
+                        color: #e44d26;
+                    "
+                    >
+                    ' . $code->code . '
+                    </p>
+                </div>
+                </div>
+
+                <p
+                style="
+                    max-width: 400px;
+                    margin: 0 auto;
+                    margin-top: 90px;
+                    text-align: center;
+                    font-weight: 500;
+                    color: #8c8c8c;
+                "
+                >
+                Need help? Ask at
+                <a
+                    href="mailto:info.edupick@gmail.com"
+                    style="color: #499fb6; text-decoration: none;"
+                    >info.edupick@gmail.com</a
+                >
+                </p>
+            </main>
+            </div>
+        </body>
+        </html>
+        ';
+        send_email($receiver, $receiver_name,  $subject, $body_string);
+    }
 }

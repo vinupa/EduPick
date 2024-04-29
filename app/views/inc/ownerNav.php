@@ -9,10 +9,6 @@
 
     <div class="menu-items">
         <ul class="nav-links">
-            <li><a href="<?php echo URLROOT; ?>/owners/index">
-                    <i class="uil uil-estate"></i>
-                    <span class="link-name">Dashboard</span>
-                </a></li>
             <li><a href="<?php echo URLROOT; ?>/owners/manageVehicles">
                     <i class="uil uil-bus-school"></i>
                     <span class="link-name">Manage Vehicles</span>
@@ -20,6 +16,18 @@
             <li><a href="<?php echo URLROOT; ?>/owners/driverRequests">
                     <i class="uil uil-streering"></i>
                     <span class="link-name">Driver Requests</span>
+                </a></li>
+            <li><a href="<?php echo URLROOT; ?>/owners/childRequests">
+                    <i class="uil uil-user-plus"></i>
+                    <span class="link-name">Parent Requests</span>
+                </a></li>
+            <li><a href="<?php echo URLROOT; ?>/owners/manageDrivers">
+                    <i class="uil uil-car-sideview"></i>
+                    <span class="link-name">Manage Drivers</span>
+                </a></li>
+            <li><a href="<?php echo URLROOT; ?>/owners/manageChildren">
+                    <i class="uil uil-clipboard-notes"></i>
+                    <span class="link-name">Registry</span>
                 </a></li>
         </ul>
 

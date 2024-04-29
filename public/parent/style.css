@@ -11,7 +11,7 @@
     --panel-color: #FFF;
     --text-color: #000;
     --black-light-color: #707070;
-    --border-color: #e6e5e5;
+    --border-color: #b7b7b7;
     --toggle-color: #DDD;
     --box1-color: #4DA3FF;
     --title-icon-color: #fff;
@@ -418,4 +418,14 @@ nav.close ~ .dashboard .top{
   
   .auth-err p {
     text-align: center;
+  }
+
+  .linked-text {
+    color: red;
+    text-decoration: none;
+    font-size: 16px;
+  }
+
+  .linked-text i {
+    color: red;
   }
